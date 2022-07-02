@@ -58,6 +58,7 @@ const App = () => {
           <BrowserRouter>
             <Routes>
               <Route element={<PrivateComponent />}>
+              <Route path="/" element={<HomePage />} />
               <Route path="/home" element={<HomePage />} />
               </Route>
               <Route path="/signin" element={<SignInPage />} />
