@@ -14,7 +14,9 @@ import AvatarGroup from "@mui/material/AvatarGroup";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import StripeCheckout from "react-stripe-checkout";
+import axios from "axios";
 
 /**
  * Form Validation Schema
@@ -36,10 +38,45 @@ const defaultValues = {
   remember: true,
 };
 
+function Checkout() {
+  const [product, setProduct] = useState({
+    name: "React from FB",
+    price: 10,
+    productBy: "facebook",
+  });
 
+  const makePayment = async (token) => {
+    const body = {
+      token,
+      product,
+    };
+    const headers = {
+      "Content-Type": "application/json",
+    };
+    try {
+      const response = await fetch(`http://klaviyo-backend.herokuapp.com/payment`, {
+        method: "POST",
+        headers,
+        body: JSON.stringify(body),
+      });
+      console.log("RESPONSE", response);
+      const { status } = response;
+      console.log("STATUS", status);
+    } catch (err) {
+      return console.log(err);
+    }
+  };
 
+  const handleCheckout=()=>{
+    axios.post(`http://klaviyo-backend.herokuapp.com/create-checkout-session`,{
+        product,
+    }).then((res)=>{
+        if(res.data.url){
+            window.location.href = res.data.url;
+        }
+    }).catch((err)=> console.log(err, message))
+  };
 
-function HomePage() {
   const navigate = useNavigate();
   const { control, formState, handleSubmit, setError, setValue } = useForm({
     mode: "onChange",
@@ -57,33 +94,30 @@ function HomePage() {
     setValue("password", "admin", { shouldDirty: true, shouldValidate: true });
   }, [setValue]);
 
-  const logOut=()=>{   
-    navigate('/signout')
-}
+  const logOut = () => {
+    navigate("/signout");
+  };
 
- async function onSubmit({ email, password }) {
-    console.warn("email,password",email,password);
-        let result = await fetch('https://klaviyo-backend.herokuapp.com/login', {
-            method: "post",
-            body: JSON.stringify({email,password}),
-            headers:{
-                'Content-Type': 'application/json'
-            },
+  async function onSubmit({ email, password }) {
+    console.warn("email,password", email, password);
+    let result = await fetch("https://klaviyo-backend.herokuapp.com/login", {
+      method: "post",
+      body: JSON.stringify({ email, password }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
-        });
-
-        result = await result.json()
-        console.warn(result);
-        if(result.auth){
-            localStorage.setItem('user', JSON.stringify(result.user));
-            localStorage.setItem('token', JSON.stringify(result.auth));
-            navigate("/home")
-        
-        }else{
-            alert("Email Does not exist")
-        }
+    result = await result.json();
+    console.warn(result);
+    if (result.auth) {
+      localStorage.setItem("user", JSON.stringify(result.user));
+      localStorage.setItem("token", JSON.stringify(result.auth));
+      navigate("/home");
+    } else {
+      alert("Email Does not exist");
+    }
   }
-
 
   return (
     <div className="flex flex-col sm:flex-row items-center md:items-start sm:justify-center md:justify-start flex-1 min-w-0">
@@ -147,44 +181,45 @@ function HomePage() {
             application today.
           </div>
           <Button
-              style={{
-                backgroundColor: "#FCB900",
-              }}
-              variant="contained"
-              color="secondary"
-              className=" w-full mt-16"
-              aria-label="Sign in"
-              disabled={_.isEmpty(dirtyFields) || !isValid}
-              type="submit"
-              size="large"
-              onClick={logOut}
-            >
-              LogOut
-            </Button>
-            <Link to='/price'>
-            <Button
-              style={{
-                backgroundColor: "#00FF00",
-              }}
-              variant="contained"
-              color="secondary"
-              className=" w-full mt-16"
-              aria-label="Sign in"
-              disabled={_.isEmpty(dirtyFields) || !isValid}
-              type="submit"
-              size="large"
-              onClick={logOut}
-            >
-              Price
-            </Button>
-            </Link>
+            style={{
+              backgroundColor: "#FCB900",
+            }}
+            variant="contained"
+            color="secondary"
+            className=" w-full mt-16"
+            aria-label="Sign in"
+            disabled={_.isEmpty(dirtyFields) || !isValid}
+            type="submit"
+            size="large"
+            onClick={logOut}
+          >
+            LogOut
+          </Button>
+          <Button
+            style={{
+              backgroundColor: "#FCB900",
+            }}
+            variant="contained"
+            color="secondary"
+            className=" w-full mt-16"
+            aria-label="Sign in"
+            disabled={_.isEmpty(dirtyFields) || !isValid}
+            type="submit"
+            size="large"
+            onClick={handleCheckout}
+          >
+            Checkout
+          </Button>
+          <StripeCheckout
+            stripeKey="pk_test_51L90PXSEwppErzgo2vdSfEPqft3K755B3hW3Ml0ec8nnvkrkH0I2ksCaHRHJkVmzjxzAUwDNgkKpqL682ISLDtFY00YZna9PaE"
+            token={makePayment}
+            name="Buy Plan"
+            amount={product.price * 100}
+          ></StripeCheckout>
         </div>
-        
       </Box>
-
-      
     </div>
   );
 }
 
-export default HomePage;
+export default Checkout;

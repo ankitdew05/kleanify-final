@@ -15,7 +15,8 @@ import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import { useEffect } from "react";
-
+import { makeStyles, ThemeProvider, createTheme ,responsiveFontSizes } from "@mui/material/styles";
+import { orange } from "@mui/material/colors";
 /**
  * Form Validation Schema
  */
@@ -49,13 +50,7 @@ function SignInPage() {
 
   const { isValid, dirtyFields, errors } = formState;
 
-  useEffect(() => {
-    setValue("email", "admin@fusetheme.com", {
-      shouldDirty: true,
-      shouldValidate: true,
-    });
-    setValue("password", "admin", { shouldDirty: true, shouldValidate: true });
-  }, [setValue]);
+ 
 
  async function onSubmit({ email, password }) {
     console.warn("email,password",email,password);
@@ -80,8 +75,47 @@ function SignInPage() {
         }
   }
 
+  let theme = createTheme({
+    palette: {
+      primary: {
+        main: '#0052cc',
+      },
+      secondary: {
+        main: '#edf2ff',
+      },
+    },
+  });
+  theme = responsiveFontSizes(theme);
+
+    const googleAuth=()=> {
+      window.open(
+        `http://klaviyo-backend.herokuapp.com/auth/google`,
+        "_self"
+      );
+    }
+
+    const facebookAuth=()=> {
+      window.open(
+        `http://klaviyo-backend.herokuapp.com/auth/facebook`,
+        "_self"
+      );
+    }
+    const facebook = async ()=>{
+       await fetch('http://localhost:5000/auth/facebook', {
+            method: "GET",
+            mdoe: "no-cors",
+            headers:{
+                'Content-Type': 'application/json',
+                "Access-Control-Allow-Origin": "https://localhost:3000",
+            },
+
+        });
+      
+    }
+  
 
   return (
+    <ThemeProvider >
     <div className="flex flex-col sm:flex-row items-center md:items-start sm:justify-center md:justify-start flex-1 min-w-0">
       <Box className="bg-[#FFF6CF] relative hidden md:flex flex-auto items-center justify-center h-full p-64 lg:px-112 overflow-hidden">
         <svg
@@ -270,12 +304,12 @@ function SignInPage() {
             </div>
 
             <div className="flex items-center mt-32 space-x-16">
-              <Button variant="outlined" className="flex-auto">
-                <FuseSvgIcon size={20} color="action">
+              <Button variant="outlined" className="flex-auto" onClick={facebookAuth}>
+                <FuseSvgIcon size={20} color="action" >
                   feather:facebook
                 </FuseSvgIcon>
               </Button>
-              <Button variant="outlined" className="flex-auto">
+              <Button variant="outlined" className="flex-auto"  onClick={googleAuth}>
                 <FuseSvgIcon size={20} color="action">
                   feather:twitter
                 </FuseSvgIcon>
@@ -290,6 +324,7 @@ function SignInPage() {
         </div>
       </Paper>
     </div>
+    </ThemeProvider>
   );
 }
 

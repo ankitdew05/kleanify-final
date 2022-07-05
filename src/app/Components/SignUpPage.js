@@ -6,7 +6,7 @@ import FormControl from "@mui/material/FormControl";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import * as yup from "yup";
 import _ from "@lodash";
 import AvatarGroup from "@mui/material/AvatarGroup";
@@ -14,6 +14,7 @@ import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import FormHelperText from "@mui/material/FormHelperText";
+import { useState } from "react";
 
 /**
  * Form Validation Schema
@@ -51,26 +52,65 @@ function SignUpPage() {
     resolver: yupResolver(schema),
   });
   const navigate = useNavigate();
-
+  const params = useParams();
+  const planId = params.id
+  const period = params.period
+  console.log(planId)
   const { isValid, dirtyFields, errors, setError } = formState;
 
- async function onSubmit({ displayName, password, email }) {
-    
-      console.warn(displayName,email,password);
-      let result = await fetch('https://klaviyo-backend.herokuapp.com/register', {
+  async function onSubmit({ displayName, password, email }) {
+    if (!planId) {
+      console.warn(displayName, email, password);
+      let result = await fetch(
+        "https://klaviyo-backend.herokuapp.com/register",
+        {
           method: "post",
-          body: JSON.stringify({displayName,email,password}),
-          headers:{
-              'Content-Type': 'application/json'
+          body: JSON.stringify({ displayName, email, password }),
+          headers: {
+            "Content-Type": "application/json",
           },
-
-      });
-
-      result = await result.json()
+        }
+      );
+      result = await result.json();
+   
       console.warn(result);
-      localStorage.setItem("user",JSON.stringify(result.result));
-      localStorage.setItem("token",JSON.stringify(result.auth));
-          navigate('/signin')
+      localStorage.setItem("user", JSON.stringify(result.result));
+      localStorage.setItem("token", JSON.stringify(result.auth));
+      navigate("/signin");
+      
+    } else {
+      let result = await fetch(
+        "http://klaviyo-backend.herokuapp.com/paidregister",
+        {
+          method: "post",
+          body: JSON.stringify({ displayName, email, password }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      result = await result.json();
+      let id = result.result._id
+      console.log(id)
+      localStorage.setItem("user", JSON.stringify(result.result));
+      localStorage.setItem("token", JSON.stringify(result.auth));
+      let result2 = await fetch(
+        "http://klaviyo-backend.herokuapp.com/create-checkout-session",
+        {
+          method: "post",
+          mdoe: "no-cors",
+          body: JSON.stringify({ displayName, email, password , planId, id , period}),
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "https://klaviyo-frontend.herokuapp.com",
+            
+          },
+        }
+      );
+      result2 = await result2.json();
+      console.warn(result2);
+      window.open(`${result2.url}`)
+    }
   }
 
   return (
