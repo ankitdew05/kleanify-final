@@ -28,7 +28,7 @@ function SimplePricingPage() {
 
   const getBounce = async () => {
     axios
-      .get("http://klaviyo-backend.herokuapp.com/plan")
+      .get("https://klaviyo-backend.herokuapp.com/plan")
       .then((response) => {
         setData(response.data);
         setFeature(response.data.feature)

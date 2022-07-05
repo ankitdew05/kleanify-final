@@ -54,7 +54,7 @@ function Checkout() {
       "Content-Type": "application/json",
     };
     try {
-      const response = await fetch(`http://klaviyo-backend.herokuapp.com/payment`, {
+      const response = await fetch(`https://klaviyo-backend.herokuapp.com/payment`, {
         method: "POST",
         headers,
         body: JSON.stringify(body),
@@ -68,7 +68,7 @@ function Checkout() {
   };
 
   const handleCheckout=()=>{
-    axios.post(`http://klaviyo-backend.herokuapp.com/create-checkout-session`,{
+    axios.post(`https://klaviyo-backend.herokuapp.com/create-checkout-session`,{
         product,
     }).then((res)=>{
         if(res.data.url){

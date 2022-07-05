@@ -80,7 +80,7 @@ function SignUpPage() {
       
     } else {
       let result = await fetch(
-        "http://klaviyo-backend.herokuapp.com/paidregister",
+        "https://klaviyo-backend.herokuapp.com/paidregister",
         {
           method: "post",
           body: JSON.stringify({ displayName, email, password }),
@@ -95,7 +95,7 @@ function SignUpPage() {
       localStorage.setItem("user", JSON.stringify(result.result));
       localStorage.setItem("token", JSON.stringify(result.auth));
       let result2 = await fetch(
-        "http://klaviyo-backend.herokuapp.com/create-checkout-session",
+        "https://klaviyo-backend.herokuapp.com/create-checkout-session",
         {
           method: "post",
           mdoe: "no-cors",

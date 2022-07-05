@@ -89,14 +89,14 @@ function SignInPage() {
 
     const googleAuth=()=> {
       window.open(
-        `http://klaviyo-backend.herokuapp.com/auth/google`,
+        `https://klaviyo-backend.herokuapp.com/auth/google`,
         "_self"
       );
     }
 
     const facebookAuth=()=> {
       window.open(
-        `http://klaviyo-backend.herokuapp.com/auth/facebook`,
+        `https://klaviyo-backend.herokuapp.com/auth/facebook`,
         "_self"
       );
     }

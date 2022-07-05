@@ -4,7 +4,7 @@ import axios from 'axios';
 export const getProjects = createAsyncThunk(
   'projectDashboardApp/projects/getProjects',
   async () => {
-    const response = await axios.get('http://klaviyo-backend.herokuapp.com/project_dashboard_projects');
+    const response = await axios.get('https://klaviyo-backend.herokuapp.com/project_dashboard_projects');
     console.log("ps-data", response.data)
     return response.data[0].value;
     
