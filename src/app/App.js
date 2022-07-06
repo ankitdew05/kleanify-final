@@ -29,6 +29,7 @@ import ProjectDashboardApp from "./Components/project/ProjectDashboardApp";
 import SimplePricingPage from "./Components/simple/SimplePricingPage";
 import SuccessPage from "./Components/SuccessPage";
 import FailurePage from "./Components/FailurePage"
+import CalendarApp from "./Components/calendar/CalendarApp";
 // import axios from 'axios';
 /**
  * Axios HTTP Request defaults
@@ -76,6 +77,7 @@ const App = () => {
               <Route path="/signup/:id/:period" element={<SignUpPage />} />
               <Route path="/new" element={<New/>} />
               <Route path="/forgot-password" element={<Forget />} />
+              <Route path="/calender" element={<CalendarApp />} />
               <Route path="/reset-password/:id/:token" element={<Reset/>} />
               <Route path="/signout" element={<SignOutPage />} />
             </Routes>
