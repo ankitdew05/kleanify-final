@@ -68,7 +68,7 @@ function SignInPage() {
         if(result.auth){
             localStorage.setItem('user', JSON.stringify(result.user));
             localStorage.setItem('token', JSON.stringify(result.auth));
-            navigate("/home")
+            navigate("/dashboard")
         
         }else{
             alert("Email Does not exist")
