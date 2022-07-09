@@ -15,6 +15,7 @@ import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import { useEffect } from "react";
+import baseURL from '../common/baseURL'
 
 /**
  * Form Validation Schema
@@ -59,7 +60,7 @@ function Forget() {
 
  async function onSubmit({email}) {
     console.warn("email",email);
-        let result = await fetch('https://klaviyo-backend.herokuapp.com/requestPasswordReset', {
+        let result = await fetch(`${baseURL}/requestPasswordReset`, {
             method: "post",
             body: JSON.stringify({email}),
             headers:{

@@ -15,6 +15,7 @@ import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import { useEffect } from "react";
+import baseURL from '../common/baseURL'
 
 /**
  * Form Validation Schema
@@ -61,9 +62,11 @@ function HomePage() {
     navigate('/signout')
 }
 
+const auth = localStorage.getItem('user');
+
  async function onSubmit({ email, password }) {
     console.warn("email,password",email,password);
-        let result = await fetch('https://klaviyo-backend.herokuapp.com/login', {
+        let result = await fetch(`${baseURL}/login`, {
             method: "post",
             body: JSON.stringify({email,password}),
             headers:{
@@ -146,7 +149,8 @@ function HomePage() {
             full of beautiful and rich modules. Join us and start building your
             application today.
           </div>
-          <Button
+           if (auth){
+            <Button
               style={{
                 backgroundColor: "#FCB900",
               }}
@@ -161,6 +165,7 @@ function HomePage() {
             >
               LogOut
             </Button>
+          }
             <Link to='/price'>
             <Button
               style={{

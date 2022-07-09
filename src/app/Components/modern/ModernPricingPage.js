@@ -10,6 +10,7 @@ import { motion } from 'framer-motion';
 import ModernPricingCard from './ModernPricingCard';
 import ModernPricingFeatureItem from './ModernPricingFeatureItem';
 import axios from 'axios';
+import baseURL from '../../common/baseURL'
 
 function ModernPricingPage() {
   const [period, setPeriod] = useState('month');
@@ -29,7 +30,7 @@ function ModernPricingPage() {
 
   const getBounce = async () => {
     axios
-      .get("https://klaviyo-backend.herokuapp.com/plan")
+      .get(`${baseURL}/plan`)
       .then((response) => {
         setData(response.data);
         console.log(response.data);

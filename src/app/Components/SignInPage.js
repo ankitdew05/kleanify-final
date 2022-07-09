@@ -17,6 +17,8 @@ import Paper from "@mui/material/Paper";
 import { useEffect } from "react";
 import { makeStyles, ThemeProvider, createTheme ,responsiveFontSizes } from "@mui/material/styles";
 import { orange } from "@mui/material/colors";
+import baseURL from '../common/baseURL'
+
 /**
  * Form Validation Schema
  */
@@ -54,7 +56,7 @@ function SignInPage() {
 
  async function onSubmit({ email, password }) {
     console.warn("email,password",email,password);
-        let result = await fetch('https://klaviyo-backend.herokuapp.com/login', {
+        let result = await fetch(`${baseURL}/login`, {
             method: "post",
             body: JSON.stringify({email,password}),
             headers:{
@@ -89,19 +91,19 @@ function SignInPage() {
 
     const googleAuth=()=> {
       window.open(
-        `https://klaviyo-backend.herokuapp.com/auth/google`,
+        `${baseURL}/auth/google`,
         "_self"
       );
     }
 
     const facebookAuth=()=> {
       window.open(
-        `https://klaviyo-backend.herokuapp.com/auth/facebook`,
+        `${baseURL}/auth/facebook`,
         "_self"
       );
     }
     const facebook = async ()=>{
-       await fetch('http://localhost:5000/auth/facebook', {
+       await fetch(`${baseURL}/auth/facebook`, {
             method: "GET",
             mdoe: "no-cors",
             headers:{

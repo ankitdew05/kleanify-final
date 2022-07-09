@@ -15,6 +15,7 @@ import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import { useEffect } from "react";
+import baseURL from '../common/baseURL'
 
 
 /**
@@ -63,7 +64,7 @@ function Reset() {
 
  async function onSubmit({ password,passwordConfirm }) {
     console.warn("password,password2",password,passwordConfirm);
-        let result = await fetch(`https://klaviyo-backend.herokuapp.com/reset-password/${params.id}/${params.token}`, {
+        let result = await fetch(`${baseURL}/reset-password/${params.id}/${params.token}`, {
             method: "put",
             body: JSON.stringify({password,passwordConfirm}),
             headers:{

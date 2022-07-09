@@ -17,6 +17,7 @@ import Paper from "@mui/material/Paper";
 import { useEffect, useState } from "react";
 import StripeCheckout from "react-stripe-checkout";
 import axios from "axios";
+import baseURL from '../common/baseURL'
 
 /**
  * Form Validation Schema
@@ -54,7 +55,7 @@ function Checkout() {
       "Content-Type": "application/json",
     };
     try {
-      const response = await fetch(`https://klaviyo-backend.herokuapp.com/payment`, {
+      const response = await fetch(`${baseURL}/payment`, {
         method: "POST",
         headers,
         body: JSON.stringify(body),
@@ -68,7 +69,7 @@ function Checkout() {
   };
 
   const handleCheckout=()=>{
-    axios.post(`https://klaviyo-backend.herokuapp.com/create-checkout-session`,{
+    axios.post(`${baseURL}/create-checkout-session`,{
         product,
     }).then((res)=>{
         if(res.data.url){
@@ -100,7 +101,7 @@ function Checkout() {
 
   async function onSubmit({ email, password }) {
     console.warn("email,password", email, password);
-    let result = await fetch("https://klaviyo-backend.herokuapp.com/login", {
+    let result = await fetch(`${baseURL}/login`, {
       method: "post",
       body: JSON.stringify({ email, password }),
       headers: {

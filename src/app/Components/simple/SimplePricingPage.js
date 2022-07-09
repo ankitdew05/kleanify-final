@@ -9,6 +9,7 @@ import { motion } from "framer-motion";
 import SimplePricingCard from "./SimplePricingCard";
 import SimplePricingFeatureItem from "./SimplePricingFeatureItem";
 import axios from "axios";
+import baseURL from '../../common/baseURL'
 
 function SimplePricingPage() {
   const [period, setPeriod] = useState("month");
@@ -28,7 +29,7 @@ function SimplePricingPage() {
 
   const getBounce = async () => {
     axios
-      .get("https://klaviyo-backend.herokuapp.com/plan")
+      .get(`${baseURL}/plan`)
       .then((response) => {
         setData(response.data);
         setFeature(response.data.feature)

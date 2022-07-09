@@ -15,6 +15,7 @@ import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import FormHelperText from "@mui/material/FormHelperText";
 import { useState } from "react";
+import baseURL from '../common/baseURL'
 
 /**
  * Form Validation Schema
@@ -62,7 +63,7 @@ function SignUpPage() {
     if (!planId) {
       console.warn(displayName, email, password);
       let result = await fetch(
-        "https://klaviyo-backend.herokuapp.com/register",
+        `${baseURL}/register`,
         {
           method: "post",
           body: JSON.stringify({ displayName, email, password }),
@@ -80,7 +81,7 @@ function SignUpPage() {
       
     } else {
       let result = await fetch(
-        "https://klaviyo-backend.herokuapp.com/paidregister",
+        `${baseURL}/paidregister`,
         {
           method: "post",
           body: JSON.stringify({ displayName, email, password }),
@@ -95,7 +96,7 @@ function SignUpPage() {
       localStorage.setItem("user", JSON.stringify(result.result));
       localStorage.setItem("token", JSON.stringify(result.auth));
       let result2 = await fetch(
-        "https://klaviyo-backend.herokuapp.com/create-checkout-session",
+        `${baseURL}/create-checkout-session`,
         {
           method: "post",
           mdoe: "no-cors",
