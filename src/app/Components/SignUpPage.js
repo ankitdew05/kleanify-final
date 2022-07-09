@@ -15,7 +15,7 @@ import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import FormHelperText from "@mui/material/FormHelperText";
 import { useState } from "react";
-import baseURL from '../common/baseURL'
+import baseURL from "../common/baseURL";
 
 /**
  * Form Validation Schema
@@ -54,67 +54,57 @@ function SignUpPage() {
   });
   const navigate = useNavigate();
   const params = useParams();
-  const planId = params.id
-  const period = params.period
-  console.log("Plan ID", planId)
+  const planId = params.id;
+  const period = params.period;
+  console.log("Plan ID", planId);
   const { isValid, dirtyFields, errors, setError } = formState;
 
   async function onSubmit({ displayName, password, email }) {
     if (!planId) {
       console.warn(displayName, email, password);
-      let result = await fetch(
-        `${baseURL}/register`,
-        {
-          method: "post",
-          mode: "no-cors",
-          body: JSON.stringify({ displayName, email, password }),
-          headers: {
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "https://seashell-app-d7t6m.ondigitalocean.app",
-          },
-        }
-      );
+      let result = await fetch(`${baseURL}/register`, {
+        method: "post",
+        body: JSON.stringify({ displayName, email, password }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
       result = await result.json();
-   
       console.warn(result);
       localStorage.setItem("user", JSON.stringify(result.result));
       localStorage.setItem("token", JSON.stringify(result.auth));
       navigate("/signin");
-      
     } else {
-      let result = await fetch(
-        `${baseURL}/paidregister`,
-        {
-          method: "post",
-          mode: "no-cors",
-          body: JSON.stringify({ displayName, email, password }),
-          headers: {
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "https://seashell-app-d7t6m.ondigitalocean.app",
-          },
-        }
-      );
+      let result = await fetch(`${baseURL}/paidregister`, {
+        method: "post",
+        body: JSON.stringify({ displayName, email, password }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
       result = await result.json();
-      let id = await result.result._id
-      console.log("register Id", id)
+      let id = await result.result._id;
+      console.log("register Id", id);
       localStorage.setItem("user", JSON.stringify(result.result));
       localStorage.setItem("token", JSON.stringify(result.auth));
-      let result2 = await fetch(
-        `${baseURL}/create-checkout-session`,
-        {
-          method: "post",
-          mode: "no-cors",
-          body: JSON.stringify({ displayName, email, password , planId, id , period}),
-          headers: {
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "https://seashell-app-d7t6m.ondigitalocean.app",
-            
-          },
-        }
-      );
+
+      let result2 = await fetch(`${baseURL}/create-checkout-session`, {
+        method: "post",
+        body: JSON.stringify({
+          displayName,
+          email,
+          password,
+          planId,
+          id,
+          period,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
       result2 = await result2.json();
       console.warn(result2);
-      window.open(`${result2.url}`)
+      window.open(`${result2.url}`);
     }
   }
 
