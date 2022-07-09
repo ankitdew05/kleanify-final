@@ -84,9 +84,11 @@ function SignUpPage() {
         `${baseURL}/paidregister`,
         {
           method: "post",
+          mode: "no-cors",
           body: JSON.stringify({ displayName, email, password }),
           headers: {
             "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "https://app.intradaystocks.today",
           },
         }
       );
@@ -99,11 +101,11 @@ function SignUpPage() {
         `${baseURL}/create-checkout-session`,
         {
           method: "post",
-          mdoe: "no-cors",
+          mode: "no-cors",
           body: JSON.stringify({ displayName, email, password , planId, id , period}),
           headers: {
             "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "https://klaviyo-frontend.herokuapp.com",
+            "Access-Control-Allow-Origin": "https://app.intradaystocks.today",
             
           },
         }

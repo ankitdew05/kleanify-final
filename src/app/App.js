@@ -70,9 +70,9 @@ const App = () => {
               <Route path="/dashboard" element={<ProjectDashboardApp />} />
               </Route>
               <Route path="/signin" element={<SignInPage />} />
-              <Route path="/" element={<HomePage />} />
+              <Route path="/" element={<ModernPricingPage />} />
               <Route path="/signup" element={<SignUpPage />} />
-              <Route path="/price" element={<ModernPricingPage />} />
+              <Route path="/home" element={<HomePage />} />
               <Route path="/price" element={<ModernPricingPage />} />
               <Route path="/signup/:id/:period" element={<SignUpPage />} />
               <Route path="/new" element={<New/>} />
