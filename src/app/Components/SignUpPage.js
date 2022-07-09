@@ -56,7 +56,7 @@ function SignUpPage() {
   const params = useParams();
   const planId = params.id
   const period = params.period
-  console.log(planId)
+  console.log("Plan ID", planId)
   const { isValid, dirtyFields, errors, setError } = formState;
 
   async function onSubmit({ displayName, password, email }) {
@@ -95,8 +95,8 @@ function SignUpPage() {
         }
       );
       result = await result.json();
-      let id = result.result._id
-      console.log(id)
+      let id = await result.result._id
+      console.log("register Id", id)
       localStorage.setItem("user", JSON.stringify(result.result));
       localStorage.setItem("token", JSON.stringify(result.auth));
       let result2 = await fetch(
