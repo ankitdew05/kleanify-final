@@ -16,6 +16,7 @@ import FuseLoading from '@fuse/core/FuseLoading';
 import { getOrders, selectOrders, selectOrdersSearchText } from '../store/ordersSlice';
 import { useNavigate } from 'react-router-dom';
 import OrdersTableHead from './OrdersTableHead';
+import baseURL from 'src/app/common/baseURL';
 import axios from 'axios';
 import { Button } from '@mui/material';
 function OrdersTable(props) {
@@ -35,7 +36,7 @@ function OrdersTable(props) {
   });
   const getBounce = async () => {
     axios
-      .get(`http://localhost:5000/campaign`)
+      .get(`${baseURL}/campaign`)
       .then((response) => {
         setData1(response.data);
         console.log(response.data);
@@ -138,7 +139,7 @@ function OrdersTable(props) {
   }
 
   const goto =async (userId ,id)=>{
-    let result = await fetch(`http://localhost:5000/campaign/${id}/pk_f188367b3073ecdeac27491f20baf27323/${userId}`, {
+    let result = await fetch(`${baseURL}/campaign/${id}/pk_f188367b3073ecdeac27491f20baf27323/${userId}`, {
       method: "put",
       headers:{
           'Content-Type': 'application/json'
@@ -150,7 +151,7 @@ function OrdersTable(props) {
   }
   const auth = localStorage.getItem('user')
   const check =async (id)=>{
-    let result = await fetch(`http://localhost:5000/campaignTest/pk_f188367b3073ecdeac27491f20baf27323/${id}/${JSON.parse(auth)._id}`, {
+    let result = await fetch(`${baseURL}/campaignTest/pk_f188367b3073ecdeac27491f20baf27323/${id}/${JSON.parse(auth)._id}`, {
       method: "get",
       headers:{
           'Content-Type': 'text/html'

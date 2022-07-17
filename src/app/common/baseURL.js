@@ -1,3 +1,3 @@
-const baseURL = "http://localhost:5000";
+const baseURL = "https://dolphin-app-yah4a.ondigitalocean.app";
 
 export default baseURL;
