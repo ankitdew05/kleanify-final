@@ -14,28 +14,17 @@ import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import FormHelperText from "@mui/material/FormHelperText";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import baseURL from "../common/baseURL";
 
 /**
  * Form Validation Schema
  */
 const schema = yup.object().shape({
-  displayName: yup.string().required("You must enter display name"),
-  email: yup
+  apiKey: yup.string().required("You must enter Api Key"),
+  url: yup
     .string()
-    .email("You must enter a valid email")
-    .required("You must enter a email"),
-  password: yup
-    .string()
-    .required("Please enter your password.")
-    .min(8, "Password is too short - should be 8 chars minimum."),
-  passwordConfirm: yup
-    .string()
-    .oneOf([yup.ref("password"), null], "Passwords must match"),
-  acceptTermsConditions: yup
-    .boolean()
-    .oneOf([true], "The terms and conditions must be accepted."),
+    .required("You must enter a URL"),
 });
 
 const defaultValues = {
@@ -46,7 +35,7 @@ const defaultValues = {
   acceptTermsConditions: false,
 };
 
-function SignUpPage() {
+function Detail() {
   const { control, formState, handleSubmit, reset } = useForm({
     mode: "onChange",
     defaultValues,
@@ -54,97 +43,22 @@ function SignUpPage() {
   });
   const navigate = useNavigate();
   const params = useParams();
-  const planId = params.id;
-  const period = params.period;
-  const [link , setLink] = useState('signin')
-  useEffect(()=>{
-    document.title = 'Sign-up to Kleanify';
-    const auth = localStorage.getItem('user');
-    if(planId){
-      setLink( `signin/${planId}/${period}`)
-      if (auth){
-        if(JSON.parse(auth).paidStatus === false){
-          createCheckout(auth)
-        } else{
-          navigate(`/dashboard/${JSON.parse(auth)._id}`)
-        }
-      }
-    }
-    if(auth){
-      navigate(`/dashboard/${JSON.parse(auth)._id}`)
-    }
-  },[])
-  
-  console.log("Plan ID", planId);
+  const id = params.id;
+  console.log("User ID", id);
   const { isValid, dirtyFields, errors, setError } = formState;
-  
-  async function onSubmit({ displayName, password, email }) {
-    if (!planId) {
-      console.warn(displayName, email, password);
-      let result = await fetch(`${baseURL}/register`, {
-        method: "post",
-        body: JSON.stringify({ displayName, email, password }),
+
+  async function onSubmit({ apiKey, url }) {
+      console.warn(apiKey, url);
+      let result = await fetch(`${baseURL}/paiduser/${id}`, {
+        method: "put",
+        body: JSON.stringify({apiKey, url}),
         headers: {
           "Content-Type": "application/json",
         },
       });
       result = await result.json();
       console.warn(result);
-      localStorage.setItem("user", JSON.stringify(result.result));
-      localStorage.setItem("token", JSON.stringify(result.auth));
-      navigate("/signin");
-    } else {
-      let result = await fetch(`${baseURL}/paidregister`, {
-        method: "post",
-        body: JSON.stringify({ displayName, email, password }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      result = await result.json();
-      let id = await result.result._id;
-      
-      console.log("register Id", id);
-      localStorage.setItem("user", JSON.stringify(result.result));
-      localStorage.setItem("token", JSON.stringify(result.auth));
-
-      let result2 = await fetch(`${baseURL}/create-checkout-session/${id}`, {
-        method: "post",
-        body: JSON.stringify({
-          displayName,
-          email,
-          password,
-          planId,
-          period,
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      result2 = await result2.json();
-      localStorage.setItem("user.paidStatus", "true");
-      console.warn(result2);
-      window.open(`${result2.url}`);
-    }
-  }
-
-  const createCheckout=async (auth)=>{
-    const id = await JSON.parse(auth)._id
-    console.warn(id);
-    let result2 = await fetch(`${baseURL}/create-checkout-session/${id}`, {
-      method: "post",
-      body: JSON.stringify({
-        planId,
-        period,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    result2 = await result2.json();
-    localStorage.setItem("user.paidStatus", "true");
-    console.warn(result2);
-    window.open(`${result2.url}`);
+      navigate('/feature')
   }
 
   return (
@@ -200,36 +114,46 @@ function SignUpPage() {
 
         <div className="z-10 relative w-full max-w-2xl">
           <div className="text-7xl font-bold leading-none text-black">
-            <div>The #1 Klaviyo  </div>
-            <div>Deliverability Solution</div>
+            <div>Welcome to</div>
+            <div>our community</div>
           </div>
           <div className="mt-24 text-lg tracking-tight leading-6 text-black">
-            Kleanify automatically validates emails, cleans subscriber lists,
-            checks content spam score & performs automated inbox placement tests
-            with your Klaviyo account so you never land in the spam folder.
+            Fuse helps developers to build organized and well coded dashboards
+            full of beautiful and rich modules. Join us and start building your
+            application today.
+          </div>
+          <div className="flex items-center mt-32">
+            <AvatarGroup
+              sx={{
+                "& .MuiAvatar-root": {
+                  borderColor: "primary.main",
+                },
+              }}
+            >
+              <Avatar src="assets/images/avatars/female-18.jpg" />
+              <Avatar src="assets/images/avatars/female-11.jpg" />
+              <Avatar src="assets/images/avatars/male-09.jpg" />
+              <Avatar src="assets/images/avatars/male-16.jpg" />
+            </AvatarGroup>
+
+            <div className="ml-16 font-medium tracking-tight text-gray-400">
+              More than 17k people joined us, it's your turn
+            </div>
           </div>
         </div>
       </Box>
 
       <Paper className="h-full sm:h-auto md:flex md:items-center md:justify-start w-full sm:w-auto md:h-full md:w-1/2 py-8 px-16 sm:p-48 md:p-64 sm:rounded-2xl md:rounded-none sm:shadow md:shadow-none ltr:border-r-1 rtl:border-l-1">
         <div className="w-full max-w-320 sm:w-320 mx-auto sm:mx-0">
-        <a href='https://kleanify.co'>
           <img
             className="w-128 h-36"
-            src="https://kleanify.co/wp-content/uploads/2022/05/Kleanify-Full-Logo.png"
-            alt="Kleanify-Logo"
+            src="https://s3-alpha-sig.figma.com/img/80e7/da20/f779c92506c5caf4dd738864fe537b92?Expires=1657497600&Signature=IP8nPB58GA0UvOf1t2wByfRO9AvcaLyrGU22Nr6YJzQroSFtzSN~CUOKjU3IUhOu64tCSeZnbhNeY2HSo5p0JxiIWcMB5uJPbDsqVOH16T1iqJtRsAmFL6EDFTFVm-FODd9Bi-BgZVN67KqrnTuN1bdc53g2y5PlTMXC3L~oELcQ6vBmwR-HH3I9b9GIXXVksW3mJVtymOE2GyQxwzH~Gj-LqJ3jdTehFOw5Sq0XSDRmRm2SpxAIm55ZVRFExplc0Bx6zkldIxDwbF88Mu-3JLxZn92xj0IQtxKgunZsnz75wfrSm1ao4ZEY87GA-M~~jZYwe~uLu-XCR3eNEFw~2g__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA"
+            alt="logo"
           />
-          </a>
 
           <Typography className="mt-32 text-4xl font-extrabold tracking-tight leading-tight">
-            Sign up
+            Information 
           </Typography>
-          <div className="flex items-baseline mt-2 font-medium">
-            <Typography>Already have an account?</Typography>
-            <Link className="ml-4" to={"/" + link }>
-              Sign in
-            </Link>
-          </div>
 
           <form
             name="registerForm"
@@ -238,17 +162,17 @@ function SignUpPage() {
             onSubmit={handleSubmit(onSubmit)}
           >
             <Controller
-              name="displayName"
+              name="apiKey"
               control={control}
               render={({ field }) => (
                 <TextField
                   {...field}
                   className="mb-24"
-                  label="Display name"
+                  label="API Key"
                   autoFocus
                   type="name"
-                  error={!!errors.displayName}
-                  helperText={errors?.displayName?.message}
+                  error={!!errors.apiKey}
+                  helperText={errors?.apiKey?.message}
                   variant="outlined"
                   required
                   fullWidth
@@ -257,52 +181,16 @@ function SignUpPage() {
             />
 
             <Controller
-              name="email"
+              name="url"
               control={control}
               render={({ field }) => (
                 <TextField
                   {...field}
                   className="mb-24"
-                  label="Email"
-                  type="email"
-                  error={!!errors.email}
-                  helperText={errors?.email?.message}
-                  variant="outlined"
-                  required
-                  fullWidth
-                />
-              )}
-            />
-
-            <Controller
-              name="password"
-              control={control}
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  className="mb-24"
-                  label="Password"
-                  type="password"
-                  error={!!errors.password}
-                  helperText={errors?.password?.message}
-                  variant="outlined"
-                  required
-                  fullWidth
-                />
-              )}
-            />
-
-            <Controller
-              name="passwordConfirm"
-              control={control}
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  className="mb-24"
-                  label="Password (Confirm)"
-                  type="password"
-                  error={!!errors.passwordConfirm}
-                  helperText={errors?.passwordConfirm?.message}
+                  label="Website Url"
+                  type="name"
+                  error={!!errors.url}
+                  helperText={errors?.url?.message}
                   variant="outlined"
                   required
                   fullWidth
@@ -337,11 +225,10 @@ function SignUpPage() {
               }}
               className="w-full mt-24"
               aria-label="Register"
-              disabled={_.isEmpty(dirtyFields) || !isValid}
               type="submit"
               size="large"
             >
-              Create your free account
+              Submit
             </Button>
           </form>
         </div>
@@ -350,4 +237,4 @@ function SignUpPage() {
   );
 }
 
-export default SignUpPage;
+export default Detail;

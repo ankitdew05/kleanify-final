@@ -51,6 +51,7 @@ function Forget() {
   const { isValid, dirtyFields, errors } = formState;
 
   useEffect(() => {
+    document.title = 'Foget-Password Kleanify';
     setValue("email", "admin@fusetheme.com", {
       shouldDirty: true,
       shouldValidate: true,
@@ -127,42 +128,26 @@ function Forget() {
 
         <div className="z-10 relative w-full max-w-2xl">
           <div className="text-7xl font-bold leading-none text-black">
-            <div>Welcome to</div>
-            <div>our community</div>
+            <div>The #1 Klaviyo  </div>
+            <div>Deliverability Solution</div>
           </div>
           <div className="mt-24 text-lg tracking-tight leading-6 text-black">
-            Fuse helps developers to build organized and well coded dashboards
-            full of beautiful and rich modules. Join us and start building your
-            application today.
-          </div>
-          <div className="flex items-center mt-32">
-            <AvatarGroup
-              sx={{
-                "& .MuiAvatar-root": {
-                  borderColor: "primary.main",
-                },
-              }}
-            >
-              <Avatar src="assets/images/avatars/female-18.jpg" />
-              <Avatar src="assets/images/avatars/female-11.jpg" />
-              <Avatar src="assets/images/avatars/male-09.jpg" />
-              <Avatar src="assets/images/avatars/male-16.jpg" />
-            </AvatarGroup>
-
-            <div className="ml-16 font-medium tracking-tight text-gray-400">
-              More than 17k people joined us, it's your turn
-            </div>
+            Kleanify automatically validates emails, cleans subscriber lists,
+            checks content spam score & performs automated inbox placement tests
+            with your Klaviyo account so you never land in the spam folder.
           </div>
         </div>
       </Box>
 
       <Paper className="h-full sm:h-auto md:flex md:items-center md:justify-start w-full sm:w-auto md:h-full md:w-1/2 py-8 px-16 sm:p-48 md:p-64 sm:rounded-2xl md:rounded-none sm:shadow md:shadow-none ltr:border-r-1 rtl:border-l-1">
         <div className="w-full max-w-320 sm:w-320 mx-auto sm:mx-0">
+        <a href='https://kleanify.co'>
           <img
             className="w-128 h-36"
-            src="https://s3-alpha-sig.figma.com/img/80e7/da20/f779c92506c5caf4dd738864fe537b92?Expires=1657497600&Signature=IP8nPB58GA0UvOf1t2wByfRO9AvcaLyrGU22Nr6YJzQroSFtzSN~CUOKjU3IUhOu64tCSeZnbhNeY2HSo5p0JxiIWcMB5uJPbDsqVOH16T1iqJtRsAmFL6EDFTFVm-FODd9Bi-BgZVN67KqrnTuN1bdc53g2y5PlTMXC3L~oELcQ6vBmwR-HH3I9b9GIXXVksW3mJVtymOE2GyQxwzH~Gj-LqJ3jdTehFOw5Sq0XSDRmRm2SpxAIm55ZVRFExplc0Bx6zkldIxDwbF88Mu-3JLxZn92xj0IQtxKgunZsnz75wfrSm1ao4ZEY87GA-M~~jZYwe~uLu-XCR3eNEFw~2g__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA"
-            alt="logo"
+            src="https://kleanify.co/wp-content/uploads/2022/05/Kleanify-Full-Logo.png"
+            alt="Kleanify-Logo"
           />
+          </a>
 
           <Typography className="mt-32 text-4xl font-extrabold tracking-tight leading-tight">
             Forget Password
@@ -205,7 +190,7 @@ function Forget() {
             >
               Reset Password
             </Button>
-            <div className="flex items-baseline mt-32 pl-5 font-medium">
+            <div className="flex items-baseline mt-24 pl-5 font-medium">
             <Typography>Return to</Typography>
             <Link className="ml-4 underline" to="/signin">
               Sign in

@@ -7,8 +7,8 @@ import Chip from '@mui/material/Chip';
 import {useNavigate} from 'react-router-dom';
 
 function ModernPricingCard(props) {
-  const { period, title, subtitle, yearlyPrice,planId, monthlyPrice, buttonTitle, isPopular, details } =
-    props;
+  const { period, title, discountPrice , subtitle, yearlyPrice,planId, monthlyPrice, buttonTitle, isPopular, details } =
+    props; 
     const navigate = useNavigate();
 
     const goto =()=>{
@@ -61,7 +61,7 @@ function ModernPricingCard(props) {
           <>
             <span>billed yearly</span>
             <span>
-              <b>{monthlyPrice}</b> billed monthly
+             <b className='line-through'>{monthlyPrice}</b>  <b>{discountPrice}</b> billed monthly
             </span>
           </>
         )}

@@ -9,6 +9,7 @@ import Button from '@mui/material/Button';
 import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
 import { selectUser } from 'app/store/userSlice';
 import { getProjects, selectProjects } from './store/projectsSlice';
+import { Link } from 'react-router-dom';
 
 function ProjectDashboardAppHeader(props) {
   const dispatch = useDispatch();
@@ -73,22 +74,22 @@ function ProjectDashboardAppHeader(props) {
           </div>
         </div>
         <div className="flex items-center mt-24 sm:mt-0 sm:mx-8 space-x-12">
-          <Button
+          <Link to='/campaign'><Button
             className="whitespace-nowrap"
             variant="contained"
             color="primary"
             startIcon={<FuseSvgIcon size={20}>heroicons-solid:mail</FuseSvgIcon>}
           >
-            Messages
-          </Button>
-          <Button
+            Campaign
+          </Button></Link>
+          <Link to='/signout'><Button
             className="whitespace-nowrap"
             variant="contained"
             color="secondary"
             startIcon={<FuseSvgIcon size={20}>heroicons-solid:cog</FuseSvgIcon>}
           >
-            Settings
-          </Button>
+            Sign Out
+          </Button></Link>
         </div>
       </div>
       <div className="flex items-center">

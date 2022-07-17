@@ -1,13 +1,16 @@
 import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import { useEffect } from 'react';
-import {useNavigate} from 'react-router-dom';
+import {useNavigate, useParams} from 'react-router-dom';
 
 function SuccessPage() {
+  const params = useParams();
   const navigate = useNavigate();
+  
   useEffect(() => {
+    console.log(params)
     setTimeout(() => {
-      navigate('/price')
+      navigate(`/detail/${params.id}`)
     }, 1000);
   }, []);
 

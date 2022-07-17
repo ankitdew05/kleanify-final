@@ -7,7 +7,7 @@ function FailurePage() {
   const navigate = useNavigate();
   useEffect(() => {
     setTimeout(() => {
-      navigate('/price')
+      navigate('/pricing')
     }, 1000);
   }, []);
 

@@ -6,6 +6,7 @@ import {useNavigate} from 'react-router-dom';
 function SignOutPage() {
   const navigate = useNavigate();
   useEffect(() => {
+    document.title = 'Sign-out to Kleanify';
     setTimeout(() => {
       localStorage.clear();
       navigate('/signin')

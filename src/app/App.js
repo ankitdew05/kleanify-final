@@ -30,6 +30,13 @@ import SimplePricingPage from "./Components/simple/SimplePricingPage";
 import SuccessPage from "./Components/SuccessPage";
 import FailurePage from "./Components/FailurePage"
 import ModernPricingPage from "./Components/modern/ModernPricingPage";
+import Detail from "./Components/Detail";
+import Orders from "./Components/Inbox/orders/Orders";
+import Feature from "./Components/feature";
+import Basic from "./Components/Inbox/products/Basic";
+import Navbar from "./Components/navbar";
+import Layout2 from "./theme-layouts/layout2/Layout2";
+import Contact from "./Components/Contact";
 // import axios from 'axios';
 /**
  * Axios HTTP Request defaults
@@ -61,24 +68,30 @@ const App = () => {
       <FuseTheme theme={mainTheme} direction={langDirection}>
         <AuthProvider>
           <BrowserRouter>
+          
             <Routes>
               <Route element={<PrivateComponent />}>
-              
+              <Route path="/campaign" element={<Orders />} />
               <Route path="/checkout" element={<Checkout />} />
-              <Route path="/success" element={<SuccessPage />} />
+              <Route path="/success/:id" element={<SuccessPage />} />
               <Route path="/failure" element={<FailurePage />} />
-              <Route path="/dashboard" element={<ProjectDashboardApp />} />
+              <Route path="/dashboard/:id" element={<ProjectDashboardApp />} />
               </Route>
+              <Route path="/signin/:id/:period" element={<SignInPage />} />
               <Route path="/signin" element={<SignInPage />} />
               <Route path="/" element={<ModernPricingPage />} />
               <Route path="/signup" element={<SignUpPage />} />
               <Route path="/home" element={<HomePage />} />
-              <Route path="/price" element={<ModernPricingPage />} />
+              <Route path="/pricing" element={<ModernPricingPage />} />
               <Route path="/signup/:id/:period" element={<SignUpPage />} />
               <Route path="/new" element={<New/>} />
               <Route path="/forgot-password" element={<Forget />} />
               <Route path="/reset-password/:id/:token" element={<Reset/>} />
               <Route path="/signout" element={<SignOutPage />} />
+              <Route path="/detail/:id" element={<Detail />} />
+              <Route path="/feature" element={<Feature />} />
+              <Route path="/basic" element={<Basic />} />
+              <Route path="/contact" element={<Contact />} />
             </Routes>
           </BrowserRouter>
         </AuthProvider>

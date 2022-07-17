@@ -1,23 +1,23 @@
-import { useEffect, useState } from 'react';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import { darken } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
-import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
-import clsx from 'clsx';
-import { motion } from 'framer-motion';
-import ModernPricingCard from './ModernPricingCard';
-import ModernPricingFeatureItem from './ModernPricingFeatureItem';
-import axios from 'axios';
-import baseURL from '../../common/baseURL'
+import { useEffect, useState } from "react";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import { darken } from "@mui/material/styles";
+import Box from "@mui/material/Box";
+import Paper from "@mui/material/Paper";
+import FuseSvgIcon from "@fuse/core/FuseSvgIcon";
+import clsx from "clsx";
+import { motion } from "framer-motion";
+import ModernPricingCard from "./ModernPricingCard";
+import ModernPricingFeatureItem from "./ModernPricingFeatureItem";
+import axios from "axios";
+import baseURL from "../../common/baseURL";
+import Navbar from "../navbar";
 
 function ModernPricingPage() {
-  const [period, setPeriod] = useState('month');
+  const [period, setPeriod] = useState("year");
   const [data, setData] = useState([""]);
-
-
   useEffect(() => {
+    document.title = 'Pricing-Kleanify';
     getBounce();
   }, []);
   const container = {
@@ -45,6 +45,7 @@ function ModernPricingPage() {
 
   return (
     <div className="relative bg-[#FFF6CF] opacity-[99%]  flex flex-col flex-auto min-w-0 overflow-hidden">
+      <Navbar />
       <div className="relative pt-32 pb-48 sm:pt-80 sm:pb-96 px-24 sm:px-64 overflow-hidden">
         <svg
           className="-z-1 absolute  inset-0 pointer-events-none"
@@ -56,7 +57,7 @@ function ModernPricingPage() {
         >
           <Box
             component="g"
-            sx={{ color: '#FCB900' }}
+            sx={{ color: "#FCB900" }}
             className="opacity-30"
             fill="none"
             stroke="currentColor"
@@ -79,7 +80,7 @@ function ModernPricingPage() {
             animate={{ opacity: 1, y: 0, transition: { delay: 0.1 } }}
           >
             <div className="mt-4 text-4xl sm:text-7xl font-extrabold tracking-tight leading-tight text-center">
-              Take control of your productivity
+              Simple pricing for everyone
             </div>
           </motion.div>
 
@@ -91,25 +92,33 @@ function ModernPricingPage() {
               className="mt-12 sm:text-2xl text-center tracking-tight"
               color="text.secondary"
             >
-              Start small and free, upgrade as you go.
+              Pricing built for businesses of all sizes.
               <br />
-              Take control of everything.
+              Always know what you’ll pay.
             </Typography>
           </motion.div>
 
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1, transition: { delay: 0.2 } }}>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1, transition: { delay: 0.2 } }}
+          >
             <Box
               className="flex items-center mt-32 sm:mt-64 p-2 rounded-full overflow-hidden"
-              sx={{ backgroundColor: (theme) => darken(theme.palette.background.default, 0.05) }}
+              sx={{
+                backgroundColor: (theme) =>
+                  darken(theme.palette.background.default, 0.05),
+              }}
             >
               <Box
                 component="button"
                 className={clsx(
-                  'h-40 items-center px-16 cursor-pointer rounded-full font-medium',
-                  period === 'year' && 'shadow'
+                  "h-40 items-center px-16 cursor-pointer rounded-full font-medium",
+                  period === "year" && "shadow"
                 )}
-                onClick={() => setPeriod('year')}
-                sx={{ backgroundColor: period === 'year' ? 'background.paper' : '' }}
+                onClick={() => setPeriod("year")}
+                sx={{
+                  backgroundColor: period === "year" ? "background.paper" : "",
+                }}
                 type="button"
               >
                 Yearly billing
@@ -118,11 +127,13 @@ function ModernPricingPage() {
               <Box
                 component="button"
                 className={clsx(
-                  'h-40 items-center px-16 cursor-pointer rounded-full font-medium',
-                  period === 'month' && 'shadow'
+                  "h-40 items-center px-16 cursor-pointer rounded-full font-medium",
+                  period === "month" && "shadow"
                 )}
-                onClick={() => setPeriod('month')}
-                sx={{ backgroundColor: period === 'month' ? 'background.paper' : '' }}
+                onClick={() => setPeriod("month")}
+                sx={{
+                  backgroundColor: period === "month" ? "background.paper" : "",
+                }}
                 type="button"
               >
                 Monthly billing
@@ -140,46 +151,56 @@ function ModernPricingPage() {
               className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-6 lg:gap-y-0 md:gap-x-24"
             >
               {data.map((value, item) => (
-              <motion.div variants={item}>
-                <ModernPricingCard
-                  period={period}
-                  title={value.title}
-                  subtitle={value.subtitle}
-                  yearlyPrice={value.yearlyPricing}
-                  monthlyPrice={value.monthlyPrice}
-                  buttonTitle="Get Started"
-                  planId= {value._id}
-                  details={
-                    <div className="flex flex-col mt-48">
-                      <Typography className="font-semibold">Core features, including:</Typography>
-                      <div className="mt-16 space-y-8">
-                        <div className="flex">
-                          <FuseSvgIcon className="text-green-600" size={20}>
-                            heroicons-solid:check
-                          </FuseSvgIcon>
-                          <Typography className="ml-2 leading-5">
-                            <b>10</b> projects
-                          </Typography>
-                        </div>
-                        <div className="flex">
-                          <FuseSvgIcon className="text-green-600" size={20}>
-                            heroicons-solid:check
-                          </FuseSvgIcon>
-                          <Typography className="ml-2 leading-5">
-                            <b>5GB</b> storage
-                          </Typography>
-                        </div>
-                        <div className="flex">
-                          <FuseSvgIcon className="text-green-600" size={20}>
-                            heroicons-solid:check
-                          </FuseSvgIcon>
-                          <Typography className="ml-2 leading-5">{value.features}</Typography>
+               
+                <motion.div variants={item}>
+                  <ModernPricingCard
+                    period={period}
+                    title={value.title}
+                    subtitle={value.subtitle}
+                    yearlyPrice={value.yearlyPricing}
+                    monthlyPrice={value.monthlyPrice}
+                    discountPrice={value.discountPrice}
+                    buttonTitle="Get Started"
+                    planId={value._id}
+                    details={
+                      <div className="flex flex-col mt-48">
+                        <Typography className="font-semibold">
+                          Core features, including:
+                        </Typography>
+                        <div className="mt-16 space-y-8">
+                          <div className="flex">
+                            <FuseSvgIcon className="text-green-600" size={20}>
+                              heroicons-solid:check
+                            </FuseSvgIcon>
+                            <Typography className="ml-2 leading-5">
+                              Email Validation -{" "}
+                              <b>{value.emailValidationCredit}</b> credits every
+                              month
+                            </Typography>
+                          </div>
+                          <div className="flex">
+                            <FuseSvgIcon className="text-green-600" size={20}>
+                              heroicons-solid:check
+                            </FuseSvgIcon>
+                            <Typography className="ml-2 leading-5">
+                            Automated List Cleaning every week 
+                            </Typography>
+                          </div>
+                          <div className="flex">
+                            <FuseSvgIcon className="text-green-600" size={20}>
+                              heroicons-solid:check
+                            </FuseSvgIcon>
+                            <Typography className="ml-2 leading-5">
+                              Content Spam & Inbox placement Tests -{" "}
+                              <b>{value.testingCredit}</b> credits every month
+                            </Typography>
+                          </div>
+                          
                         </div>
                       </div>
-                    </div>
-                  }
-                />
-              </motion.div>
+                    }
+                  />
+                </motion.div>
               ))}
             </motion.div>
           </div>
@@ -190,57 +211,58 @@ function ModernPricingPage() {
         <div className="w-full max-w-7xl">
           <div>
             <Typography className="text-4xl font-extrabold tracking-tight leading-tight">
-              Everything you need to build efficiently
+              Everything you need to improve Klaviyo deliverability
             </Typography>
-            <Typography className="max-w-xl mt-2 text-xl" color="text.secondary">
-              Start building your app using our tools, be efficient, spend less time with details
-              more time with your business
+            <Typography
+              className="max-w-xl mt-2 text-xl"
+              color="text.secondary"
+            >
+              Start improving your Klaviyo performance using our tools, be
+              efficient, spend less time with details more time with your
+              business
             </Typography>
           </div>
           <div className="grid grid-cols-1 gap-x-24 gap-y-48 sm:grid-cols-2 lg:grid-cols-3 lg:gap-64 w-full mt-48 sm:mt-64">
             <ModernPricingFeatureItem
               icon="heroicons-outline:pencil-alt"
-              title="Create and Edit Projects"
-              subtitle="Create and edit projects, upload images via drag drop, add categories, add custom
-                fields, create interactive forms and more."
+              title="Email Validation"
+              subtitle="Automatically remove invalid email addresses before sending emails to them."
             />
             <ModernPricingFeatureItem
               icon="heroicons-outline:filter"
-              title="Search and Filter"
-              subtitle="Search and filter within the projects, categories and custom fields. Save search and
-                filter details for easy access."
+              title="Unengaged Email Cleaner"
+              subtitle="Automatically clean unengaged email subscribers to maintain a clean list & reduce Klaviyo cost."
             />
             <ModernPricingFeatureItem
               icon="heroicons-outline:refresh"
-              title="Real Time Updates"
-              subtitle="Real time updates that doesn't require page reload. Lean back and watch the changes
-                happen in real time."
+              title="Campaign Check"
+              subtitle="Identify “risky” content in your email campaigns before you send them."
             />
             <ModernPricingFeatureItem
               icon="heroicons-outline:tag"
-              title="Meta Information"
-              subtitle="Add and remove meta information to custom fields to differentiate them in reports and analytics results, use them for detailed reports."
+              title="Inbox Placement Check"
+              subtitle="Figure out if your email campaigns are going to spam, inbox, promotions or other sub-folders at Gmail, Outlook & all major ISPs"
             />
             <ModernPricingFeatureItem
               icon="heroicons-outline:document-text"
-              title="Pre-rendered Results"
-              subtitle="Pre-render results to make reports and analytics more accessible by screen readers
-                and other accessibility tools."
+              title="Inbox Delivery Check"
+              subtitle="Improve your email revenue by improving your inbox delivery rate while saving time.
+"
             />
             <ModernPricingFeatureItem
               icon="heroicons-outline:chart-square-bar"
-              title="Simple Analytics"
-              subtitle="Simple analytics with no unnecessary data flow or weight. More readable results with
-                less data consumption."
+              title="Spam Filter"
+              subtitle="Identify deliverability issues in your emails by automatic testing across common spam filters such as Google Spam Filter, Barracuda, SpamAssassin, and Mimecast.
+"
             />
           </div>
         </div>
       </Paper>
-      <Box
+      {/* <Box
         sx={{ backgroundColor: 'primary.main', color: 'primary.contrastText' }}
         className="px-24 py-40 sm:py-48 sm:px-64"
       >
-        <div className="flex flex-col items-center w-full max-w-7xl mx-auto text-center">
+        {/* <div className="flex flex-col items-center w-full max-w-7xl mx-auto text-center">
           <Typography className="text-3xl sm:text-4xl sm:text-5xl font-extrabold leading-6 sm:leading-10">
             Boost your productivity.
           </Typography>
@@ -261,7 +283,7 @@ function ModernPricingPage() {
           >
             Sign up for free
           </Button>
-        </div>
+        </div> 
       </Box>
 
       <div className="flex flex-col items-center pt-12 sm:pt-72 pb-32 sm:pb-80 px-24 sm:px-64">
@@ -325,7 +347,7 @@ function ModernPricingPage() {
             </div>
           </div>
         </div>
-      </div>
+      </div>  */}
     </div>
   );
 }
