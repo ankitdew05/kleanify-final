@@ -41,7 +41,7 @@ function Navbar(props) {
         <div className="md:flex sm:invisible md:visible hidden  md:flex-1  md:justify-evenly md:items-center ">
           <Button
             component="a"
-            href="/signin"
+            href="/pricing"
             target="_blank"
             rel="noreferrer noopener"
             role="button"
