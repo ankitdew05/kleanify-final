@@ -92,6 +92,7 @@ const App = () => {
               <Route path="/feature" element={<Feature />} />
               <Route path="/basic" element={<Basic />} />
               <Route path="/contact" element={<Contact />} />
+              <Route path="/signup/:id/:email" element={<SignUpPage />} />
             </Routes>
           </BrowserRouter>
         </AuthProvider>

@@ -17,6 +17,7 @@ import FuseSettingsViewerDialog from "app/theme-layouts/shared-components/FuseSe
 import UserNavbarHeader from "app/theme-layouts/shared-components/UserNavbarHeader";
 import CustomizedMenus from "./shared-components/StyledMenu";
 import SmallMenu from "./shared-components/SmallMenu";
+import { fontSize } from "@mui/system";
 
 const Root = styled("div")(({ theme }) => ({
   backgroundColor: theme.palette.background.default,
@@ -39,6 +40,8 @@ function Navbar(props) {
         <SmallMenu />
         </div>
         <div className="md:flex sm:invisible md:visible hidden  md:flex-1  md:justify-evenly md:items-center ">
+          
+        <CustomizedMenus />
           <Button
             component="a"
             href="/pricing"
@@ -49,27 +52,9 @@ function Navbar(props) {
             variant="contained"
             color="secondary"
             style={{
-              backgroundColor: "#FCB900",
-            }}
-            startIcon={
-              <FuseSvgIcon size={16}>
-                heroicons-outline:trending-up
-              </FuseSvgIcon>
-            }
-          >
-            Get Started
-          </Button>
-          <Button
-            component="a"
-            href="/pricing"
-            target="_blank"
-            rel="noreferrer noopener"
-            role="button"
-            className={clsx("", props.className)}
-            variant="contained"
-            color="secondary"
-            style={{
-              backgroundColor: "#FCB900",
+              backgroundColor: "#FFFFFF",
+              color: '#000000',
+              fontSize: '15px'
             }}
             startIcon={
               <FuseSvgIcon size={16}>
@@ -89,7 +74,9 @@ function Navbar(props) {
             variant="contained"
             color="secondary"
             style={{
-              backgroundColor: "#FCB900",
+              backgroundColor: "#FFFFFF",
+              color: '#000000',
+              fontSize: '15px'
             }}
             startIcon={
               <FuseSvgIcon size={16}>
@@ -110,7 +97,9 @@ function Navbar(props) {
             variant="contained"
             color="secondary"
             style={{
-              backgroundColor: "#FCB900",
+              backgroundColor: "#FFFFFF",
+              color: '#000000',
+              fontSize: '15px'
             }}
             startIcon={
               <FuseSvgIcon size={16}>
@@ -120,7 +109,28 @@ function Navbar(props) {
           >
             Login
           </Button>
-          <CustomizedMenus />
+         
+          <Button
+            component="a"
+            href="/pricing"
+            target="_blank"
+            rel="noreferrer noopener"
+            role="button"
+            className={clsx("", props.className)}
+            variant="contained"
+            color="secondary"
+            style={{
+              backgroundColor: "#FCB900",
+
+            }}
+            startIcon={
+              <FuseSvgIcon size={16}>
+                heroicons-outline:trending-up
+              </FuseSvgIcon>
+            }
+          >
+            Get Started
+          </Button>
           
         </div>
       </div>

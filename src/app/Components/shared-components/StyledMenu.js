@@ -79,9 +79,10 @@ export default function CustomizedMenus() {
         variant="contained"
         disableElevation
         style={{
-            backgroundColor:'#FCB900',
-            color: '#FFFFFF'
-        }}
+              backgroundColor: "#FFFFFF",
+              color: '#000000',
+              fontSize: '15px'
+            }}
         onClick={handleClick}
         endIcon={<KeyboardArrowDownIcon />}
       >

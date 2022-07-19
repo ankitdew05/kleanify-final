@@ -6,7 +6,7 @@ import OrdersHeader from './OrdersHeader';
 import OrdersTable from './OrdersTable';
 
 function Orders() {
-  const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down('lg'));
+  const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down('md'));
 
   return (
     <FusePageCarded

@@ -40,7 +40,7 @@ const schema = yup.object().shape({
 
 const defaultValues = {
   displayName: "",
-  email: "",
+  email: useParams().email,
   password: "",
   passwordConfirm: "",
   acceptTermsConditions: false,
@@ -54,79 +54,76 @@ function SignUpPage() {
   });
   const navigate = useNavigate();
   const params = useParams();
-  const planId = params.id;
-  const period = params.period;
-  const [link , setLink] = useState('signin')
+  const UserId = params.id;
+  //const [link , setLink] = useState('signin')
   useEffect(()=>{
     document.title = 'Sign-up to Kleanify';
-    const auth = localStorage.getItem('user');
-    if(planId){
-      setLink( `signin/${planId}/${period}`)
-      if (auth){
-        if(JSON.parse(auth).paidStatus === false){
-          createCheckout(auth)
-        } else{
-          navigate(`/dashboard/${JSON.parse(auth)._id}`)
-        }
-      }
-    }
-    if(auth){
-      navigate(`/dashboard/${JSON.parse(auth)._id}`)
-    }
+    //const auth = localStorage.getItem('user');
+    // if(planId){
+    //   setLink( `signin/${planId}/${period}`)
+    //   if (auth){
+    //     if(JSON.parse(auth).paidStatus === false){
+    //       createCheckout(auth)
+    //     } else{
+    //       navigate(`/dashboard/${JSON.parse(auth)._id}`)
+    //     }
+    //   }
+    // }
+    // if(auth){
+    //   navigate(`/dashboard/${JSON.parse(auth)._id}`)
+    // }
   },[])
   
-  console.log("Plan ID", planId);
+  console.log("User ID", UserId);
   const { isValid, dirtyFields, errors, setError } = formState;
   
-  async function onSubmit({ displayName, password, email }) {
-    if (!planId) {
+  async function onSubmit({ displayName, password}) {
       console.warn(displayName, email, password);
-      let result = await fetch(`${baseURL}/register`, {
-        method: "post",
-        body: JSON.stringify({ displayName, email, password }),
+      let result = await fetch(`${baseURL}/signupUser/${UserId}`, {
+        method: "put",
+        body: JSON.stringify({ displayName, password }),
         headers: {
           "Content-Type": "application/json",
         },
       });
       result = await result.json();
       console.warn(result);
-      localStorage.setItem("user", JSON.stringify(result.result));
-      localStorage.setItem("token", JSON.stringify(result.auth));
       navigate("/signin");
-    } else {
-      let result = await fetch(`${baseURL}/paidregister`, {
-        method: "post",
-        body: JSON.stringify({ displayName, email, password }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      result = await result.json();
-      let id = await result.result._id;
-      
-      console.log("register Id", id);
-      localStorage.setItem("user", JSON.stringify(result.result));
-      localStorage.setItem("token", JSON.stringify(result.auth));
-
-      let result2 = await fetch(`${baseURL}/create-checkout-session/${id}`, {
-        method: "post",
-        body: JSON.stringify({
-          displayName,
-          email,
-          password,
-          planId,
-          period,
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      result2 = await result2.json();
-      localStorage.setItem("user.paidStatus", "true");
-      console.warn(result2);
-      window.open(`${result2.url}`);
     }
-  }
+  //   } else {
+  //     let result = await fetch(`${baseURL}/paidregister`, {
+  //       method: "post",
+  //       body: JSON.stringify({ displayName, email, password }),
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //     });
+  //     result = await result.json();
+  //     let id = await result.result._id;
+      
+  //     console.log("register Id", id);
+  //     localStorage.setItem("user", JSON.stringify(result.result));
+  //     localStorage.setItem("token", JSON.stringify(result.auth));
+
+  //     let result2 = await fetch(`${baseURL}/create-checkout-session/${id}`, {
+  //       method: "post",
+  //       body: JSON.stringify({
+  //         displayName,
+  //         email,
+  //         password,
+  //         planId,
+  //         period,
+  //       }),
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //     });
+  //     result2 = await result2.json();
+  //     localStorage.setItem("user.paidStatus", "true");
+  //     console.warn(result2);
+  //     window.open(`${result2.url}`);
+  //   }
+  // }
 
   const createCheckout=async (auth)=>{
     const id = await JSON.parse(auth)._id
@@ -226,7 +223,7 @@ function SignUpPage() {
           </Typography>
           <div className="flex items-baseline mt-2 font-medium">
             <Typography>Already have an account?</Typography>
-            <Link className="ml-4" to={"/" + link }>
+            <Link className="ml-4" to='/signin'>
               Sign in
             </Link>
           </div>
@@ -268,6 +265,7 @@ function SignUpPage() {
                   error={!!errors.email}
                   helperText={errors?.email?.message}
                   variant="outlined"
+                  contentEditab = "false"
                   required
                   fullWidth
                 />

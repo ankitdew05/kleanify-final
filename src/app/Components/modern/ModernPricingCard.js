@@ -44,7 +44,7 @@ function ModernPricingCard(props) {
         <Typography className="mr-8 text-2xl">USD</Typography>
         <Typography className="text-6xl font-semibold leading-tight tracking-tight">
           {period === 'month' && monthlyPrice}
-          {period === 'year' && yearlyPrice}
+          {period === 'year' && discountPrice}
         </Typography>
       </div>
 
@@ -53,15 +53,15 @@ function ModernPricingCard(props) {
           <>
             <span>billed monthly</span>
             <span>
-              <b>{yearlyPrice}</b> billed yearly
+              <b className='line-through '>{monthlyPrice}</b> <b className='font-bold'>{discountPrice}</b> billed monthly on yearly plan
             </span>
           </>
         )}
         {period === 'year' && (
           <>
-            <span>billed yearly</span>
+            <span>billed monthly</span>
             <span>
-             <b className='line-through'>{monthlyPrice}</b>  <b>{discountPrice}</b> billed monthly
+             <b>{yearlyPrice}</b> billed yearly
             </span>
           </>
         )}
