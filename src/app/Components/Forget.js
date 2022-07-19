@@ -141,14 +141,13 @@ function Forget() {
 
       <Paper className="h-full sm:h-auto md:flex md:items-center md:justify-start w-full sm:w-auto md:h-full md:w-1/2 py-8 px-16 sm:p-48 md:p-64 sm:rounded-2xl md:rounded-none sm:shadow md:shadow-none ltr:border-r-1 rtl:border-l-1">
         <div className="w-full max-w-320 sm:w-320 mx-auto sm:mx-0">
-        <a href='https://kleanify.co'>
-          <img
-            className="w-128 h-36"
-            src="https://kleanify.co/wp-content/uploads/2022/05/Kleanify-Full-Logo.png"
-            alt="Kleanify-Logo"
-          />
+        <a href="https://app.kleanify.co">
+            <img
+              className="w-128 h-36"
+              src="https://kleanify.co/wp-content/uploads/2022/05/Kleanify-Full-Logo.png"
+              alt="Kleanify-Logo"
+            />
           </a>
-
           <Typography className="mt-32 text-4xl font-extrabold tracking-tight leading-tight">
             Forget Password
           </Typography>

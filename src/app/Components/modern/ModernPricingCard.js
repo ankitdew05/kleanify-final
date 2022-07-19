@@ -5,15 +5,21 @@ import Divider from '@mui/material/Divider';
 import clsx from 'clsx';
 import Chip from '@mui/material/Chip';
 import {useNavigate} from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
 function ModernPricingCard(props) {
-  const { period, title, discountPrice , subtitle, yearlyPrice,planId, monthlyPrice, buttonTitle, isPopular, details } =
+  const { period, title, discountPrice ,yearLink, monthLink, subtitle, yearlyPrice,planId, monthlyPrice, buttonTitle, isPopular, details } =
     props; 
     const navigate = useNavigate();
 
-    const goto =()=>{
-      navigate(`/signup/${planId}/${period}`)
-    }
+    const [link , setLink] = useState('')
+    useEffect(()=>{
+      if(period === 'month' ){
+        setLink(monthLink)
+      } else(
+        setLink(yearLink)
+      )
+    })
 
   return (
     <Paper
@@ -67,16 +73,16 @@ function ModernPricingCard(props) {
         )}
       </Typography>
 
-      <Button
+      <a href={link}><Button
         className="mt-40 w-full"
         size="large"
         variant={isPopular ? 'contained' : 'outlined'}
         color={isPopular ? 'secondary' : 'inherit'}
-        onClick={goto}
       >
         {buttonTitle}
       </Button>
-      {details}
+      {details}</a>
+      
     </Paper>
   );
 }

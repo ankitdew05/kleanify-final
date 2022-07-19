@@ -42,10 +42,6 @@ function ProjectDashboardApp(props) {
       .catch((err) => console.error(err));
   };
   useEffect(() => {
-    const auth = localStorage.getItem('user');
-    if(JSON.parse(auth).paidStatus === false){
-      navigate(`/pricing`)
-    }
     dispatch(getWidgets());
     getResult();
   }, [dispatch]);

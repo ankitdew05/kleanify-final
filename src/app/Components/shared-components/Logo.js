@@ -21,12 +21,13 @@ function Logo() {
       <div
         className="badge flex justify-center items-center md:py-4 md:px-8 md:mx-8 rounded"
         style={{ backgroundColor: '#FFFFFF', color: '#FFFFFF' }}
-      >
+      ><a href='https://app.kleanify.co'>
         <img
           className=" w-128 h-36 "
           src="https://i.ibb.co/9rWTwTm/Kleanify-Full-Logo-removebg-preview.png"
           alt="logo"
         />
+        </a>
       </div>
     </Root>
   );

@@ -37,6 +37,8 @@ import Basic from "./Components/Inbox/products/Basic";
 import Navbar from "./Components/navbar";
 import Layout2 from "./theme-layouts/layout2/Layout2";
 import Contact from "./Components/Contact";
+import Feature2 from "./Components/feature2";
+import Feature1 from "./Components/feature1";
 // import axios from 'axios';
 /**
  * Axios HTTP Request defaults
@@ -76,10 +78,11 @@ const App = () => {
               <Route path="/success/:id" element={<SuccessPage />} />
               <Route path="/failure" element={<FailurePage />} />
               <Route path="/dashboard/:id" element={<ProjectDashboardApp />} />
+              <Route path="/" element={<ProjectDashboardApp />}/>
+
               </Route>
               <Route path="/signin/:id/:period" element={<SignInPage />} />
               <Route path="/signin" element={<SignInPage />} />
-              <Route path="/" element={<ModernPricingPage />} />
               <Route path="/home" element={<HomePage />} />
               <Route path="/pricing" element={<ModernPricingPage />} />
               <Route path="/new" element={<New/>} />
@@ -87,7 +90,9 @@ const App = () => {
               <Route path="/reset-password/:id/:token" element={<Reset/>} />
               <Route path="/signout" element={<SignOutPage />} />
               <Route path="/detail/:id" element={<Detail />} />
-              <Route path="/feature" element={<Feature />} />
+              <Route path="/feature/:id" element={<Feature />} />
+              <Route path="/feature2/:id" element={<Feature2 />} />
+              <Route path="/feature1/:id" element={<Feature1 />} />
               <Route path="/basic" element={<Basic />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/signup/:id" element={<SignUpPage />} />

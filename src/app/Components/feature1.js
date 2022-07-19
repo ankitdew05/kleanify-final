@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
@@ -6,12 +6,36 @@ import Paper from "@mui/material/Paper";
 import Divider from "@mui/material/Divider";
 import FuseSvgIcon from "@fuse/core/FuseSvgIcon";
 import { motion } from "framer-motion";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams , useNavigate } from "react-router-dom";
+import axios from "axios";
+import baseURL from "../common/baseURL";
 
-function Feature() {
+function Feature1() {
   const [period, setPeriod] = useState("month");
   const params = useParams();
   const id = params.id;
+const navigate = useNavigate()
+  useEffect(() => {
+    const data = getData()
+      .then((res) => {
+        console.log(res);
+        if (res[0].segmentId) {
+          navigate(`/`);
+        } 
+      })
+      .catch((err) => console.log(err));
+    console.log("data", data);
+  }, []);
+
+  async function getData() {
+    const data = await axios
+      .get(`${baseURL}/paiduser/${id}`)
+      .then((response) => {
+        return response.data;
+      })
+      .catch((err) => console.error(err));
+    return data;
+  }
   return (
     <div className="relative bg-[#FFF6CF] opacity-90  flex flex-col flex-auto min-w-0 overflow-hidden">
       <div className="relative pt-32 pb-48 sm:pt-80 sm:pb-96 px-24 sm:px-64 overflow-hidden">
@@ -48,7 +72,7 @@ function Feature() {
             animate={{ opacity: 1, y: 0, transition: { delay: 0.1 } }}
           >
             <div className="mt-4 text-4xl sm:text-7xl font-extrabold tracking-tight leading-tight text-center">
-              Content Spam and Inbox Placement Test
+              Automated Email Validation
             </div>
           </motion.div>
 
@@ -78,20 +102,14 @@ function Feature() {
                   color="text.secondary"
                 >
                   Kleanify scans your Klaviyo account every 15 mins to check for
-                  new campaigns. If a campaign is in "scheduled" state and
-                  hasn't been tested before, it is automatically tested for
-                  content spam score and inbox placement test. You will get an
-                  email report with the test results once the test is done.
-                  <p className="pt-7">
-                    Campaigns in "draft" state or "scheduled" campaigns which
-                    have been tested before, won't be tested automatically to
-                    save your testing credits. You can manually initiate the
-                    test for such campaigns to re-test them.
-                  </p>
+                  new subscribers & automatically validates the emails. If
+                  emails are found to be invalid, it automatically suppresses
+                  these emails in your account.
+                  
                 </Typography>
                 <div className="felx  mt-24 ">
                   <Typography className="text-3xl font-bold justify-center underline">
-                    <Link to={"/feature2/" + id}>Got it</Link>
+                    <Link to={"/feature/"+ id}>Understood</Link>
                   </Typography>
                 </div>
               </div>
@@ -103,4 +121,4 @@ function Feature() {
   );
 }
 
-export default Feature;
+export default Feature1;

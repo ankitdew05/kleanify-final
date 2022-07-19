@@ -17,7 +17,7 @@ function ModernPricingPage() {
   const [period, setPeriod] = useState("year");
   const [data, setData] = useState([""]);
   useEffect(() => {
-    document.title = 'Pricing-Kleanify';
+    document.title = "Pricing-Kleanify";
     getBounce();
   }, []);
   const container = {
@@ -33,7 +33,7 @@ function ModernPricingPage() {
       .get(`${baseURL}/plan`)
       .then((response) => {
         setData(response.data);
-        console.log(response.data);
+        //console.log(response.data);
       })
       .catch((err) => console.error(err));
   };
@@ -142,7 +142,7 @@ function ModernPricingPage() {
           </motion.div>
         </div>
 
-        <div className="flex justify-center mt-40 sm:mt-80">
+        {/* <div className="flex justify-center mt-40 sm:mt-80">
           <div className="w-full max-w-sm md:max-w-7xl">
             <motion.div
               variants={container}
@@ -205,8 +205,222 @@ function ModernPricingPage() {
             </motion.div>
           </div>
         </div>
-      </div>
+      </div> */}
 
+        <div className="flex justify-center mt-40 sm:mt-80">
+          <div className="w-full max-w-sm md:max-w-7xl">
+            <motion.div
+              variants={container}
+              initial="hidden"
+              animate="show"
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-6 lg:gap-y-0 md:gap-x-24"
+            >
+              <motion.div variants={item}>
+                <ModernPricingCard
+                  period={period}
+                  title="Starter"
+                  subtitle="Perfect for an individual or a small team starting to get bigger"
+                  yearlyPrice="$468.00"
+                  monthlyPrice="$49.00"
+                  discountPrice = "$39.00"
+                  buttonTitle="Get Started"
+                  yearLink= "https://buy.stripe.com/test_5kA5m9fpx9F1fLOeUV"
+                  monthLink = "https://buy.stripe.com/eVa00l6yt2p29fq7sD"
+                  details={
+                    <div className="flex flex-col mt-48">
+                      <Typography className="font-semibold">
+                        Core features, including:
+                      </Typography>
+                      <div className="mt-16 space-y-8">
+                        <div className="flex">
+                          <FuseSvgIcon className="text-green-600" size={20}>
+                            heroicons-solid:check
+                          </FuseSvgIcon>
+                          <Typography className="ml-2 leading-5">
+                            Email Validation <b>2000 </b> credits every month
+                          </Typography>
+                        </div>
+                        <div className="flex">
+                          <FuseSvgIcon className="text-green-600" size={20}>
+                            heroicons-solid:check
+                          </FuseSvgIcon>
+                          <Typography className="ml-2 leading-5">
+                            Automated List Cleaning every week
+                          </Typography>
+                        </div>
+                        <div className="flex">
+                          <FuseSvgIcon className="text-green-600" size={20}>
+                            heroicons-solid:check
+                          </FuseSvgIcon>
+                          <Typography className="ml-2 leading-5">
+                            Content Spam & Inbox placement Tests -<b>10 </b>{" "}
+                            credits every month
+                          </Typography>
+                        </div>
+                        <div className="flex">
+                          <FuseSvgIcon className="text-red-600" size={20}>
+                            heroicons-solid:x
+                          </FuseSvgIcon>
+                          <Typography className="ml-2 leading-5">
+                            Manual Klaviyo Health Audit by an expert every month
+                          </Typography>
+                        </div>
+                        <div className="flex">
+                          <FuseSvgIcon className="text-red-600" size={20}>
+                            heroicons-solid:x
+                          </FuseSvgIcon>
+                          <Typography className="ml-2 leading-5">
+                            Priority Support
+                          </Typography>
+                        </div>
+                      </div>
+                    </div>
+                  }
+                />
+              </motion.div>
+              <motion.div variants={item}>
+                <ModernPricingCard
+                  period={period}
+                  title="Pro"
+                  subtitle="Perfect for growing teams wanting to be in more control"
+                  yearlyPrice="$948.00"
+                  monthlyPrice="$99.00"
+                  discountPrice = "$79.00"
+                  yearLink= "https://buy.stripe.com/3cs7sN1e99Ru9fq28m"
+                  monthLink = "https://buy.stripe.com/14kcN7e0V8NqdvG4gt"
+                  buttonTitle="Get Started"
+                  details={
+                    <div className="flex flex-col mt-48">
+                      <Typography className="font-semibold">
+                        Core features, including:
+                      </Typography>
+                      <div className="mt-16 space-y-8">
+                        <div className="flex">
+                          <FuseSvgIcon className="text-green-600" size={20}>
+                            heroicons-solid:check
+                          </FuseSvgIcon>
+                          <Typography className="ml-2 leading-5">
+                            Email Validation <b>10,000 </b> credits every month
+                          </Typography>
+                        </div>
+                        <div className="flex">
+                          <FuseSvgIcon className="text-green-600" size={20}>
+                            heroicons-solid:check
+                          </FuseSvgIcon>
+                          <Typography className="ml-2 leading-5">
+                            Automated List Cleaning every week
+                          </Typography>
+                        </div>
+                        <div className="flex">
+                          <FuseSvgIcon className="text-green-600" size={20}>
+                            heroicons-solid:check
+                          </FuseSvgIcon>
+                          <Typography className="ml-2 leading-5">
+                            Content Spam & Inbox placement Tests -<b>25</b>{" "}
+                            credits every month
+                          </Typography>
+                        </div>
+                        <div className="flex">
+                          <FuseSvgIcon className="text-red-600" size={20}>
+                            heroicons-solid:x
+                          </FuseSvgIcon>
+                          <Typography className="ml-2 leading-5">
+                            Manual Klaviyo Health Audit by an expert every month
+                          </Typography>
+                        </div>
+                        <div className="flex">
+                          <FuseSvgIcon className="text-red-600" size={20}>
+                            heroicons-solid:x
+                          </FuseSvgIcon>
+                          <Typography className="ml-2 leading-5">
+                            Priority Support
+                          </Typography>
+                        </div>
+                      </div>
+                    </div>
+                  }
+                  
+                />
+              </motion.div>
+              <motion.div variants={item}>
+                <ModernPricingCard
+                  period={period}
+                  title="Enterprise"
+                  subtitle="Perfect for companies wanting advanced tools and support"
+                  yearlyPrice="$1788.00"
+                  monthlyPrice="$199.00"
+                  discountPrice = "$149.00"
+                  buttonTitle="Get Started"
+                  yearLink= "https://buy.stripe.com/9AQ00lcWR5Be9fqcN2"
+                  monthLink = "https://buy.stripe.com/3cs4gBbSN2p20IU6oD"
+                  details={
+                    <div className="flex flex-col mt-48">
+                      <Typography className="font-semibold">
+                        Core features, including:
+                      </Typography>
+                      <div className="mt-16 space-y-8">
+                        <div className="flex">
+                          <FuseSvgIcon className="text-green-600" size={20}>
+                            heroicons-solid:check
+                          </FuseSvgIcon>
+                          <Typography className="ml-2 leading-5">
+                            Email Validation <b>30,000 </b> credits every month
+                          </Typography>
+                        </div>
+                        <div className="flex">
+                          <FuseSvgIcon className="text-green-600" size={20}>
+                            heroicons-solid:check
+                          </FuseSvgIcon>
+                          <Typography className="ml-2 leading-5">
+                            Automated List Cleaning every week
+                          </Typography>
+                        </div>
+                        <div className="flex">
+                          <FuseSvgIcon className="text-green-600" size={20}>
+                            heroicons-solid:check
+                          </FuseSvgIcon>
+                          <Typography className="ml-2 leading-5">
+                            Content Spam & Inbox placement Tests -<b>60 </b>{" "}
+                            credits every month
+                          </Typography>
+                        </div>
+                        <div className="flex">
+                          <FuseSvgIcon className="text-green-600" size={20}>
+                            heroicons-solid:check
+                          </FuseSvgIcon>
+                          <Typography className="ml-2 leading-5">
+                            Manual Klaviyo Health Audit by an expert every month
+                          </Typography>
+                        </div>
+                        <div className="flex">
+                          <FuseSvgIcon className="text-green-600" size={20}>
+                            heroicons-solid:check
+                          </FuseSvgIcon>
+                          <Typography className="ml-2 leading-5">
+                            Priority Support
+                          </Typography>
+                        </div>
+                      </div>
+                    </div>
+                  }
+                />
+              </motion.div>
+            </motion.div>
+          </div>
+        </div>
+        <div className="flex justify-center mt-52">
+          <FuseSvgIcon className="text-green-600" size={20}>
+            heroicons-solid:check
+          </FuseSvgIcon>
+          <Typography className="ml-2 leading-5">Buy Additional Validation Credits for $0.001 per email</Typography>
+        </div>
+        <div className="flex justify-center">
+          <FuseSvgIcon className="text-green-600" size={20}>
+            heroicons-solid:check
+          </FuseSvgIcon>
+          <Typography className="ml-2 leading-5">Buy Additional Testing Credits for $1 per test</Typography>
+        </div>
+      </div>
       <Paper className="flex flex-col items-center px-24 py-40 sm:px-64 sm:pt-72 sm:pb-80">
         <div className="w-full max-w-7xl">
           <div>

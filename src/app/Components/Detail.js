@@ -14,17 +14,15 @@ import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import FormHelperText from "@mui/material/FormHelperText";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import baseURL from "../common/baseURL";
-
+import axios from "axios";
 /**
  * Form Validation Schema
  */
 const schema = yup.object().shape({
   apiKey: yup.string().required("You must enter Api Key"),
-  url: yup
-    .string()
-    .required("You must enter a URL"),
+  url: yup.string().required("You must enter a URL"),
 });
 
 const defaultValues = {
@@ -41,24 +39,46 @@ function Detail() {
     defaultValues,
     resolver: yupResolver(schema),
   });
+  useEffect(() => {
+    const data = getData()
+      .then((res) => {
+        console.log(res);
+        if (res[0].apiKey) {
+          navigate(`/feature1/${id}`);
+        } 
+      })
+      .catch((err) => console.log(err));
+    console.log("data", data);
+  }, []);
+
   const navigate = useNavigate();
   const params = useParams();
   const id = params.id;
   console.log("User ID", id);
   const { isValid, dirtyFields, errors, setError } = formState;
 
+  async function getData() {
+    const data = await axios
+      .get(`${baseURL}/paiduser/${id}`)
+      .then((response) => {
+        return response.data;
+      })
+      .catch((err) => console.error(err));
+    return data;
+  }
+
   async function onSubmit({ apiKey, url }) {
-      console.warn(apiKey, url);
-      let result = await fetch(`${baseURL}/paiduser/${id}`, {
-        method: "put",
-        body: JSON.stringify({apiKey, url}),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      result = await result.json();
-      console.warn(result);
-      navigate('/feature')
+    console.warn(apiKey, url);
+    let result = await fetch(`${baseURL}/paiduser/${id}`, {
+      method: "put",
+      body: JSON.stringify({ apiKey, url }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    result = await result.json();
+    console.warn(result);
+    navigate(`/feature1/${id}`);
   }
 
   return (
@@ -114,31 +134,13 @@ function Detail() {
 
         <div className="z-10 relative w-full max-w-2xl">
           <div className="text-7xl font-bold leading-none text-black">
-            <div>Welcome to</div>
-            <div>our community</div>
+            <div>The #1 Klaviyo </div>
+            <div>Deliverability Solution</div>
           </div>
           <div className="mt-24 text-lg tracking-tight leading-6 text-black">
-            Fuse helps developers to build organized and well coded dashboards
-            full of beautiful and rich modules. Join us and start building your
-            application today.
-          </div>
-          <div className="flex items-center mt-32">
-            <AvatarGroup
-              sx={{
-                "& .MuiAvatar-root": {
-                  borderColor: "primary.main",
-                },
-              }}
-            >
-              <Avatar src="assets/images/avatars/female-18.jpg" />
-              <Avatar src="assets/images/avatars/female-11.jpg" />
-              <Avatar src="assets/images/avatars/male-09.jpg" />
-              <Avatar src="assets/images/avatars/male-16.jpg" />
-            </AvatarGroup>
-
-            <div className="ml-16 font-medium tracking-tight text-gray-400">
-              More than 17k people joined us, it's your turn
-            </div>
+            Kleanify automatically validates emails, cleans subscriber lists,
+            checks content spam score & performs automated inbox placement tests
+            with your Klaviyo account so you never land in the spam folder.
           </div>
         </div>
       </Box>
@@ -152,7 +154,7 @@ function Detail() {
           />
 
           <Typography className="mt-32 text-4xl font-extrabold tracking-tight leading-tight">
-            Information 
+            Information
           </Typography>
 
           <form
@@ -198,24 +200,9 @@ function Detail() {
               )}
             />
 
-            <Controller
-              name="acceptTermsConditions"
-              control={control}
-              render={({ field }) => (
-                <FormControl
-                  className="items-center"
-                  error={!!errors.acceptTermsConditions}
-                >
-                  <FormControlLabel
-                    label="I agree to the Terms of Service and Privacy Policy"
-                    control={<Checkbox size="small" {...field} />}
-                  />
-                  <FormHelperText>
-                    {errors?.acceptTermsConditions?.message}
-                  </FormHelperText>
-                </FormControl>
-              )}
-            />
+            <Typography className="ml-2 leading-5">
+             Go to Klaviyo Account -- Settings -- API Keys to get your Klaviyo Private API Key.
+            </Typography>
 
             <Button
               variant="contained"

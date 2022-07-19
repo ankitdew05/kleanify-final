@@ -16,6 +16,8 @@ import Paper from "@mui/material/Paper";
 import FormHelperText from "@mui/material/FormHelperText";
 import { useEffect, useState } from "react";
 import baseURL from "../common/baseURL";
+import { func } from "prop-types";
+import axios from "axios";
 
 /**
  * Form Validation Schema
@@ -38,20 +40,9 @@ const schema = yup.object().shape({
     .oneOf([true], "The terms and conditions must be accepted."),
 });
 
-const defaultValues = {
-  displayName: "",
-  email: "",
-  password: "",
-  passwordConfirm: "",
-  acceptTermsConditions: false,
-};
-
 function SignUpPage() {
-  const { control, formState, handleSubmit, reset } = useForm({
-    mode: "onChange",
-    defaultValues,
-    resolver: yupResolver(schema),
-  });
+  const [email, setEmail] = useState("");
+
   const navigate = useNavigate();
   const params = useParams();
   const UserId = params.id;
@@ -72,11 +63,26 @@ function SignUpPage() {
     // if(auth){
     //   navigate(`/dashboard/${JSON.parse(auth)._id}`)
     // }
+    const data = getData()
+      .then((res) => {
+        console.log(res);
+        setEmail(res.email)
+      })
+      .catch((err) => console.log(err));
+    //   console.log("email" ,email)
+    // console.log("data", data);
   }, []);
+
+  const { control, formState, handleSubmit, reset } = useForm({
+    mode: "onChange",
+    defaultValues: {
+      acceptTermsConditions: false,
+    },
+    resolver: yupResolver(schema),
+  });
 
   console.log("User ID", UserId);
   const { isValid, dirtyFields, errors, setError } = formState;
-
   async function onSubmit({ displayName, password }) {
     let result = await fetch(`${baseURL}/signupUser/${UserId}`, {
       method: "put",
@@ -88,6 +94,18 @@ function SignUpPage() {
     result = await result.json();
     console.warn(result);
     navigate("/signin");
+  }
+
+
+
+  async function getData() {
+    const data = await axios
+      .get(`${baseURL}/signupUser/${UserId}`)
+      .then((response) => {
+        return response.data;
+      })
+      .catch((err) => console.error(err));
+    return data;
   }
   //   } else {
   //     let result = await fetch(`${baseURL}/paidregister`, {
@@ -209,7 +227,7 @@ function SignUpPage() {
 
       <Paper className="h-full sm:h-auto md:flex md:items-center md:justify-start w-full sm:w-auto md:h-full md:w-1/2 py-8 px-16 sm:p-48 md:p-64 sm:rounded-2xl md:rounded-none sm:shadow md:shadow-none ltr:border-r-1 rtl:border-l-1">
         <div className="w-full max-w-320 sm:w-320 mx-auto sm:mx-0">
-          <a href="https://kleanify.co">
+          <a href="https://app.kleanify.co">
             <img
               className="w-128 h-36"
               src="https://kleanify.co/wp-content/uploads/2022/05/Kleanify-Full-Logo.png"
@@ -246,6 +264,8 @@ function SignUpPage() {
                   error={!!errors.displayName}
                   helperText={errors?.displayName?.message}
                   variant="outlined"
+                  input
+                
                   required
                   fullWidth
                 />
@@ -265,6 +285,7 @@ function SignUpPage() {
                   helperText={errors?.email?.message}
                   variant="outlined"
                   contentEditab="false"
+                  value = {email}
                   required
                   fullWidth
                 />
@@ -283,6 +304,7 @@ function SignUpPage() {
                   error={!!errors.password}
                   helperText={errors?.password?.message}
                   variant="outlined"
+
                   required
                   fullWidth
                 />

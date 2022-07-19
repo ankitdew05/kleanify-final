@@ -6,12 +6,38 @@ import Paper from "@mui/material/Paper";
 import Divider from "@mui/material/Divider";
 import FuseSvgIcon from "@fuse/core/FuseSvgIcon";
 import { motion } from "framer-motion";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
+import FormControl from "@mui/material/FormControl";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import TextField from "@mui/material/TextField";
+import { Controller, useForm } from "react-hook-form";
+import {useParams , useNavigate} from 'react-router-dom'
+import baseURL from "../common/baseURL";
 
-function Feature() {
+function Feature2() {
   const [period, setPeriod] = useState("month");
-  const params = useParams();
-  const id = params.id;
+  const params = useParams()
+  const UserId = params.id
+  const navigate = useNavigate();
+  async function onSubmit({segmentId}) {
+    let result = await fetch(`${baseURL}/segment/${UserId}`, {
+      method: "put",
+      body: JSON.stringify({ segmentId }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    result = await result.json();
+    console.warn(result);
+    navigate("/");
+  }
+
+  const { control, formState, handleSubmit, setError, setValue } = useForm({
+    mode: "onChange",
+  });
+
+  const { isValid, dirtyFields, errors } = formState;
+
   return (
     <div className="relative bg-[#FFF6CF] opacity-90  flex flex-col flex-auto min-w-0 overflow-hidden">
       <div className="relative pt-32 pb-48 sm:pt-80 sm:pb-96 px-24 sm:px-64 overflow-hidden">
@@ -48,7 +74,7 @@ function Feature() {
             animate={{ opacity: 1, y: 0, transition: { delay: 0.1 } }}
           >
             <div className="mt-4 text-4xl sm:text-7xl font-extrabold tracking-tight leading-tight text-center">
-              Content Spam and Inbox Placement Test
+              Automated Email Validation
             </div>
           </motion.div>
 
@@ -77,21 +103,56 @@ function Feature() {
                   className="mt-8 text-xl leading-relaxed"
                   color="text.secondary"
                 >
-                  Kleanify scans your Klaviyo account every 15 mins to check for
-                  new campaigns. If a campaign is in "scheduled" state and
-                  hasn't been tested before, it is automatically tested for
-                  content spam score and inbox placement test. You will get an
-                  email report with the test results once the test is done.
-                  <p className="pt-7">
-                    Campaigns in "draft" state or "scheduled" campaigns which
-                    have been tested before, won't be tested automatically to
-                    save your testing credits. You can manually initiate the
-                    test for such campaigns to re-test them.
+                  Kleanify cleans your unengaged subscribers from Klaviyo
+                  account automatically every week.
+                  <p className="mt-7">
+                    To start cleaning, please set-up a dynamic segment in
+                    Klaviyo by following{" "}
+                    <spam className="underline">this guide</spam>. This takes
+                    less than 5 mins and is a one-time process. Copy the segment
+                    id and paste it below.
                   </p>
                 </Typography>
-                <div className="felx  mt-24 ">
+                <form
+                  name="loginForm"
+                  noValidate
+                  className="flex flex-col justify-center w-1/3 mt-32"
+                  onSubmit={handleSubmit(onSubmit)}
+                >
+                  <Controller
+                    name="segmentId"
+                    control={control}
+                    render={({ field }) => (
+                      <TextField
+                        {...field}
+                        className="mb-24"
+                        label="Segment Id"
+                        autoFocus
+                        type="name"
+                        variant="outlined"
+                        required
+                        fullWidth
+                      />
+                    )}
+                  />
+
+                  <Button
+                    style={{
+                      backgroundColor: "#FCB900",
+                    }}
+                    variant="contained"
+                    color="secondary"
+                    className=" w-full mt-16"
+                    aria-label="Sign in"
+                    type="submit"
+                    size="large"
+                  >
+                    Finish
+                  </Button>
+                </form>
+                <div className="felx text-right  mt-24 ">
                   <Typography className="text-3xl font-bold justify-center underline">
-                    <Link to={"/feature2/" + id}>Got it</Link>
+                    <Link to="/">Do it Later</Link>
                   </Typography>
                 </div>
               </div>
@@ -103,4 +164,4 @@ function Feature() {
   );
 }
 
-export default Feature;
+export default Feature2;
