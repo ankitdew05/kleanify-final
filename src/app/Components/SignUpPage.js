@@ -40,7 +40,7 @@ const schema = yup.object().shape({
 
 const defaultValues = {
   displayName: "",
-  email: useParams().email,
+  email: "",
   password: "",
   passwordConfirm: "",
   acceptTermsConditions: false,
@@ -56,8 +56,8 @@ function SignUpPage() {
   const params = useParams();
   const UserId = params.id;
   //const [link , setLink] = useState('signin')
-  useEffect(()=>{
-    document.title = 'Sign-up to Kleanify';
+  useEffect(() => {
+    document.title = "Sign-up to Kleanify";
     //const auth = localStorage.getItem('user');
     // if(planId){
     //   setLink( `signin/${planId}/${period}`)
@@ -72,24 +72,23 @@ function SignUpPage() {
     // if(auth){
     //   navigate(`/dashboard/${JSON.parse(auth)._id}`)
     // }
-  },[])
-  
+  }, []);
+
   console.log("User ID", UserId);
   const { isValid, dirtyFields, errors, setError } = formState;
-  
-  async function onSubmit({ displayName, password}) {
-      console.warn(displayName, email, password);
-      let result = await fetch(`${baseURL}/signupUser/${UserId}`, {
-        method: "put",
-        body: JSON.stringify({ displayName, password }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      result = await result.json();
-      console.warn(result);
-      navigate("/signin");
-    }
+
+  async function onSubmit({ displayName, password }) {
+    let result = await fetch(`${baseURL}/signupUser/${UserId}`, {
+      method: "put",
+      body: JSON.stringify({ displayName, password }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    result = await result.json();
+    console.warn(result);
+    navigate("/signin");
+  }
   //   } else {
   //     let result = await fetch(`${baseURL}/paidregister`, {
   //       method: "post",
@@ -100,7 +99,7 @@ function SignUpPage() {
   //     });
   //     result = await result.json();
   //     let id = await result.result._id;
-      
+
   //     console.log("register Id", id);
   //     localStorage.setItem("user", JSON.stringify(result.result));
   //     localStorage.setItem("token", JSON.stringify(result.auth));
@@ -125,24 +124,24 @@ function SignUpPage() {
   //   }
   // }
 
-  const createCheckout=async (auth)=>{
-    const id = await JSON.parse(auth)._id
-    console.warn(id);
-    let result2 = await fetch(`${baseURL}/create-checkout-session/${id}`, {
-      method: "post",
-      body: JSON.stringify({
-        planId,
-        period,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    result2 = await result2.json();
-    localStorage.setItem("user.paidStatus", "true");
-    console.warn(result2);
-    window.open(`${result2.url}`);
-  }
+  // const createCheckout = async (auth) => {
+  //   const id = await JSON.parse(auth)._id;
+  //   console.warn(id);
+  //   let result2 = await fetch(`${baseURL}/create-checkout-session/${id}`, {
+  //     method: "post",
+  //     body: JSON.stringify({
+  //       planId,
+  //       period,
+  //     }),
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //   });
+  //   result2 = await result2.json();
+  //   localStorage.setItem("user.paidStatus", "true");
+  //   console.warn(result2);
+  //   window.open(`${result2.url}`);
+  // };
 
   return (
     <div className="flex flex-col sm:flex-row items-center md:items-start sm:justify-center md:justify-start flex-1 min-w-0">
@@ -197,7 +196,7 @@ function SignUpPage() {
 
         <div className="z-10 relative w-full max-w-2xl">
           <div className="text-7xl font-bold leading-none text-black">
-            <div>The #1 Klaviyo  </div>
+            <div>The #1 Klaviyo </div>
             <div>Deliverability Solution</div>
           </div>
           <div className="mt-24 text-lg tracking-tight leading-6 text-black">
@@ -210,12 +209,12 @@ function SignUpPage() {
 
       <Paper className="h-full sm:h-auto md:flex md:items-center md:justify-start w-full sm:w-auto md:h-full md:w-1/2 py-8 px-16 sm:p-48 md:p-64 sm:rounded-2xl md:rounded-none sm:shadow md:shadow-none ltr:border-r-1 rtl:border-l-1">
         <div className="w-full max-w-320 sm:w-320 mx-auto sm:mx-0">
-        <a href='https://kleanify.co'>
-          <img
-            className="w-128 h-36"
-            src="https://kleanify.co/wp-content/uploads/2022/05/Kleanify-Full-Logo.png"
-            alt="Kleanify-Logo"
-          />
+          <a href="https://kleanify.co">
+            <img
+              className="w-128 h-36"
+              src="https://kleanify.co/wp-content/uploads/2022/05/Kleanify-Full-Logo.png"
+              alt="Kleanify-Logo"
+            />
           </a>
 
           <Typography className="mt-32 text-4xl font-extrabold tracking-tight leading-tight">
@@ -223,7 +222,7 @@ function SignUpPage() {
           </Typography>
           <div className="flex items-baseline mt-2 font-medium">
             <Typography>Already have an account?</Typography>
-            <Link className="ml-4" to='/signin'>
+            <Link className="ml-4" to="/signin">
               Sign in
             </Link>
           </div>
@@ -265,7 +264,7 @@ function SignUpPage() {
                   error={!!errors.email}
                   helperText={errors?.email?.message}
                   variant="outlined"
-                  contentEditab = "false"
+                  contentEditab="false"
                   required
                   fullWidth
                 />

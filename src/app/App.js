@@ -80,10 +80,8 @@ const App = () => {
               <Route path="/signin/:id/:period" element={<SignInPage />} />
               <Route path="/signin" element={<SignInPage />} />
               <Route path="/" element={<ModernPricingPage />} />
-              <Route path="/signup" element={<SignUpPage />} />
               <Route path="/home" element={<HomePage />} />
               <Route path="/pricing" element={<ModernPricingPage />} />
-              <Route path="/signup/:id/:period" element={<SignUpPage />} />
               <Route path="/new" element={<New/>} />
               <Route path="/forgot-password" element={<Forget />} />
               <Route path="/reset-password/:id/:token" element={<Reset/>} />
@@ -92,7 +90,7 @@ const App = () => {
               <Route path="/feature" element={<Feature />} />
               <Route path="/basic" element={<Basic />} />
               <Route path="/contact" element={<Contact />} />
-              <Route path="/signup/:id/:email" element={<SignUpPage />} />
+              <Route path="/signup/:id" element={<SignUpPage />} />
             </Routes>
           </BrowserRouter>
         </AuthProvider>

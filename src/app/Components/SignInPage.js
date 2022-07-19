@@ -56,28 +56,27 @@ function SignInPage() {
 
   useEffect(()=>{
     document.title = 'Sign-in to Kleanify';
-    const auth = localStorage.getItem('user');
-    if(planId){
-      if (auth){
-        createCheckout(auth)
-      }
-    } 
-    if(auth ){
-      if(JSON.parse(auth).paidStatus === true){
-        navigate(`/dashboard/${JSON.parse(auth)._id}`)
-      }else{
-        navigate(`/pricing`)
-      }  
-    } 
+    // const auth = localStorage.getItem('user');
+    // if(planId){
+    //   if (auth){
+    //     createCheckout(auth)
+    //   }
+    // } 
+    // if(auth ){
+    //   if(JSON.parse(auth).paidStatus === true){
+    //     navigate(`/dashboard/${JSON.parse(auth)._id}`)
+    //   }else{
+    //     navigate(`/pricing`)
+    //   }  
+    // } 
   },[])
 
   const { isValid, dirtyFields, errors } = formState;
   const params = useParams();
-  const planId = params.id;
-  const period = params.period;
+  // const planId = params.id;
+  // const period = params.period;
 
   async function onSubmit({ email, password }) {
-    if (!planId) {
       console.warn("email,password", email, password);
       let result = await fetch(`${baseURL}/login`, {
         method: "post",
@@ -91,50 +90,47 @@ function SignInPage() {
       if (result.auth) {
         localStorage.setItem("user", JSON.stringify(result.user));
         localStorage.setItem("token", JSON.stringify(result.auth));
-        if (!result.user.paidStatus) {
-          navigate("/pricing");
-        } else {
           navigate(`/dashboard/${result.user._id}`);
-        }
       } else {
         alert("Email Does not exist");
       }
-    }else{
-      console.warn("email,password", email, password);
-      let result = await fetch(`${baseURL}/login`, {
-        method: "post",
-        body: JSON.stringify({ email, password }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      result = await result.json();
-      if (result.auth) {
-        setid(result.user._id)
-        console.warn(id);
-        localStorage.setItem("user", JSON.stringify(result.user));
-        localStorage.setItem("token", JSON.stringify(result.auth));
-        let result2 = await fetch(`${baseURL}/create-checkout-session/${id}`, {
-          method: "post",
-          body: JSON.stringify({
-            planId,
-            period,
-          }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        result2 = await result2.json();
-        localStorage.setItem("user.paidStatus", "true");
-        console.warn(result2);
-        window.open(`${result2.url}`);
-      } else {
-        alert("Email Does not exist");
-      }
+     }
+ // else{
+  //     console.warn("email,password", email, password);
+  //     let result = await fetch(`${baseURL}/login`, {
+  //       method: "post",
+  //       body: JSON.stringify({ email, password }),
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //     });
+  //     result = await result.json();
+  //     if (result.auth) {
+  //       setid(result.user._id)
+  //       console.warn(id);
+  //       localStorage.setItem("user", JSON.stringify(result.user));
+  //       localStorage.setItem("token", JSON.stringify(result.auth));
+  //       let result2 = await fetch(`${baseURL}/create-checkout-session/${id}`, {
+  //         method: "post",
+  //         body: JSON.stringify({
+  //           planId,
+  //           period,
+  //         }),
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //       });
+  //       result2 = await result2.json();
+  //       localStorage.setItem("user.paidStatus", "true");
+  //       console.warn(result2);
+  //       window.open(`${result2.url}`);
+  //     } else {
+  //       alert("Email Does not exist");
+  //     }
 
       
-    }
-  }
+  //   }
+  // }
 
   let theme = createTheme({
     palette: {
@@ -148,23 +144,23 @@ function SignInPage() {
   });
   theme = responsiveFontSizes(theme);
 
-  const createCheckout=async (auth)=>{
-    const id = await JSON.parse(auth)._id
-    console.warn(id);
-    let result2 = await fetch(`${baseURL}/create-checkout-session/${id}`, {
-      method: "post",
-      body: JSON.stringify({
-        planId,
-        period,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    result2 = await result2.json();
-    console.warn(result2);
-    window.open(`${result2.url}`);
-  }
+  // const createCheckout=async (auth)=>{
+  //   const id = await JSON.parse(auth)._id
+  //   console.warn(id);
+  //   let result2 = await fetch(`${baseURL}/create-checkout-session/${id}`, {
+  //     method: "post",
+  //     body: JSON.stringify({
+  //       planId,
+  //       period,
+  //     }),
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //   });
+  //   result2 = await result2.json();
+  //   console.warn(result2);
+  //   window.open(`${result2.url}`);
+  // }
 
   // const googleAuth=()=> {
   //   window.open(
