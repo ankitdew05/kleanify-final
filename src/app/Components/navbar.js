@@ -18,6 +18,9 @@ import UserNavbarHeader from "app/theme-layouts/shared-components/UserNavbarHead
 import CustomizedMenus from "./shared-components/StyledMenu";
 import SmallMenu from "./shared-components/SmallMenu";
 import { fontSize } from "@mui/system";
+import IconButton from '@mui/material/IconButton';
+
+
 
 const Root = styled("div")(({ theme }) => ({
   backgroundColor: theme.palette.background.default,
@@ -131,6 +134,7 @@ function Navbar(props) {
           >
             Get Started
           </Button>
+         
           
         </div>
       </div>

@@ -22,51 +22,54 @@ const rows = [
     id: 'id',
     align: 'left',
     disablePadding: false,
-    label: 'ID',
+    label: 'Campaign ID',
+    tip: 'ID of your campaigns in Klaviyo',
     sort: true,
   },
-  {
-    id: 'reference',
-    align: 'left',
-    disablePadding: false,
-    label: 'Reference',
-    sort: true,
-  },
+ 
   {
     id: 'customer',
     align: 'left',
     disablePadding: false,
-    label: 'Customer',
+    label: 'Subject',
+    tip: 'Subject of your campaigns',
     sort: true,
   },
+
   {
-    id: 'total',
-    align: 'right',
+    id: 'reference',
+    align: 'left',
     disablePadding: false,
-    label: 'Total',
+    label: 'Status',
+    tip: 'Current Status of your campaigns in Klaviyo',
     sort: true,
   },
+
   {
     id: 'payment',
     align: 'left',
     disablePadding: false,
-    label: 'Payment',
-    sort: true,
-  },
-  {
-    id: 'status',
-    align: 'left',
-    disablePadding: false,
-    label: 'Status',
+    label: 'Last Updated',
+    tip: ' Date & time when your campaign was last updated in Klaviyo',
     sort: true,
   },
   {
     id: 'date',
     align: 'left',
     disablePadding: false,
-    label: 'Date',
+    label: 'Update',
+    tip: 'Update your campaign data in Kleanify',
     sort: true,
   },
+  {
+    id: 'status',
+    align: 'left',
+    disablePadding: false,
+    label: 'View Details',
+    tip: 'View details, request testing & test scores of your campaigns',
+    sort: true,
+  },
+ 
 ];
 
 function OrdersTableHead(props) {
@@ -166,7 +169,7 @@ function OrdersTableHead(props) {
             >
               {row.sort && (
                 <Tooltip
-                  title="Sort"
+                  title={row.tip}
                   placement={row.align === 'right' ? 'bottom-end' : 'bottom-start'}
                   enterDelay={300}
                 >

@@ -1,37 +1,46 @@
-import FuseScrollbars from '@fuse/core/FuseScrollbars';
-import FuseUtils from '@fuse/utils';
-import _ from '@lodash';
-import Checkbox from '@mui/material/Checkbox';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TablePagination from '@mui/material/TablePagination';
-import TableRow from '@mui/material/TableRow';
-import Typography from '@mui/material/Typography';
-import { motion } from 'framer-motion';
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import withRouter from '@fuse/core/withRouter';
-import FuseLoading from '@fuse/core/FuseLoading';
-import { getOrders, selectOrders, selectOrdersSearchText } from '../store/ordersSlice';
-import { useNavigate } from 'react-router-dom';
-import OrdersTableHead from './OrdersTableHead';
-import baseURL from 'src/app/common/baseURL';
-import axios from 'axios';
-import { Button } from '@mui/material';
+import FuseScrollbars from "@fuse/core/FuseScrollbars";
+import FuseUtils from "@fuse/utils";
+import _ from "@lodash";
+import Checkbox from "@mui/material/Checkbox";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TablePagination from "@mui/material/TablePagination";
+import TableRow from "@mui/material/TableRow";
+import Typography from "@mui/material/Typography";
+import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import withRouter from "@fuse/core/withRouter";
+import FuseLoading from "@fuse/core/FuseLoading";
+import Tooltip from "@mui/material/Tooltip";
+import CircularProgress from "@mui/material/CircularProgress";
+import Backdrop from "@mui/material/Backdrop";
+
+import {
+  getOrders,
+  selectOrders,
+  selectOrdersSearchText,
+} from "../store/ordersSlice";
+import { useNavigate } from "react-router-dom";
+import OrdersTableHead from "./OrdersTableHead";
+import baseURL from "src/app/common/baseURL";
+import axios from "axios";
+import { Button } from "@mui/material";
 function OrdersTable(props) {
+  const [spinner, setSpinner] = useState(false);
   const dispatch = useDispatch();
   const orders = useSelector(selectOrders);
   const searchText = useSelector(selectOrdersSearchText);
   const [loading, setLoading] = useState(true);
   const [selected, setSelected] = useState([]);
   const [data, setData] = useState(orders);
-  const [data1, setData1] = useState('');
+  const [data1, setData1] = useState("");
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const navigate = useNavigate();
   const [order, setOrder] = useState({
-    direction: 'asc',
+    direction: "asc",
     id: null,
   });
   const getBounce = async () => {
@@ -43,7 +52,7 @@ function OrdersTable(props) {
       })
       .catch((err) => console.error(err));
   };
-  
+
   useEffect(() => {
     dispatch(getOrders()).then(() => setLoading(false));
     getBounce();
@@ -60,10 +69,10 @@ function OrdersTable(props) {
 
   function handleRequestSort(event, property) {
     const id = property;
-    let direction = 'desc';
+    let direction = "desc";
 
-    if (order.id === property && order.direction === 'desc') {
-      direction = 'asc';
+    if (order.id === property && order.direction === "desc") {
+      direction = "asc";
     }
 
     setOrder({
@@ -86,7 +95,7 @@ function OrdersTable(props) {
 
   //function handleClick(item) {
   //  props.navigate(`/apps/e-commerce/orders/${item.id}`);
- // }
+  // }
 
   function handleCheck(event, id) {
     const selectedIndex = selected.indexOf(id);
@@ -132,36 +141,46 @@ function OrdersTable(props) {
         className="flex flex-1 items-center justify-center h-full"
       >
         <Typography color="text.secondary" variant="h5">
-          There are no orders!
+          There are no Campaign!
         </Typography>
       </motion.div>
     );
   }
 
-  const goto =async (userId ,id)=>{
-    let result = await fetch(`${baseURL}/campaign/${id}/pk_f188367b3073ecdeac27491f20baf27323/${userId}`, {
-      method: "put",
-      headers:{
-          'Content-Type': 'application/json'
-      },
-  });
-  result = await result.json()
-  console.warn(result);
-  alert(`Sucssefuly Updated ${result.subject}`)
-  }
-  const auth = localStorage.getItem('user')
-  const check =async (id)=>{
-    let result = await fetch(`${baseURL}/campaignTest/pk_f188367b3073ecdeac27491f20baf27323/${id}/${JSON.parse(auth)._id}`, {
-      method: "get",
-      headers:{
-          'Content-Type': 'text/html'
-      },
-  });
- result = await result.json();
-  console.warn(result);
-  navigate(`/dashboard/${result.id}`)
-  }
- 
+  const goto = async (userId, id) => {
+    setSpinner(true);
+    console.log(id);
+    let result = await fetch(
+      `${baseURL}/campaign/${id}/${JSON.parse(auth).apiKey}/${userId}`,
+      {
+        method: "put",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    result = await result.json();
+    setSpinner(false);
+    console.warn(result);
+    alert(`Sucssefuly Updated ${result.subject}`);
+  };
+  const auth = localStorage.getItem("user");
+  const check = async (id) => {
+    let result = await fetch(
+      `${baseURL}/campaignTest/${JSON.parse(auth).apiKey}/${id}/${
+        JSON.parse(auth)._id
+      }`,
+      {
+        method: "get",
+        headers: {
+          "Content-Type": "text/html",
+        },
+      }
+    );
+    result = await result.json();
+    console.warn(result);
+    navigate(`/campaign-test-result/${result.id}`);
+  };
 
   return (
     <div className="w-full flex flex-col min-h-full">
@@ -182,13 +201,13 @@ function OrdersTable(props) {
               [
                 (o) => {
                   switch (order.id) {
-                    case 'id': {
+                    case "id": {
                       return parseInt(o.id, 10);
                     }
-                    case 'customer': {
+                    case "customer": {
                       return o.customer.firstName;
                     }
-                    case 'payment': {
+                    case "payment": {
                       return o.payment.method;
                     }
                     default: {
@@ -213,7 +232,10 @@ function OrdersTable(props) {
                     selected={isSelected}
                     //onClick={(event) => handleClick(n)}
                   >
-                    <TableCell className="w-40 md:w-64 text-center" padding="none">
+                    <TableCell
+                      className="w-40 md:w-64 text-center"
+                      padding="none"
+                    >
                       <Checkbox
                         checked={isSelected}
                         onClick={(event) => event.stopPropagation()}
@@ -221,34 +243,66 @@ function OrdersTable(props) {
                       />
                     </TableCell>
 
-                    <TableCell className="p-4 md:p-16" component="th" scope="row">
+                    <TableCell
+                      className="p-4 md:p-16"
+                      component="th"
+                      scope="row"
+                    >
                       {n.id}
                     </TableCell>
 
-                    <TableCell className="p-4 md:p-16" component="th" scope="row">
+                    <TableCell
+                      className="p-4 md:p-16 truncate"
+                      component="th"
+                      scope="row"
+                    >
+                      {n.subject}
+                    </TableCell>
+
+                    <TableCell
+                      className="p-4 md:p-16"
+                      component="th"
+                      scope="row"
+                    >
                       {n.status}
                     </TableCell>
 
-                    <TableCell className="p-4 md:p-16 truncate" component="th" scope="row">
-                      {n.subject} 
-                    </TableCell>
-
-                    <TableCell className="p-4 md:p-16" component="th" scope="row" align="right">
-                      <span>$</span>
+                    {/* <TableCell className="p-4 md:p-16" component="th" scope="row" align="right">
+                      
                       {n.created}
-                    </TableCell>
+                    </TableCell> */}
 
-                    <TableCell className="p-4 md:p-16" component="th" scope="row">
+                    <TableCell
+                      className="p-4 md:p-16"
+                      component="th"
+                      scope="row"
+                    >
                       {n.updated}
                     </TableCell>
 
-                    <TableCell className="p-4 md:p-16" component="th" scope="row">
-                    <Button onClick={()=>check(n.id)}>Check</Button>
+                    <TableCell
+                      className="p-4 md:p-16 underline"
+                      component="th"
+                      scope="row"
+                    >
+                      <Button onClick={() => goto(n._id, n.id)}>Update</Button>
+                      <Backdrop
+                        sx={{
+                          color: "#fff",
+                          zIndex: (theme) => theme.zIndex.drawer + 1,
+                        }}
+                        open={spinner}
+                      >
+                        <CircularProgress color="success" />
+                      </Backdrop>
                     </TableCell>
 
-                    <TableCell className="p-4 md:p-16" component="th" scope="row">
-                    <Button onClick={()=>goto(n._id , n.id)}>Update</Button>
-                      
+                    <TableCell
+                      className="p-4 md:p-16 underline"
+                      component="th"
+                      scope="row"
+                    >
+                      <Button onClick={() => check(n.id)}>View Details</Button>
                     </TableCell>
                   </TableRow>
                 );
@@ -264,10 +318,10 @@ function OrdersTable(props) {
         rowsPerPage={rowsPerPage}
         page={page}
         backIconButtonProps={{
-          'aria-label': 'Previous Page',
+          "aria-label": "Previous Page",
         }}
         nextIconButtonProps={{
-          'aria-label': 'Next Page',
+          "aria-label": "Next Page",
         }}
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}

@@ -5,7 +5,7 @@ const ProjectDashboardApp = lazy(() => import('./ProjectDashboardApp'));
 const ProjectDashboardAppConfig = {
   settings: {
     layout: {
-      config: {},
+ 
     },
   },
   routes: [

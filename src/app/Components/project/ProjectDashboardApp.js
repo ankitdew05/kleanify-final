@@ -41,9 +41,19 @@ function ProjectDashboardApp(props) {
       })
       .catch((err) => console.error(err));
   };
+  const getEmailInfo = async () => {
+    axios
+      .get(`https://spamtest.glockapps.com/api/v1/GetEmailInfo?apikey=5137137b8402e6996ce4bff9abeefbabd583d105&TestID=2022-07-07-15:26:54:268t`)
+      .then((response) => {
+        setData(response.data);
+        console.log("Email Info Data", response.data);
+      })
+      .catch((err) => console.error(err));
+  };
   useEffect(() => {
     dispatch(getWidgets());
     getResult();
+    getEmailInfo();
   }, [dispatch]);
 
   function handleChangeTab(event, value) {

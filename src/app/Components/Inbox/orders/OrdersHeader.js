@@ -1,14 +1,32 @@
-import Input from '@mui/material/Input';
-import Paper from '@mui/material/Paper';
-import Typography from '@mui/material/Typography';
-import { motion } from 'framer-motion';
-import { useDispatch, useSelector } from 'react-redux';
-import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
-import { selectOrdersSearchText, setOrdersSearchText } from '../store/ordersSlice';
+import Input from "@mui/material/Input";
+import Paper from "@mui/material/Paper";
+import Switch from "@mui/material/Switch";
+import FormGroup from "@mui/material/FormGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Typography from "@mui/material/Typography";
+import { motion } from "framer-motion";
+import { useDispatch, useSelector } from "react-redux";
+import FuseSvgIcon from "@fuse/core/FuseSvgIcon";
+import {
+  selectOrdersSearchText,
+  setOrdersSearchText,
+} from "../store/ordersSlice";
+import { useState } from "react";
 
 function OrdersHeader(props) {
   const dispatch = useDispatch();
   const searchText = useSelector(selectOrdersSearchText);
+  const [checked, setChecked] = useState('true');
+  const handleChange = async () => {
+    if(checked){
+      setChecked(false)
+      console.log(checked);
+    } else {
+      setChecked(true)
+      console.log(checked);
+    }
+    
+  };
 
   return (
     <div className="flex flex-col sm:flex-row flex-1 w-full space-y-8 sm:space-y-0 items-center justify-between py-32 px-24 md:px-32">
@@ -17,10 +35,19 @@ function OrdersHeader(props) {
         initial={{ x: -20 }}
         animate={{ x: 0, transition: { delay: 0.2 } }}
         delay={300}
-        className="flex text-24 md:text-32 font-extrabold tracking-tight"
+        className="flex text-15 md:text-20 font-extrabold tracking-tight"
       >
-        Campaigns
+        Test Queued Campaigns Automatically (only if not tested alredy)
       </Typography>
+
+      <div class="flex justify-center ml-10">
+        <FormGroup>
+          <FormControlLabel
+            control={<Switch checked={checked}  onChange={handleChange} />}
+            inputProps={{ 'aria-label': 'controlled' }}
+          />
+        </FormGroup>
+      </div>
 
       <div className="flex flex-1 items-center justify-end space-x-8 w-full sm:w-auto">
         <Paper
@@ -32,13 +59,13 @@ function OrdersHeader(props) {
           <FuseSvgIcon color="disabled">heroicons-solid:search</FuseSvgIcon>
 
           <Input
-            placeholder="Search orders"
+            placeholder="Search Subjects"
             className="flex flex-1"
             disableUnderline
             fullWidth
             value={searchText}
             inputProps={{
-              'aria-label': 'Search Orders',
+              "aria-label": "Search Orders",
             }}
             onChange={(ev) => dispatch(setOrdersSearchText(ev))}
           />

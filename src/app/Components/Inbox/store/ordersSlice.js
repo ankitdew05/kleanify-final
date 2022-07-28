@@ -12,7 +12,7 @@ export const getOrders = createAsyncThunk('eCommerceApp/orders/getOrders', async
 export const removeOrders = createAsyncThunk(
   'eCommerceApp/orders/removeOrders',
   async (orderIds, { dispatch, getState }) => {
-    await axios.delete('/api/ecommerce/orders', { data: orderIds });
+    await axios.delete(`${baseURL}/campaign/${orderIds}`, { data: orderIds });
 
     return orderIds;
   }

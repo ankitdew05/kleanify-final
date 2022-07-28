@@ -39,6 +39,13 @@ import Layout2 from "./theme-layouts/layout2/Layout2";
 import Contact from "./Components/Contact";
 import Feature2 from "./Components/feature2";
 import Feature1 from "./Components/feature1";
+import Sidebar1 from "./Components/EmailValidation";
+import Sidebar2 from "./Components/BuyCredits";
+import EmailValidation from "./Components/EmailValidation";
+import Dashboard from "./Components/Dashboard";
+import BuyCredits from "./Components/BuyCredits";
+import CampaignTest from "./Components/CampaignTest";
+import CampaignTestResult from "./Components/CampaignTestResult";
 // import axios from 'axios';
 /**
  * Axios HTTP Request defaults
@@ -70,16 +77,14 @@ const App = () => {
       <FuseTheme theme={mainTheme} direction={langDirection}>
         <AuthProvider>
           <BrowserRouter>
-          
             <Routes>
               <Route element={<PrivateComponent />}>
-              <Route path="/campaign" element={<Orders />} />
+              <Route path="/campaign-test" element={<CampaignTest />} />
               <Route path="/checkout" element={<Checkout />} />
               <Route path="/success/:id" element={<SuccessPage />} />
               <Route path="/failure" element={<FailurePage />} />
               <Route path="/dashboard/:id" element={<ProjectDashboardApp />} />
-              <Route path="/" element={<ProjectDashboardApp />}/>
-
+              
               </Route>
               <Route path="/signin/:id/:period" element={<SignInPage />} />
               <Route path="/signin" element={<SignInPage />} />
@@ -96,6 +101,11 @@ const App = () => {
               <Route path="/basic" element={<Basic />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/signup/:id" element={<SignUpPage />} />
+              <Route path="/buy-credits" element={<BuyCredits />} />
+              <Route path="/" element={<Dashboard />}/>
+              <Route path="/email-validation" element={<EmailValidation />}/>
+              <Route path="/campaign-test-result/:id" element={<CampaignTestResult />}/>
+              <Route path="/dashboard" element={<ProjectDashboardApp />} />
             </Routes>
           </BrowserRouter>
         </AuthProvider>
