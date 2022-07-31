@@ -5,6 +5,8 @@ import useThemeMediaQuery from '@fuse/hooks/useThemeMediaQuery';
 import DemoHeader from './shared-components/DemoHeader';
 import DemoSidebar from './shared-components/DemoSidebar';
 import DemoContent1 from './shared-components/DemoContent1';
+import ListCleaningContent from './shared-components/ListCleaningContent'
+import Contact from './Contact';
 
 const Root = styled(FusePageSimple)(({ theme }) => ({
   '& .FusePageSimple-header': {
@@ -19,14 +21,14 @@ const Root = styled(FusePageSimple)(({ theme }) => ({
   '& .FusePageSimple-sidebarContent': {},
 }));
 
-function EmailValidation() {
+function SupportPage() {
   const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down('lg'));
 
   const [leftSidebarOpen, setLeftSidebarOpen] = useState(!isMobile);
   const [rightSidebarOpen, setRightSidebarOpen] = useState(!isMobile);
 
   useEffect(() => {
-    document.title = "Email Validation Kleanify";
+    document.title = " Kleanify-Support";
     setLeftSidebarOpen(!isMobile);
     setRightSidebarOpen(!isMobile);
   }, [isMobile]);
@@ -41,10 +43,10 @@ function EmailValidation() {
           rightSidebarToggle={(ev) => {
             setRightSidebarOpen(!rightSidebarOpen);
           }}
-          title= "Email Validation"
+          title= "Support"
         />
       }
-      content={<DemoContent1 />}
+      content={<Contact />}
       leftSidebarOpen={leftSidebarOpen}
       leftSidebarOnClose={() => {
         setLeftSidebarOpen(false);
@@ -58,4 +60,4 @@ function EmailValidation() {
   );
 }
 
-export default EmailValidation;
+export default SupportPage;

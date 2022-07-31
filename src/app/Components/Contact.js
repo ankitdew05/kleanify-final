@@ -13,10 +13,10 @@ import baseURL from '../common/baseURL';
 import { useEffect } from 'react';
 const defaultValues = { name: '', email: '', subject: '', message: '' };
 const schema = yup.object().shape({
-  name: yup.string().required('You must enter a name'),
+ // name: yup.string().required('You must enter a name'),
   subject: yup.string().required('You must enter a subject'),
   message: yup.string().required('You must enter a message'),
-  email: yup.string().email('You must enter a valid email').required('You must enter a email'),
+  // email: yup.string().email('You must enter a valid email').required('You must enter a email'),
 });
 
 function Contact() {
@@ -32,44 +32,33 @@ function Contact() {
   const { isValid, dirtyFields, errors } = formState;
   const form = watch();
   async function onSubmit({ name , email, message , subject  }) {
-    console.warn("name,email , message , subject", name,email, message , subject);
-        let result = await fetch(`${baseURL}/contact`, {
-            method: "post",
-            body: JSON.stringify({ name,email, message , subject}),
-            headers:{
-                'Content-Type': 'application/json'
-            },
+    // console.warn("name,email , message , subject", name,email, message , subject);
+    //     let result = await fetch(`${baseURL}/contact`, {
+    //         method: "post",
+    //         body: JSON.stringify({ name,email, message , subject}),
+    //         headers:{
+    //             'Content-Type': 'application/json'
+    //         },
 
-        });
+    //     });
 
-        result = await result.json()
-        console.warn(result);
-        navigate('/pricing')
+    //     result = await result.json()
+    //     console.warn(result);
+    //     navigate('/')
+  
+      window.open(`mailto:ankit_d@ar.iitr.ac.in?subject=${encodeURIComponent(subject) || ''}&body=${encodeURIComponent(message) || ''}`)
+      navigate('/')
   }
 
   if (_.isEmpty(form)) {
     return null;
   }
 
-  return (
-    <div className="flex bg-[#FFF6CF] flex-col  items-center p-24 sm:p-40 w-full">
-    <div className="flex flex-col  w-full max-w-4xl">
-        <div className="sm:mt-32">
-          <Button
-            component={Link}
-            to="/pricing"
-            style={{
-              color: '#bca129'
-            }}
-            startIcon={<FuseSvgIcon>heroicons-outline:arrow-narrow-left</FuseSvgIcon>}
-          >
-            Back to Pricing Page
-          </Button>
-        </div>
-        <div className="mt-8 text-4xl sm:text-7xl font-extrabold tracking-tight leading-tight">
-          Contact support
-        </div>
+ 
 
+  return (
+    <div className="flex  flex-col  items-center p-24 sm:p-40 w-full">
+    <div className="flex flex-col  w-full max-w-4xl">
         <Paper className="mt-32 sm:mt-48 p-24 pb-28 sm:p-40 sm:pb-28 rounded-2xl">
           <form onSubmit={handleSubmit(onSubmit)} className="px-0 sm:px-24">
             <div className="mb-24">
@@ -77,12 +66,11 @@ function Contact() {
                 Submit your request
               </Typography>
               <Typography color="text.secondary">
-                Your request will be processed and our support staff will get back to you in 24
-                hours.
+                Please fill out the form below to request support. We typically reply within 24 hours htrough email.
               </Typography>
             </div>
             <div className="space-y-32">
-              <Controller
+              {/* <Controller
                 control={control}
                 name="name"
                 render={({ field }) => (
@@ -117,7 +105,7 @@ function Contact() {
                     required
                   />
                 )}
-              />
+              /> */}
 
               <Controller
                 control={control}
@@ -166,8 +154,9 @@ function Contact() {
               disabled={_.isEmpty(dirtyFields) || !isValid}
               onClick={handleSubmit(onSubmit)}
             >
-              Save
-            </Button>
+              Send
+            </Button> 
+            
           </div>
         </Paper>
       </div>

@@ -27,6 +27,7 @@ function BuyCredits() {
   const [rightSidebarOpen, setRightSidebarOpen] = useState(!isMobile);
 
   useEffect(() => {
+    document.title = "Buy Credits Kleanify";
     setLeftSidebarOpen(!isMobile);
     setRightSidebarOpen(!isMobile);
   }, [isMobile]);

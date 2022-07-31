@@ -89,8 +89,9 @@ function SignInPage() {
       console.warn(result.user);
       if (result.auth) {
         localStorage.setItem("user", JSON.stringify(result.user));
+        console.log("localstorageset")
         localStorage.setItem("token", JSON.stringify(result.auth));
-          navigate(`/detail/${result.user._id}`);
+          navigate(`/onboarding`);
       } else {
         alert("Email Does not exist");
       }

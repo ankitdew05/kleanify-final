@@ -120,7 +120,7 @@ function DemoContent1() {
             <div className="flex items-center justify-between px-8 pt-12"></div>
             <div className="text-center mt-8 p-28">
               <Typography className="text-3xl sm:text-4xl mb-8 font-bold tracking-tight leading-none text-blue-500">
-                Invalis Emails
+                Invalid Emails
               </Typography>
 
               <Typography className="text-7xl  sm:text-8xl mt-36 font-bold tracking-tight leading-none text-blue-500">

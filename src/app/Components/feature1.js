@@ -14,8 +14,10 @@ function Feature1() {
   const [period, setPeriod] = useState("month");
   const params = useParams();
   const id = params.id;
+  const auth = localStorage.getItem('user');
 const navigate = useNavigate()
   useEffect(() => {
+      document.title = "Onboarding to Kleanify";
     const data = getData()
       .then((res) => {
         console.log(res);
@@ -29,7 +31,7 @@ const navigate = useNavigate()
 
   async function getData() {
     const data = await axios
-      .get(`${baseURL}/paiduser/${id}`)
+      .get(`${baseURL}/paiduser/${JSON.parse(auth)._id}`)
       .then((response) => {
         return response.data;
       })
@@ -64,7 +66,6 @@ const navigate = useNavigate()
             initial={{ opacity: 0 }}
             animate={{ opacity: 1, transition: { delay: 0.05 } }}
           >
-            <h2 className="text-xl font-semibold">Feature 1</h2>
           </motion.div>
 
           <motion.div
@@ -80,14 +81,7 @@ const navigate = useNavigate()
             initial={{ opacity: 0 }}
             animate={{ opacity: 1, transition: { delay: 0.15 } }}
           >
-            <Typography
-              className="mt-12 sm:text-2xl text-center tracking-tight"
-              color="text.secondary"
-            >
-              Start small and free, upgrade as you go.
-              <br />
-              Take control of everything.
-            </Typography>
+            
           </motion.div>
 
           <motion.div
@@ -109,7 +103,7 @@ const navigate = useNavigate()
                 </Typography>
                 <div className="felx  mt-24 ">
                   <Typography className="text-3xl font-bold justify-center underline">
-                    <Link to={"/feature/"+ id}>Understood</Link>
+                    <Link to="/onboarding2">Understood</Link>
                   </Typography>
                 </div>
               </div>

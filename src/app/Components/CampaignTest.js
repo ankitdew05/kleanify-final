@@ -28,6 +28,7 @@ function CampaignTest() {
   const [rightSidebarOpen, setRightSidebarOpen] = useState(!isMobile);
 
   useEffect(() => {
+    document.title = "Campaign Test Kleanify";
     setLeftSidebarOpen(!isMobile);
     setRightSidebarOpen(!isMobile);
   }, [isMobile]);

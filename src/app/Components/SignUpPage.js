@@ -84,7 +84,7 @@ function SignUpPage() {
   console.log("User ID", UserId);
   const { isValid, dirtyFields, errors, setError } = formState;
   async function onSubmit({ displayName, password }) {
-    let result = await fetch(`${baseURL}/signupUser/${UserId}`, {
+    let result = await fetch(`${baseURL}/register/${UserId}`, {
       method: "put",
       body: JSON.stringify({ displayName, password }),
       headers: {
@@ -93,7 +93,14 @@ function SignUpPage() {
     });
     result = await result.json();
     console.warn(result);
-    navigate("/signin");
+    if (result.auth) {
+      localStorage.setItem("user", JSON.stringify(result.user));
+      console.log("localstorageset")
+      localStorage.setItem("token", JSON.stringify(result.auth));
+        navigate(`/onboarding`);
+    } else {
+      alert("Email Does not exist");
+    }
   }
 
 

@@ -28,6 +28,7 @@ import baseURL from "src/app/common/baseURL";
 import axios from "axios";
 import { Button } from "@mui/material";
 function OrdersTable(props) {
+  const auth = localStorage.getItem("user");
   const [spinner, setSpinner] = useState(false);
   const dispatch = useDispatch();
   const orders = useSelector(selectOrders);
@@ -54,6 +55,7 @@ function OrdersTable(props) {
   };
 
   useEffect(() => {
+    document.title = "Campaign-Kleanify";
     dispatch(getOrders()).then(() => setLoading(false));
     getBounce();
   }, [dispatch]);
@@ -164,7 +166,7 @@ function OrdersTable(props) {
     console.warn(result);
     alert(`Sucssefuly Updated ${result.subject}`);
   };
-  const auth = localStorage.getItem("user");
+  
   const check = async (id) => {
     let result = await fetch(
       `${baseURL}/campaignTest/${JSON.parse(auth).apiKey}/${id}/${
@@ -277,7 +279,13 @@ function OrdersTable(props) {
                       component="th"
                       scope="row"
                     >
-                      {n.updated}
+                       {new Date(n.updated).toLocaleDateString(
+                            "locale",
+                        
+                          {
+                            dateStyle: "full",
+                          }
+                        )}
                     </TableCell>
 
                     <TableCell

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
@@ -15,12 +15,16 @@ import {useParams , useNavigate} from 'react-router-dom'
 import baseURL from "../common/baseURL";
 
 function Feature2() {
+  const auth = localStorage.getItem('user');
+useEffect(()=>{
+  document.title = "Onboarding to Kleanify";
+})
   const [period, setPeriod] = useState("month");
   const params = useParams()
   const UserId = params.id
   const navigate = useNavigate();
   async function onSubmit({segmentId}) {
-    let result = await fetch(`${baseURL}/segment/${UserId}`, {
+    let result = await fetch(`${baseURL}/segment/${JSON.parse(auth)._id}`, {
       method: "put",
       body: JSON.stringify({ segmentId }),
       headers: {
@@ -29,7 +33,7 @@ function Feature2() {
     });
     result = await result.json();
     console.warn(result);
-    navigate("/");
+    navigate("/list-cleaning");
   }
 
   const { control, formState, handleSubmit, setError, setValue } = useForm({
@@ -66,7 +70,6 @@ function Feature2() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1, transition: { delay: 0.05 } }}
           >
-            <h2 className="text-xl font-semibold">Feature 1</h2>
           </motion.div>
 
           <motion.div
@@ -82,14 +85,7 @@ function Feature2() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1, transition: { delay: 0.15 } }}
           >
-            <Typography
-              className="mt-12 sm:text-2xl text-center tracking-tight"
-              color="text.secondary"
-            >
-              Start small and free, upgrade as you go.
-              <br />
-              Take control of everything.
-            </Typography>
+            
           </motion.div>
 
           <motion.div

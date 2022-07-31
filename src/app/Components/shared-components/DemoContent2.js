@@ -34,9 +34,25 @@ function DemoContent2() {
   const planId = userData.planId;
   useEffect(() => {
     setUserData(JSON.parse(auth));
-    setTotal(parseFloat(emailCredit * 0.001) + parseInt(campaignCredit));
+    setTotal(parseFloat(emailCredit * 0.001) + parseFloat(campaignCredit));
     getBounce();
   }, [emailCredit, campaignCredit]);
+
+
+  const handleCheckout = () => {
+    axios
+      .post(`${baseURL}/create-checkout-session`, {
+        userId,
+        emailCredit,
+        campaignCredit
+      })
+      .then((response) => {
+        if (response.data.url) {
+          window.location.href = response.data.url;
+        }
+      })
+      .catch((err) => console.log(err.message));
+  };
 
   async function handleToken(token, addresses) {
     const response = await axios.post(`${baseURL}/checkout`, {
@@ -51,7 +67,7 @@ function DemoContent2() {
     console.log(response.status, response.id);
     let clientSecret = await response.data.id;
     console.log(clientSecret);
-    
+
     if (response.status === 200) {
       navigate("/");
       alert("Succesful Payment");
@@ -60,7 +76,6 @@ function DemoContent2() {
     }
   }
 
-  
   // Confirm Card Payment.
 
   const getBounce = async () => {
@@ -210,17 +225,8 @@ function DemoContent2() {
           <div className="text-center mt-8 p-28 grid grid-cols-3">
             <Typography className="text-md sm:text-3xl mb-8 font-bold tracking-tight leading-none text-green-500"></Typography>
             <Typography className="text-md sm:text-2xl mb-8 font-bold tracking-tight leading-none text-green-500"></Typography>
-            <Typography className="text-md sm:text-2xl mb-8 font-bold tracking-tight leading-none text-green-500">
-    
-                <StripeCheckout
-                  className="center"
-                  stripeKey="pk_test_51KG5PGSDsAxbilQ0bNTgziVAcLVW6dBz4U63ASiNWbgETRtnmVSE43GUTSM5wJqPXAWYiStH2nKeqn71fM95HYLT00KKjJfAGP"
-                  token={handleToken}
-                  amount={total * 100}
-                  name="Buy Now"
-                  email={userData.email}
-                />
-
+            <Typography className="text-md  sm:text-2xl mb-8 font-bold tracking-tight leading-none text-green-500">
+              <button className="bg-green p-12 text-white rounded-12" onClick={() => handleCheckout()}>Buy Credits</button>
             </Typography>
           </div>
           {/* <div className="flex items-center justify-evenly px-8 pt-12 pb-20">

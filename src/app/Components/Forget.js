@@ -25,10 +25,7 @@ const schema = yup.object().shape({
     .string()
     .email("You must enter a valid email")
     .required("You must enter a email"),
-  password: yup
-    .string()
-    .required("Please enter your password.")
-    .min(4, "Password is too short - must be at least 4 chars."),
+ 
 });
 
 const defaultValues = {
@@ -52,17 +49,14 @@ function Forget() {
 
   useEffect(() => {
     document.title = 'Foget-Password Kleanify';
-    setValue("email", "admin@fusetheme.com", {
-      shouldDirty: true,
-      shouldValidate: true,
-    });
-    setValue("password", "admin", { shouldDirty: true, shouldValidate: true });
-  }, [setValue]);
+   
+    
+  }, []);
 
  async function onSubmit({email}) {
     console.warn("email",email);
         let result = await fetch(`${baseURL}/requestPasswordReset`, {
-            method: "post",
+            method: "POST",
             body: JSON.stringify({email}),
             headers:{
                 'Content-Type': 'application/json'

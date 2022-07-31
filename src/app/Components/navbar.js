@@ -69,7 +69,7 @@ function Navbar(props) {
           </Button>
           <Button
             component="a"
-            href="/contact"
+            href=" https://kleanify.co/contact"
             target="_blank"
             rel="noreferrer noopener"
             role="button"

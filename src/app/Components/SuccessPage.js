@@ -8,9 +8,10 @@ function SuccessPage() {
   const navigate = useNavigate();
   
   useEffect(() => {
+    document.title = "Successfull Payment to Kleanify";
     console.log(params)
     setTimeout(() => {
-      navigate(`/detail/${params.id}`)
+      navigate(`/buy-credits`)
     }, 1000);
   }, []);
 

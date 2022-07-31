@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
@@ -9,9 +9,11 @@ import { motion } from "framer-motion";
 import { Link, useParams } from "react-router-dom";
 
 function Feature() {
+  useEffect(()=>{
+    document.title = "Onboarding to Kleanify";
+  })
+  const auth = localStorage.getItem('user');
   const [period, setPeriod] = useState("month");
-  const params = useParams();
-  const id = params.id;
   return (
     <div className="relative bg-[#FFF6CF] opacity-90  flex flex-col flex-auto min-w-0 overflow-hidden">
       <div className="relative pt-32 pb-48 sm:pt-80 sm:pb-96 px-24 sm:px-64 overflow-hidden">
@@ -40,7 +42,6 @@ function Feature() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1, transition: { delay: 0.05 } }}
           >
-            <h2 className="text-xl font-semibold">Feature 1</h2>
           </motion.div>
 
           <motion.div
@@ -56,14 +57,7 @@ function Feature() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1, transition: { delay: 0.15 } }}
           >
-            <Typography
-              className="mt-12 sm:text-2xl text-center tracking-tight"
-              color="text.secondary"
-            >
-              Start small and free, upgrade as you go.
-              <br />
-              Take control of everything.
-            </Typography>
+           
           </motion.div>
 
           <motion.div
@@ -91,7 +85,7 @@ function Feature() {
                 </Typography>
                 <div className="felx  mt-24 ">
                   <Typography className="text-3xl font-bold justify-center underline">
-                    <Link to={"/feature2/" + id}>Got it</Link>
+                    <Link to="/onboarding3">Got it</Link>
                   </Typography>
                 </div>
               </div>

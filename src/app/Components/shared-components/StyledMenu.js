@@ -99,32 +99,32 @@ export default function CustomizedMenus() {
       >
         <MenuItem onClick={handleClose} disableRipple>
           <MarkEmailReadTwoToneIcon />
-          <Link to='/email-validation'>Automated Email Validation</Link>
+          <a href='https://kleanify.co/email-validation'>Automated Email Validation</a>
         </MenuItem>
         <Divider sx={{ my: 0.5 }} />
         <MenuItem  disableRipple>
           <PlaylistAddCheckTwoToneIcon />
-          <Link to='/list-cleaning'>Automated List Cleaning</Link>
+          <a href=' https://kleanify.co/list-cleaning'>Automated List Cleaning</a>
         </MenuItem>
         <Divider sx={{ my: 0.5 }} />
         <MenuItem  disableRipple>
           <ForwardToInboxTwoToneIcon />
-          <Link to='/inbox-testing'>Inbox Placement Testing </Link>
+          <a href=' https://kleanify.co/inbox-testing'>Inbox Placement Testing </a>
         </MenuItem>
         <Divider sx={{ my: 0.5 }} />
         <MenuItem disableRipple>
           <EqualizerTwoToneIcon />
-          <Link to='/content-spam-check'>Content Spam Score</Link>
+          <a href='https://kleanify.co/content-spam-check'>Content Spam Score</a>
         </MenuItem>
         <Divider sx={{ my: 0.5 }} />
         <MenuItem disableRipple>
           <VerifiedUserTwoToneIcon />
-          <Link to='/klaviyo-audit'>Klaviyo Account Audit</Link>
+          <a href='https://kleanify.co/klaviyo-audit'>Klaviyo Account Audit</a>
         </MenuItem>
         <Divider sx={{ my: 0.5 }} />
         <MenuItem disableRipple>
           <CancelScheduleSendTwoToneIcon />
-          <Link to='/bounce-checker'>Free Bounce Checker</Link>
+          <a to='https://app.kleanify.co/bounce-checker'>Free Bounce Checker</a>
         </MenuItem>
       </StyledMenu>
     </div>
