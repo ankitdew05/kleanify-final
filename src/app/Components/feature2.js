@@ -77,7 +77,7 @@ useEffect(()=>{
             animate={{ opacity: 1, y: 0, transition: { delay: 0.1 } }}
           >
             <div className="mt-4 text-4xl sm:text-7xl font-extrabold tracking-tight leading-tight text-center">
-              Automated Email Validation
+              Clean Unengaged Subscribers
             </div>
           </motion.div>
 
