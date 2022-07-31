@@ -35,9 +35,6 @@ const schema = yup.object().shape({
   passwordConfirm: yup
     .string()
     .oneOf([yup.ref("password"), null], "Passwords must match"),
-  acceptTermsConditions: yup
-    .boolean()
-    .oneOf([true], "The terms and conditions must be accepted."),
 });
 
 function SignUpPage() {
@@ -75,9 +72,6 @@ function SignUpPage() {
 
   const { control, formState, handleSubmit, reset } = useForm({
     mode: "onChange",
-    defaultValues: {
-      acceptTermsConditions: false,
-    },
     resolver: yupResolver(schema),
   });
 
@@ -333,25 +327,6 @@ function SignUpPage() {
                   required
                   fullWidth
                 />
-              )}
-            />
-
-            <Controller
-              name="acceptTermsConditions"
-              control={control}
-              render={({ field }) => (
-                <FormControl
-                  className="items-center"
-                  error={!!errors.acceptTermsConditions}
-                >
-                  <FormControlLabel
-                    label="I agree to the Terms of Service and Privacy Policy"
-                    control={<Checkbox size="small" {...field} />}
-                  />
-                  <FormHelperText>
-                    {errors?.acceptTermsConditions?.message}
-                  </FormHelperText>
-                </FormControl>
               )}
             />
 
