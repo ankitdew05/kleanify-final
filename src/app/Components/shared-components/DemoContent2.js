@@ -29,6 +29,7 @@ function DemoContent2() {
   let [userData, setUserData] = useState({});
   const [emailBalance, setemailBalance] = useState("");
   const [campaignBalance, setcampaignBalance] = useState("");
+  const [customerId , setcustomerId] = useState('');
   let [data, setData] = useState({});
   const userId = userData._id;
   const planId = userData.planId;
@@ -42,6 +43,7 @@ function DemoContent2() {
   const handleCheckout = () => {
     axios
       .post(`${baseURL}/create-checkout-session`, {
+        customerId,
         userId,
         emailCredit,
         campaignCredit
@@ -84,6 +86,7 @@ function DemoContent2() {
       .then((response) => {
         setemailBalance(response.data[0].credits.emailValidationCredit);
         setcampaignBalance(response.data[0].credits.testingCredit);
+        setcustomerId(response.data[0].customerId)
       })
       .catch((err) => console.error(err));
   };

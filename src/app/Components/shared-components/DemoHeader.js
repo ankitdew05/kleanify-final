@@ -6,7 +6,7 @@ import FuseSvgIcon from "@fuse/core/FuseSvgIcon";
 
 function DemoHeader(props) {
   const { leftSidebarToggle, title } = props;
-  const auth = localStorage.getItem('user');
+  const auth = localStorage.getItem("user");
   function handleClick() {}
 
   return (
@@ -45,7 +45,7 @@ function DemoHeader(props) {
       </div>
       <div className="flex items-center w-full mt-8 -mx-10">
         {leftSidebarToggle && (
-          <div className="flex shrink-0 items-center">
+          <div className="flex lg:invisible shrink-0 items-center">
             <IconButton onClick={leftSidebarToggle} aria-label="toggle sidebar">
               <FuseSvgIcon>heroicons-outline:menu</FuseSvgIcon>
             </IconButton>
@@ -58,17 +58,16 @@ function DemoHeader(props) {
           {title}
         </Typography>
         <div className="flex-col">
-        <Typography className="username text-14 whitespace-nowrap font-medium">
-          {JSON.parse(auth).displayName}
-        </Typography>
-        <Typography
-          className="email text-13 whitespace-nowrap font-medium"
-          color="text.secondary"
-        >
-          {JSON.parse(auth).email}
-        </Typography>
+          <Typography className="username text-14 whitespace-nowrap font-medium">
+            {JSON.parse(auth).displayName}
+          </Typography>
+          <Typography
+            className="email text-13 whitespace-nowrap font-medium"
+            color="text.secondary"
+          >
+            {JSON.parse(auth).email}
+          </Typography>
         </div>
-        
       </div>
     </div>
   );

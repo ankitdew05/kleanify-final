@@ -111,7 +111,6 @@ function Detail() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1, transition: { delay: 0.05 } }}
         >
-          <h2 className="text-xl font-semibold">Feature 1</h2>
         </motion.div>
 
         <motion.div
