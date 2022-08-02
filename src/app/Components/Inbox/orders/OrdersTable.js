@@ -27,8 +27,8 @@ import OrdersTableHead from "./OrdersTableHead";
 import baseURL from "src/app/common/baseURL";
 import axios from "axios";
 import { Button } from "@mui/material";
+
 function OrdersTable(props) {
-  const auth = localStorage.getItem("user");
   const [spinner, setSpinner] = useState(false);
   const dispatch = useDispatch();
   const orders = useSelector(selectOrders);
@@ -44,15 +44,7 @@ function OrdersTable(props) {
     direction: "asc",
     id: null,
   });
-  const getBounce = async () => {
-    axios
-      .get(`${baseURL}/campaign`)
-      .then((response) => {
-        setData1(response.data);
-        console.log(response.data);
-      })
-      .catch((err) => console.error(err));
-  };
+  const auth = localStorage.getItem("user");
 
   useEffect(() => {
     document.title = "Campaign-Kleanify";
@@ -68,6 +60,16 @@ function OrdersTable(props) {
       setData(orders);
     }
   }, [orders, searchText]);
+
+  const getBounce = async () => {
+    axios
+      .get(`${baseURL}/campaign/${JSON.parse(auth)._id}`)
+      .then((response) => {
+        console.log("hi", response.data);
+        setData1(response.data);
+      })
+      .catch((err) => console.error(err));
+  };
 
   function handleRequestSort(event, property) {
     const id = property;
@@ -166,22 +168,9 @@ function OrdersTable(props) {
     console.warn(result);
     alert(`Sucssefuly Updated ${result.subject}`);
   };
-  
+
   const check = async (id) => {
-    let result = await fetch(
-      `${baseURL}/campaignTest/${JSON.parse(auth).apiKey}/${id}/${
-        JSON.parse(auth)._id
-      }`,
-      {
-        method: "get",
-        headers: {
-          "Content-Type": "text/html",
-        },
-      }
-    );
-    result = await result.json();
-    console.warn(result);
-    navigate(`/campaign-test-result/${result.id}`);
+    navigate(`/campaign-test-result/${id}`);
   };
 
   return (
@@ -199,7 +188,7 @@ function OrdersTable(props) {
 
           <TableBody>
             {_.orderBy(
-              data,
+              data1,
               [
                 (o) => {
                   switch (order.id) {
@@ -279,13 +268,13 @@ function OrdersTable(props) {
                       component="th"
                       scope="row"
                     >
-                       {new Date(n.updated).toLocaleDateString(
-                            "locale",
-                        
-                          {
-                            dateStyle: "full",
-                          }
-                        )}
+                      {new Date(n.updated).toLocaleDateString(
+                        "locale",
+
+                        {
+                          dateStyle: "full",
+                        }
+                      )}
                     </TableCell>
 
                     <TableCell
@@ -296,9 +285,11 @@ function OrdersTable(props) {
                       <Button onClick={() => goto(n._id, n.id)}>Update</Button>
                       <Backdrop
                         sx={{
+                          opacity: "5%",
                           color: "#fff",
                           zIndex: (theme) => theme.zIndex.drawer + 1,
                         }}
+                        opacity="5%"
                         open={spinner}
                       >
                         <CircularProgress color="success" />

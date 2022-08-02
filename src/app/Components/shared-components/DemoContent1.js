@@ -22,30 +22,32 @@ function DemoContent1() {
 
   useEffect(() => {
     getBounce();
-  },[]);
+    getData()
+  }, []);
 
   const getBounce = async () => {
     await axios
-      .get(`${baseURL}/paiduser/${JSON.parse(auth)._id}`)
+      .get(`${baseURL}/email/${JSON.parse(auth)._id}`)
       .then((response) => {
-        if(response.data[0].emailId){
-          axios
-          .get(`${baseURL}/email/${response.data[0].emailId}`)
-          .then((response) => {
-            const arr = response.data.array
-            let count = arr.length;
-            console.log(response.data);
-            setnewsub(response.data.newSubscriber)
-            setnocheck(response.data.newSubscriberChecked)
-            setemailarray(response.data.array)
-            setnoemails(count)
-
-          })
-          .catch((err) => console.error(err));
-        }
+        console.log(response.data);
+        setemailarray(response.data);
       })
       .catch((err) => console.error(err));
   };
+
+  async function getData() {
+     await axios
+      .get(`${baseURL}/paiduser/${JSON.parse(auth)._id}`)
+      .then((response) => {
+        console.log(response.data[0].newSubscriber)
+        setnewsub(response.data[0].newSubscriber)
+        setnocheck(response.data[0].newSubscriber)
+        setnoemails(response.data[0].emailValidation)
+      })
+      .catch((err) => console.error(err));
+  
+  }
+
   return (
     <motion.div
       className="grid grid-cols-1 sm:grid-cols-6 gap-24 w-full min-w-0 p-24"
@@ -68,20 +70,14 @@ function DemoContent1() {
                 Invalid Email Supressed
               </Typography> */}
             </div>
-            <div className="flex items-center justify-evenly px-8 pt-12 pb-20">
+             <div className="flex items-center justify-evenly px-8 pt-12 pb-20">
               <Typography
                 className="px-16 text-xl font-medium tracking-tight leading-6 truncate"
                 color="text.secondary"
               >
                 Last 30 Days
               </Typography>
-              <Typography
-                className="px-16 text-xl font-medium tracking-tight leading-6 truncate"
-                color="text.secondary"
-              >
-                View Details
-              </Typography>
-            </div>
+            </div> 
           </Paper>
         </motion.div>
         <motion.div className="sm:col-span-1">
@@ -106,13 +102,7 @@ function DemoContent1() {
               >
                 Last 30 Days
               </Typography>
-              <Typography
-                className="px-16 text-xl font-medium tracking-tight leading-6 truncate underline"
-                color="text.secondary"
-              >
-                View Details
-              </Typography>
-            </div>
+            </div> 
           </Paper>
         </motion.div>
         <motion.div className="sm:col-span-1">
@@ -137,13 +127,7 @@ function DemoContent1() {
               >
                 Last 30 Days
               </Typography>
-              <Typography
-                className="px-16 text-xl font-medium tracking-tight leading-6 truncate underline"
-                color="text.secondary"
-              >
-                View Details
-              </Typography>
-            </div>
+            </div> 
           </Paper>
         </motion.div>
       </div>
@@ -177,15 +161,24 @@ function DemoContent1() {
                 </TableRow>
               </TableHead>
               <TableBody>
-              {emailarray.map((value , index)=>(
-                <TableRow key={index}>
-                  <TableCell  component="th" scope="row">
-                    <Typography className="">{value}</Typography>
-                  </TableCell>
-                </TableRow>
-              ))}
-               
-                
+                {emailarray.map((value, index) => (
+                  <>
+                    {(value.array || []).map((valueEmail) => {
+                      return (
+                        <TableRow>
+                        <>
+                          <TableCell component="th" scope="row">
+                            <Typography className="">{valueEmail.email}</Typography>
+                          </TableCell>
+                          <TableCell component="th" scope="row">
+                            <Typography className="">{valueEmail.reason}</Typography>
+                          </TableCell>
+                        </>
+                        </TableRow>
+                      );
+                    })}
+                  </>
+                ))}
               </TableBody>
             </Table>
           </div>

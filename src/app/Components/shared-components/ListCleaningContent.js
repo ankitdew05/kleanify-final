@@ -22,12 +22,15 @@ function ListCleaningContent() {
   const [nocheck, setnocheck] = useState("0");
   const [noemails, setnoemails] = useState("0");
   const [emailarray, setemailarray] = useState([""]);
+  const [ListCleaned , setListCleaned] = useState('')
   const [unengaged, setUnengaged] = useState([]);
+  const [status, setstatus] = useState(false);
   useEffect(() => {
     getData1()
       .then((res) => {
-        console.log("Response",res.length);
-        if(res.length > 0) {
+        console.log("Response", res.length);
+        if (res.length > 0) {
+          setstatus(!status)
           getUnengaged()
             .then((res) => {
               setUnengaged(res);
@@ -37,6 +40,7 @@ function ListCleaningContent() {
           getData()
             .then((res) => {
               console.log(res);
+              setListCleaned(res[0].listCleaning)
               if (res[0].segmentId) {
                 navigate(`/list-cleaning`);
               } else {
@@ -45,7 +49,8 @@ function ListCleaningContent() {
             })
             .catch((err) => console.log(err));
         } else {
-          navigate("/empty-list-cleaning");
+          setstatus(status)
+          // navigate("/empty-list-cleaning");
         }
       })
       .catch((err) => console.log(err));
@@ -63,7 +68,7 @@ function ListCleaningContent() {
 
   async function getData1() {
     const data = await axios
-      .get(`${baseURL}/unengaged`)
+      .get(`${baseURL}/unengaged/${JSON.parse(auth)._id}`)
       .then((response) => {
         return response.data;
       })
@@ -73,7 +78,7 @@ function ListCleaningContent() {
 
   async function getUnengaged() {
     const data = await axios
-      .get(`${baseURL}/unengaged`)
+      .get(`${baseURL}/unengaged/${JSON.parse(auth)._id}`)
       .then((response) => {
         console.log(response);
         return response.data;
@@ -82,92 +87,111 @@ function ListCleaningContent() {
     return data;
   }
 
-  return (
-    <motion.div
-      className="grid grid-cols-1 sm:grid-cols-6 gap-24 w-full min-w-0 p-24"
-      initial="hidden"
-      animate="show"
-    >
-      <motion.div className="sm:col-span-6">
-        <Paper className="flex flex-col flex-auto p-24 shadow rounded-2xl overflow-hidden">
-          <Typography className="text-3xl p-24 font-medium tracking-tight leading-6 truncate">
-            76 unengagged subscriber cleaned in last 30 days
-          </Typography>
-          <div className="table-responsive">
-            <Table className="w-full min-w-full">
-              <TableHead>
-                <TableRow>
-                  <TableCell>
-                    <Typography
-                      color="text.secondary"
-                      className="font-semibold text-18 whitespace-nowrap"
-                    >
-                      Date
-                    </Typography>
-                  </TableCell>
-
-                  <TableCell>
-                    <Typography
-                      color="text.secondary"
-                      className="font-semibold text-18 whitespace-nowrap"
-                    >
-                      No. of Unengaged Subscriber
-                    </Typography>
-                  </TableCell>
-
-                  <TableCell>
-                    <Typography
-                      color="text.secondary"
-                      className="font-semibold text-18 whitespace-nowrap"
-                    >
-                      Download List ;
-                    </Typography>
-                  </TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {unengaged.map((value) => (
+  if (status) {
+    return (
+      <motion.div
+        className="grid grid-cols-1 sm:grid-cols-6 gap-24 w-full min-w-0 p-24"
+        initial="hidden"
+        animate="show"
+      >
+        <motion.div className="sm:col-span-6">
+          <Paper className="flex flex-col flex-auto p-24 shadow rounded-2xl overflow-hidden">
+            <Typography className="text-3xl p-24 font-medium tracking-tight leading-6 truncate">
+              {ListCleaned} unengagged subscriber cleaned in last 30 days
+            </Typography>
+            <div className="table-responsive">
+              <Table className="w-full min-w-full">
+                <TableHead>
                   <TableRow>
-                    <TableCell component="th" scope="row">
-                      <Typography className="">
-                        {new Date(value.date).toLocaleDateString(
-                          "locale",
-
-                          {
-                            dateStyle: "full",
-                          }
-                        )}
+                    <TableCell>
+                      <Typography
+                        color="text.secondary"
+                        className="font-semibold text-18 whitespace-nowrap"
+                      >
+                        Date
                       </Typography>
                     </TableCell>
-                    <TableCell component="th" scope="row">
-                      <Typography className="">{value.creditUsed}</Typography>
+
+                    <TableCell>
+                      <Typography
+                        color="text.secondary"
+                        className="font-semibold text-18 whitespace-nowrap"
+                      >
+                        No. of Unengaged Subscriber
+                      </Typography>
                     </TableCell>
-                    <TableCell component="th" scope="row">
-                      <Typography className="underline">
-                        <CSVLink columns="Emails" data={[value.array]}>
-                          Download List
-                        </CSVLink>
+
+                    <TableCell>
+                      <Typography
+                        color="text.secondary"
+                        className="font-semibold text-18 whitespace-nowrap"
+                      >
+                        Download List ;
                       </Typography>
                     </TableCell>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </div>
-        </Paper>
-      </motion.div>
+                </TableHead>
+                <TableBody>
+                  {unengaged.map((value) => (
+                    <TableRow>
+                      <TableCell component="th" scope="row">
+                        <Typography className="">
+                          {new Date(value.date).toLocaleDateString(
+                            "locale",
 
-      {/*   <motion.div variants={item} className="widget flex w-full sm:w-1/2 p-12">
-        <Widget8 widget={widgets.widget8} />
+                            {
+                              dateStyle: "full",
+                            }
+                          )}
+                        </Typography>
+                      </TableCell>
+                      <TableCell component="th" scope="row">
+                        <Typography className="">{value.creditUsed}</Typography>
+                      </TableCell>
+                      <TableCell component="th" scope="row">
+                        <Typography className="underline">
+                          <CSVLink columns="Emails" data={[value.array]}>
+                            Download List
+                          </CSVLink>
+                        </Typography>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
+          </Paper>
+        </motion.div>
+
+        {/*   <motion.div variants={item} className="widget flex w-full sm:w-1/2 p-12">
+          <Widget8 widget={widgets.widget8} />
+        </motion.div>
+        <motion.div variants={item} className="widget flex w-full sm:w-1/2 p-12">
+          <Widget9 widget={widgets.widget9} />
+        </motion.div>
+        <motion.div variants={item} className="widget flex w-full p-12">
+          <Widget10 widget={widgets.widget10} />
+        </motion.div> */}
       </motion.div>
-      <motion.div variants={item} className="widget flex w-full sm:w-1/2 p-12">
-        <Widget9 widget={widgets.widget9} />
+    );
+  } else {
+    return (
+      <motion.div
+        className="grid grid-cols-1 sm:grid-cols-6 gap-24 w-full min-w-0 p-24"
+        initial="hidden"
+        animate="show"
+      >
+        <motion.div className="sm:col-span-6">
+          <Paper className="flex flex-col flex-auto p-24 shadow rounded-2xl overflow-hidden">
+            <Typography className="text-3xl p-24 font-medium tracking-tight leading-6 truncate">
+              Cleaning in progress. Please check back later. You will also
+              receive an email once the cleaning is done
+            </Typography>
+          </Paper>
+        </motion.div>
       </motion.div>
-      <motion.div variants={item} className="widget flex w-full p-12">
-        <Widget10 widget={widgets.widget10} />
-      </motion.div> */}
-    </motion.div>
-  );
+    );
+  }
 }
 
 export default ListCleaningContent;

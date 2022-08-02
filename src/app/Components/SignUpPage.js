@@ -24,10 +24,6 @@ import axios from "axios";
  */
 const schema = yup.object().shape({
   displayName: yup.string().required("You must enter display name"),
-  email: yup
-    .string()
-    .email("You must enter a valid email")
-    .required("You must enter a email"),
   password: yup
     .string()
     .required("Please enter your password.")

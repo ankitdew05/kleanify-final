@@ -1,11 +1,34 @@
 import IconButton from "@mui/material/IconButton";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
-import { memo } from "react";
+import { memo, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import FuseSvgIcon from "@fuse/core/FuseSvgIcon";
+import axios from "axios";
+import { Link } from "react-router-dom";
+import baseURL from "src/app/common/baseURL";
 
 function DemoContent() {
+  const auth = localStorage.getItem("user");
+  const [data , setData] = useState('')
+  const [emailBalance, setemailBalance] = useState("0");
+  const [campaignBalance, setcampaignBalance] = useState("0");
+  useEffect(() => {
+    getBounce();
+  },[]);
+
+  const getBounce = async () => {
+    await axios
+      .get(`${baseURL}/paiduser/${JSON.parse(auth)._id}`)
+      .then((response) => {
+        console.log(response.data[0])
+        setData(response.data[0])
+        setemailBalance(response.data[0].credits.emailValidationCredit)
+        setcampaignBalance(response.data[0].credits.testingCredit)
+      })
+      .catch((err) => console.error(err));
+  };
+
   return (
     <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 gap-24 w-full min-w-0 p-24">
 
@@ -19,7 +42,7 @@ function DemoContent() {
             </Typography>
           
             <Typography className="text-7xl  sm:text-8xl mt-36 font-bold tracking-tight leading-none text-green-500">
-             458
+             {data.emailValidation}
             </Typography>
             <Typography className="text-lg font-medium text-green-600">
               Invalid Email Supressed
@@ -33,10 +56,9 @@ function DemoContent() {
               Last 30 Days
             </Typography>
             <Typography
-              className="px-16 text-xl font-medium tracking-tight leading-6 truncate"
+              className="px-16 text-xl font-medium tracking-tight underline leading-6 truncate"
               color="text.secondary"
-            >
-              View Details
+            ><Link to='/email-validation'>View Details</Link>
             </Typography>
           </div>
         
@@ -48,11 +70,11 @@ function DemoContent() {
           </div>
           <div className="text-center mt-8 p-28">
           <Typography className="text-3xl sm:text-4xl mb-8 font-bold tracking-tight leading-none text-amber-500">
-             Campaign Testing
+             Campaigns Testing
             </Typography>
           
             <Typography className="text-7xl  sm:text-8xl mt-36 font-bold tracking-tight leading-none text-amber-500">
-             12
+            {data.campaignTesting}
             </Typography>
             <Typography className="text-lg font-medium text-amber-600">
               Tests Done
@@ -69,7 +91,7 @@ function DemoContent() {
               className="px-16 text-xl font-medium tracking-tight leading-6 truncate underline"
               color="text.secondary"
             >
-              View Details
+              <Link to='/campaign-test'>View Details</Link>
             </Typography>
           </div>
         
@@ -85,7 +107,7 @@ function DemoContent() {
             </Typography>
           
             <Typography className="text-7xl  sm:text-8xl mt-36 font-bold tracking-tight leading-none text-blue-500">
-             12351
+            {data.listCleaning}
             </Typography>
             <Typography className="text-lg font-medium text-blue-600">
               Unengaged Subscribers Cleaned
@@ -102,7 +124,7 @@ function DemoContent() {
               className="px-16 text-xl font-medium tracking-tight leading-6 truncate underline"
               color="text.secondary"
             >
-              View Details
+              <Link to='/list-cleaning'>View Details</Link>
             </Typography>
           </div>
         
@@ -119,7 +141,7 @@ function DemoContent() {
             <div className="flex">
           <div className="flex-col flex-1">
           <Typography className="text-7xl  sm:text-8xl mt-36 font-bold tracking-tight leading-none text-red-500">
-             12351
+            {emailBalance}
             </Typography>
             <Typography className="text-lg font-medium text-red-600">
               Email Validation Credit
@@ -127,7 +149,7 @@ function DemoContent() {
           </div>
           <div className="flex-col flex-1">
           <Typography className="text-7xl  sm:text-8xl mt-36 font-bold tracking-tight leading-none text-red-500">
-             18
+            {campaignBalance}
             </Typography>
             <Typography className="text-lg font-medium text-red-600">
               Camapign Testing Credit
@@ -147,7 +169,7 @@ function DemoContent() {
               className="px-16 text-xl font-medium tracking-tight leading-6 truncate underline"
               color="text.secondary"
             >
-              View Details
+              <Link to='/buy-credits'>View Details</Link>
             </Typography>
           </div>
         

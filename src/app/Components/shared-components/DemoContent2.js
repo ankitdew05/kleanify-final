@@ -35,11 +35,26 @@ function DemoContent2() {
   const planId = userData.planId;
   useEffect(() => {
     setUserData(JSON.parse(auth));
-    setTotal(parseFloat(emailCredit * 0.001) + parseFloat(campaignCredit));
+    setTotal(parseFloat(emailCredit) + parseFloat(campaignCredit));
     getBounce();
   }, [emailCredit, campaignCredit]);
 
 
+  function handleEmailCredit(value){
+    if(value<0 || null){
+      setemailCredit(0);
+    }else{
+      setemailCredit(value);
+    }
+  }
+
+  function handleCampaignCredit(value){
+    if(value<0 || null){
+      setCampaignCredit(0);
+    }else{
+      setCampaignCredit(value);
+    }
+  }
   const handleCheckout = () => {
     axios
       .post(`${baseURL}/create-checkout-session`, {
@@ -105,7 +120,7 @@ function DemoContent2() {
                 Email Validation
               </Typography>
 
-              <Typography className="text-7xl  sm:text-8xl mt-36 font-bold tracking-tight leading-none text-green-500">
+              <Typography className="text-3xl  sm:text-6xl mt-36 font-bold tracking-tight leading-none text-green-500">
                 {emailBalance}
               </Typography>
               <Typography className="text-lg font-medium text-green-600">
@@ -136,7 +151,7 @@ function DemoContent2() {
                 Campaign Test
               </Typography>
 
-              <Typography className="text-7xl  sm:text-8xl mt-36 font-bold tracking-tight leading-none text-amber-500">
+              <Typography className="text-3xl  sm:text-6xl mt-36 font-bold tracking-tight leading-none text-amber-500">
                 {campaignBalance}
               </Typography>
               <Typography className="text-lg font-medium text-amber-600">
@@ -178,20 +193,20 @@ function DemoContent2() {
             </Typography>
             <TextField
               className=" mb-16 w-1/2 "
-              label="Qauntity"
+              label=" Lot Qauntity(1 Lot = 1000 credits)"
               id="priceTaxExcl"
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start"></InputAdornment>
                 ),
               }}
-              onChange={(e) => setemailCredit(e.target.value)}
+              onChange={(e) => {handleEmailCredit(e.target.value) }}
               value={emailCredit}
               type="number"
               variant="outlined"
             />
             <Typography className="text-md sm:text-2xl mb-8 font-bold tracking-tight leading-none text-green-500">
-              ${emailCredit * 0.001}
+              ${emailCredit}
             </Typography>
           </div>
           <div className="text-center mt-8 p-28 grid grid-cols-3 justify-items-center">
@@ -207,7 +222,7 @@ function DemoContent2() {
                   <InputAdornment position="start"></InputAdornment>
                 ),
               }}
-              onChange={(e) => setCampaignCredit(e.target.value)}
+              onChange={(e) => handleCampaignCredit(e.target.value)}
               value={campaignCredit}
               type="number"
               variant="outlined"
