@@ -13,6 +13,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import withRouter from "@fuse/core/withRouter";
 import FuseLoading from "@fuse/core/FuseLoading";
+import { lighten, useTheme } from "@mui/material/styles";
 import Tooltip from "@mui/material/Tooltip";
 import CircularProgress from "@mui/material/CircularProgress";
 import Backdrop from "@mui/material/Backdrop";
@@ -29,6 +30,7 @@ import axios from "axios";
 import { Button } from "@mui/material";
 
 function OrdersTable(props) {
+  const theme = useTheme()
   const [spinner, setSpinner] = useState(false);
   const dispatch = useDispatch();
   const orders = useSelector(selectOrders);
@@ -285,11 +287,11 @@ function OrdersTable(props) {
                       <Button onClick={() => goto(n._id, n.id)}>Update</Button>
                       <Backdrop
                         sx={{
-                          opacity: "5%",
-                          color: "#fff",
+                          opacity: "0",
+                          color: "#000000",
                           zIndex: (theme) => theme.zIndex.drawer + 1,
                         }}
-                        opacity="5%"
+                        
                         open={spinner}
                       >
                         <CircularProgress color="success" />

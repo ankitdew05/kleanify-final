@@ -46,8 +46,14 @@ function Contact() {
       },
     });
     result = await result.json();
-    console.warn(result);
-    navigate("/");
+    if(result.Message === "OK"){
+      alert("Support Successfuly Raised")
+      navigate('/')
+    } else{
+      alert("OOPs! Try Again")
+      
+    }
+    
   }
 
   if (_.isEmpty(form)) {

@@ -72,7 +72,7 @@ function DemoContent1() {
             </div>
              <div className="flex items-center justify-evenly px-8 pt-12 pb-20">
               <Typography
-                className="px-16 text-xl font-medium tracking-tight leading-6 truncate"
+                className="px-16 text-xl font-medium tracking-tight leading-6 "
                 color="text.secondary"
               >
                 Last 30 Days
@@ -97,7 +97,7 @@ function DemoContent1() {
             </div>
             <div className="flex items-center justify-evenly px-8 pt-12 pb-20">
               <Typography
-                className="px-16 text-xl font-medium tracking-tight leading-6 truncate"
+                className="px-16 text-xl font-medium tracking-tight leading-6 "
                 color="text.secondary"
               >
                 Last 30 Days
@@ -122,7 +122,7 @@ function DemoContent1() {
             </div>
             <div className="flex items-center justify-evenly px-8 pt-12 pb-20">
               <Typography
-                className="px-16 text-xl font-medium tracking-tight leading-6 truncate"
+                className="px-16 text-xl font-medium tracking-tight leading-6 "
                 color="text.secondary"
               >
                 Last 30 Days
@@ -134,7 +134,7 @@ function DemoContent1() {
 
       <motion.div className="sm:col-span-6">
         <Paper className="flex flex-col flex-auto p-24 shadow rounded-2xl overflow-hidden">
-          <Typography className="text-3xl font-medium tracking-tight leading-6 truncate">
+          <Typography className="text-3xl font-medium tracking-tight leading-6 ">
             Invalid Emails
           </Typography>
           <div className="table-responsive">

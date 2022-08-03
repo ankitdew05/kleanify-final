@@ -23,8 +23,8 @@ import "react-toastify/dist/ReactToastify.css";
 function DemoContent2() {
   const navigate = useNavigate();
   const auth = localStorage.getItem("user");
-  const [emailCredit, setemailCredit] = useState("0");
-  const [campaignCredit, setCampaignCredit] = useState("0");
+  const [emailCredit, setemailCredit] = useState("1");
+  const [campaignCredit, setCampaignCredit] = useState("1");
   let [total, setTotal] = useState("0");
   let [userData, setUserData] = useState({});
   const [emailBalance, setemailBalance] = useState("");
@@ -41,16 +41,16 @@ function DemoContent2() {
 
 
   function handleEmailCredit(value){
-    if(value<0 || null){
-      setemailCredit(0);
+    if(value<1 || null ){
+      setemailCredit(1);
     }else{
       setemailCredit(value);
     }
   }
 
   function handleCampaignCredit(value){
-    if(value<0 || null){
-      setCampaignCredit(0);
+    if(value<1 || null){
+      setCampaignCredit(1);
     }else{
       setCampaignCredit(value);
     }
@@ -111,16 +111,16 @@ function DemoContent2() {
       initial="hidden"
       animate="show"
     >
-      <div className="sm:col-span-6 lg:col-span-6 grid grid-cols-1 md:grid-cols-3 md:gap-x-24 gap-y-24 ">
+      <div className="sm:col-span-6 lg:col-span-6 grid grid-cols-1 md:grid-cols-4 md:gap-x-24 gap-y-24 ">
         <motion.div className="sm:col-span-1">
           <Paper className="flex flex-col flex-auto shadow rounded-2xl w-full h-full overflow-hidden">
             <div className="flex items-center justify-between px-8 pt-12"></div>
-            <div className="text-center mt-8 p-28">
-              <Typography className="text-3xl sm:text-4xl mb-8 font-bold tracking-tight leading-none text-green-500">
+            <div className="text-center mt-8 p-12">
+              <Typography className="text-3xl sm:text-3xl mb-8 font-bold tracking-tight leading-none text-green-500">
                 Email Validation
               </Typography>
 
-              <Typography className="text-3xl  sm:text-6xl mt-36 font-bold tracking-tight leading-none text-green-500">
+              <Typography className="text-3xl  sm:text-5xl mt-36 font-bold tracking-tight leading-none text-green-500">
                 {emailBalance}
               </Typography>
               <Typography className="text-lg font-medium text-green-600">
@@ -146,12 +146,12 @@ function DemoContent2() {
         <motion.div className="sm:col-span-1">
           <Paper className="flex flex-col flex-auto shadow rounded-2xl w-full h-full overflow-hidden">
             <div className="flex items-center justify-between px-8 pt-12"></div>
-            <div className="text-center mt-8 p-28">
-              <Typography className="text-3xl sm:text-4xl mb-8 font-bold tracking-tight leading-none text-amber-500">
+            <div className="text-center mt-8 p-12">
+              <Typography className="text-3xl sm:text-3xl mb-8 font-bold tracking-tight leading-none text-amber-500">
                 Campaign Test
               </Typography>
 
-              <Typography className="text-3xl  sm:text-6xl mt-36 font-bold tracking-tight leading-none text-amber-500">
+              <Typography className="text-3xl  sm:text-5xl mt-36 font-bold tracking-tight leading-none text-amber-500">
                 {campaignBalance}
               </Typography>
               <Typography className="text-lg font-medium text-amber-600">
@@ -178,21 +178,23 @@ function DemoContent2() {
 
       <motion.div className="sm:col-span-6 md:col-span-5">
         <Paper className="flex flex-col flex-auto shadow rounded-2xl w-full h-full overflow-hidden">
-          <div className="text-center mt-8 p-28 grid grid-cols-3">
-            <Typography className="text-lg sm:text-3xl mb-8 font-bold tracking-tight leading-none text-green-500"></Typography>
-            <Typography className="text-md sm:text-2xl mb-8 font-bold tracking-tight leading-none text-green-500">
+          <div className="text-center mt-8 px-28 py-9 grid grid-cols-3">
+            <Typography className="text-lg sm:text-3xl mb-4 font-bold tracking-tight leading-none text-green-500"></Typography>
+            <Typography className="text-md sm:text-2xl mb-4 font-bold tracking-tight leading-none text-gray-700">
               Credits
             </Typography>
-            <Typography className="text-md sm:text-2xl mb-8 font-bold tracking-tight leading-none text-green-500">
+            <Typography className="text-md sm:text-2xl mb-4 font-bold tracking-tight leading-none text-gray-700">
               Amount
             </Typography>
           </div>
-          <div className="text-center mt-8 p-28 grid grid-cols-3 justify-items-center">
-            <Typography className="text-md sm:text-3xl mb-8 font-bold tracking-tight leading-none text-green-500">
-              Buy Email Validation Credit
+          <div className="text-left mt-8 px-28 py-5 grid grid-cols-3 justify-items-center">
+            <Typography className="text-sm sm:text-3xl mb-4 font-bold tracking-tight leading-none text-gray-700">
+              <p className="mt-10 pt-10" >Buy Email Validation Credit </p>
+              <p className="text-lg text-green-500 font-light">You are buying in <b className="font-bold">Lots</b> which contain <b className="font-bold">1000 credits</b> </p>
+              <p className="text-lg text-green-500 font-light"> <b className="font-bold">1 Credit = .001 $</b></p>
             </Typography>
             <TextField
-              className=" mb-16 w-1/2 "
+              className=" mb-4 w-1/2 "
               label=" Lot Qauntity(1 Lot = 1000 credits)"
               id="priceTaxExcl"
               InputProps={{
@@ -205,16 +207,16 @@ function DemoContent2() {
               type="number"
               variant="outlined"
             />
-            <Typography className="text-md sm:text-2xl mb-8 font-bold tracking-tight leading-none text-green-500">
+            <Typography className="text-md sm:text-2xl mb-4 font-bold tracking-tight leading-none text-gray-700">
               ${emailCredit}
             </Typography>
           </div>
-          <div className="text-center mt-8 p-28 grid grid-cols-3 justify-items-center">
-            <Typography className="text-md sm:text-3xl mb-8 font-bold tracking-tight leading-none text-green-500">
+          <div className="text-left mt-8 px-28 py-9 grid grid-cols-3 justify-items-center">
+            <Typography className="text-md sm:text-3xl mb-4 font-bold tracking-tight leading-none text-gray-700">
               Buy Campaign Testing Credit
             </Typography>
             <TextField
-              className=" mb-16 w-1/2 "
+              className="  mt-10 w-1/2 "
               label="Qauntity"
               id="priceTaxExcl"
               InputProps={{
@@ -227,23 +229,23 @@ function DemoContent2() {
               type="number"
               variant="outlined"
             />
-            <Typography className="text-md sm:text-2xl mb-8 font-bold tracking-tight leading-none text-green-500">
+            <Typography className="text-md sm:text-2xl mb-4 font-bold tracking-tight leading-none text-gray-700">
               ${campaignCredit}
             </Typography>
           </div>
-          <div className="text-center mt-8 p-28 grid grid-cols-3">
-            <Typography className="text-md sm:text-3xl mb-8 font-bold tracking-tight leading-none text-green-500">
+          <div className="text-center mt-8 px-28 py-9 grid grid-cols-3">
+            <Typography className="text-md sm:text-3xl mb-4 font-bold tracking-tight leading-none text-gray-700">
               Total
             </Typography>
-            <Typography className="text-md sm:text-2xl mb-8 font-bold tracking-tight leading-none text-green-500"></Typography>
-            <Typography className="text-md sm:text-2xl mb-8 font-bold tracking-tight leading-none text-green-500">
+            <Typography className="text-md sm:text-2xl mb-4 font-bold tracking-tight leading-none text-green-500"></Typography>
+            <Typography className="text-md sm:text-2xl mb-4 font-bold tracking-tight leading-none text-gray-700">
               ${total}
             </Typography>
           </div>
-          <div className="text-center mt-8 p-28 grid grid-cols-3">
-            <Typography className="text-md sm:text-3xl mb-8 font-bold tracking-tight leading-none text-green-500"></Typography>
-            <Typography className="text-md sm:text-2xl mb-8 font-bold tracking-tight leading-none text-green-500"></Typography>
-            <Typography className="text-md  sm:text-2xl mb-8 font-bold tracking-tight leading-none text-green-500">
+          <div className="text-center mt-8 px-28 py-9 grid grid-cols-3">
+            <Typography className="text-md sm:text-3xl mb-4 font-bold tracking-tight leading-none text-green-500"></Typography>
+            <Typography className="text-md sm:text-2xl mb-4 font-bold tracking-tight leading-none text-green-500"></Typography>
+            <Typography className="text-md  sm:text-xl mb-4 font-bold tracking-tight leading-none text-green-500">
               <button className="bg-green p-12 text-white rounded-12" onClick={() => handleCheckout()}>Buy Credits</button>
             </Typography>
           </div>

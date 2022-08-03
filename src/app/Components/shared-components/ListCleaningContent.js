@@ -95,9 +95,9 @@ function ListCleaningContent() {
         animate="show"
       >
         <motion.div className="sm:col-span-6">
-          <Paper className="flex flex-col flex-auto p-24 shadow rounded-2xl overflow-hidden">
-            <Typography className="text-3xl p-24 font-medium tracking-tight leading-6 truncate">
-              {ListCleaned} unengagged subscriber cleaned in last 30 days
+          <Paper className="flex flex-col flex-auto p-24 shadow rounded-2xl overflow-hidden ">
+            <Typography className="text-3xl p-24 font-medium tracking-tight leading-6 ">
+              <b>{ListCleaned} </b>unengagged subscriber cleaned in last 30 days
             </Typography>
             <div className="table-responsive">
               <Table className="w-full min-w-full">
@@ -183,7 +183,7 @@ function ListCleaningContent() {
       >
         <motion.div className="sm:col-span-6">
           <Paper className="flex flex-col flex-auto p-24 shadow rounded-2xl overflow-hidden">
-            <Typography className="text-3xl p-24 font-medium tracking-tight leading-6 truncate">
+            <Typography className="text-3xl p-24 font-medium tracking-tight leading-6 ">
               Cleaning in progress. Please check back later. You will also
               receive an email once the cleaning is done
             </Typography>
