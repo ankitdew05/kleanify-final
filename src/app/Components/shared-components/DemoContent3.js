@@ -136,7 +136,12 @@ function DemoContent3() {
     result = await result.json();
     setSpinner(false);
     console.warn(result);
-    window.location.reload;
+    if( result.Status === "Success"){
+      alert(`Succesfully Tested Camapign ${result.CamapignId}`)
+    } else{
+      alert(` Oops! Eroor Not Able To Test Tested Camapign ${result.CamapignId} , Try Agin Later`)
+    }
+    window.location.reload()
   };
 
   if (status ) {

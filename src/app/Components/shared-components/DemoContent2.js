@@ -188,9 +188,9 @@ function DemoContent2() {
             </Typography>
           </div>
           <div className="text-left mt-8 px-28 py-5 grid grid-cols-3 justify-items-center">
-            <Typography className="text-sm sm:text-3xl mb-4 font-bold tracking-tight leading-none text-gray-700">
+            <Typography className="text-[10px] sm:text-3xl mb-4 font-bold tracking-tight leading-none text-gray-700">
               <p className="mt-10 pt-10" >Buy Email Validation Credit </p>
-              <p className="text-lg text-green-500 font-light">You are buying in <b className="font-bold">Lots</b> which contain <b className="font-bold">1000 credits</b> </p>
+              <p className=" text-[1px] sm:text-lg text-green-500 font-light">You are buying in <b className="font-bold text-[1px] sm:text-lg">Lots</b> which contain <b className="font-bold text-[1px] sm:text-lg">1000 credits</b> </p>
               <p className="text-lg text-green-500 font-light"> <b className="font-bold">1 Credit = .001 $</b></p>
             </Typography>
             <TextField
@@ -212,7 +212,7 @@ function DemoContent2() {
             </Typography>
           </div>
           <div className="text-left mt-8 px-28 py-9 grid grid-cols-3 justify-items-center">
-            <Typography className="text-md sm:text-3xl mb-4 font-bold tracking-tight leading-none text-gray-700">
+            <Typography className="text-[10px] sm:text-3xl mb-4 font-bold tracking-tight leading-none text-gray-700">
               Buy Campaign Testing Credit
             </Typography>
             <TextField

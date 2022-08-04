@@ -167,8 +167,11 @@ function OrdersTable(props) {
     );
     result = await result.json();
     setSpinner(false);
-    console.warn(result);
-    alert(`Sucssefuly Updated ${result.subject}`);
+    if(result.Status === "Success"){
+      alert(`Sucssefuly Updated ${result.subject}`);
+    } else{
+      alert(`Oops! not able to update  ${result.subject}. Try Again in some time!!`);
+    }
   };
 
   const check = async (id) => {
