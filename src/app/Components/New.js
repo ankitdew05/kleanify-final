@@ -72,7 +72,7 @@ function New() {
       localStorage.setItem("token", JSON.stringify(result.auth));
       navigate("/home");
     } else {
-      alert("Email Does not exist");
+      alert("Email Does  exist");
     }
   }
 
