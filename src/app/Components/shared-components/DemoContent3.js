@@ -54,7 +54,7 @@ function DemoContent3() {
     //getEmailInfo();
     getData()
       .then((response) => {
-        if (response.checked.length !== 0) {
+        if (response.checked.length !== 0 && response.checked.Result !== "null") {
           setstatus(true);
           setResult("Test Again");
           console.log(status);

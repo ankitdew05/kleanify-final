@@ -306,7 +306,7 @@ function OrdersTable(props) {
                       component="th"
                       scope="row"
                     >
-                      <Button onClick={() => check(n.id)}>View Details</Button>
+                      <Button onClick={() => check(n._id)}>View Details</Button>
                     </TableCell>
                   </TableRow>
                 );
