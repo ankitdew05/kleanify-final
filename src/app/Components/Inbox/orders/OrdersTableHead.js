@@ -22,8 +22,8 @@ const rows = [
     id: "id",
     align: "left",
     disablePadding: false,
-    label: "Campaign ID",
-    tip: "ID of your campaigns in Klaviyo",
+    label: "Name",
+    tip: "Name of your campaigns in Klaviyo",
     sort: true,
   },
 
@@ -72,7 +72,7 @@ const rows = [
 ];
 
 function OrdersTableHead(props) {
-  const auth = localStorage.getItem('user');
+  const auth = localStorage.getItem("user");
   const { selectedOrderIds } = props;
   const numSelected = selectedOrderIds.length;
 
@@ -93,69 +93,10 @@ function OrdersTableHead(props) {
   }
 
   // const {onSelectAllClick, order, orderBy, numSelected, rowCount} = props;
-  
 
   return (
     <TableHead>
       <TableRow className="h-48 sm:h-64">
-        <TableCell
-          padding="none"
-          className="w-40 md:w-64 text-center z-99"
-          sx={{
-            backgroundColor: (theme) =>
-              darken(
-                theme.palette.background.paper,
-                theme.palette.mode === "light" ? 0.02 : 0.2
-              ),
-          }}
-        >
-          <Checkbox
-            indeterminate={numSelected > 0 && numSelected < props.rowCount}
-            checked={props.rowCount !== 0 && numSelected === props.rowCount}
-            onChange={props.onSelectAllClick}
-          />
-          {numSelected > 0 && (
-            <Box
-              className="flex items-center justify-center absolute w-64 top-0 ltr:left-0 rtl:right-0 mx-56 h-64 z-10 border-b-1"
-              sx={{
-                backgroundColor: (theme) =>
-                  theme.palette.mode === "light"
-                    ? lighten(theme.palette.background.default, 0.4)
-                    : lighten(theme.palette.background.default, 0.02),
-              }}
-            >
-              <IconButton
-                aria-owns={selectedOrdersMenu ? "selectedOrdersMenu" : null}
-                aria-haspopup="true"
-                onClick={openSelectedOrdersMenu}
-                size="large"
-              >
-                <FuseSvgIcon>heroicons-outline:dots-horizontal</FuseSvgIcon>
-              </IconButton>
-              <Menu
-                id="selectedOrdersMenu"
-                anchorEl={selectedOrdersMenu}
-                open={Boolean(selectedOrdersMenu)}
-                onClose={closeSelectedOrdersMenu}
-              >
-                <MenuList>
-                  <MenuItem
-                    onClick={() => {
-                      dispatch(removeOrders(selectedOrderIds));
-                      props.onMenuItemClick();
-                      closeSelectedOrdersMenu();
-                    }}
-                  >
-                    <ListItemIcon className="min-w-40">
-                      <FuseSvgIcon>heroicons-outline:trash</FuseSvgIcon>
-                    </ListItemIcon>
-                    <ListItemText primary="Remove" />
-                  </MenuItem>
-                </MenuList>
-              </Menu>
-            </Box>
-          )}
-        </TableCell>
         {rows.map((row) => {
           return (
             <TableCell

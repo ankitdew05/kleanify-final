@@ -338,7 +338,7 @@ function SignUpPage() {
               type="submit"
               size="large"
             >
-              Create your free account
+              Get Started
             </Button>
           </form>
         </div>

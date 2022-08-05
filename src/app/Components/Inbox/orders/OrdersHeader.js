@@ -95,7 +95,7 @@ function OrdersHeader(props) {
           <FuseSvgIcon color="disabled">heroicons-solid:search</FuseSvgIcon>
 
           <Input
-            placeholder="Search Subjects"
+            placeholder="Search Campaign"
             className="flex flex-1"
             disableUnderline
             fullWidth

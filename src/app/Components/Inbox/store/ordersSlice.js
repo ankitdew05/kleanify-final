@@ -5,7 +5,6 @@ export const getOrders = createAsyncThunk('eCommerceApp/orders/getOrders', async
   const response = await axios.get(`${baseURL}/campaign`);
   const data = await response.data;
   console.log('orders',data)
-
   return data;
 });
 
@@ -25,6 +24,7 @@ export const { selectAll: selectOrders, selectById: selectOrderById } = ordersAd
 );
 
 const ordersSlice = createSlice({
+  
   name: 'eCommerceApp/orders',
   initialState: ordersAdapter.getInitialState({
     searchText: '',
@@ -41,6 +41,7 @@ const ordersSlice = createSlice({
     [getOrders.fulfilled]: ordersAdapter.setAll,
     [removeOrders.fulfilled]: (state, action) => ordersAdapter.removeMany(state, action.payload),
   },
+  
 });
 
 export const { setOrdersSearchText } = ordersSlice.actions;

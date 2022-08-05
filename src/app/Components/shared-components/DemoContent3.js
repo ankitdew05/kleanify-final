@@ -166,7 +166,14 @@ function DemoContent3() {
               Subject : {camp.subject}
             </Typography>
             <Typography className="username text-16 m-20 mt-0 text-gray-700 whitespace-nowrap ">
-              Last Updated : {camp.Updated}
+              Last Updated :{" "}
+              {new Date(camp.Updated).toLocaleDateString(
+                "locale",
+
+                {
+                  dateStyle: "full",
+                }
+              )}
             </Typography>
             <Typography className="username text-16 m-20 mt-0 text-gray-700 whitespace-nowrap ">
               Current Status : {camp.status}
@@ -225,7 +232,6 @@ function DemoContent3() {
         </div>
         {checked.map((value, index) => (
           <div className="sm:col-span-6  lg:col-span-6 grid grid-cols-1 md:grid-cols-4 md:gap-x-24 gap-y-24">
-          
             <div>
               <div className=" sm:col-span-6 lg:col-span-6 grid-cols-4 grid">
                 <div className=" flex flex-col col-span-3">
@@ -926,7 +932,13 @@ function DemoContent3() {
               Subject : {camp.subject}
             </Typography>
             <Typography className="username text-16 m-20 mt-0 text-gray-700 whitespace-nowrap ">
-              Last Updated : {camp.updated}
+              Last Updated : {new Date(camp.updated).toLocaleDateString(
+                "locale",
+
+                {
+                  dateStyle: "full",
+                }
+              )}
             </Typography>
             <Typography className="username text-16 m-20 mt-0 text-gray-700 whitespace-nowrap ">
               Current Status : {camp.status}

@@ -180,6 +180,7 @@ function OrdersTable(props) {
 
   return (
     <div className="w-full flex flex-col min-h-full">
+    
       <FuseScrollbars className="grow overflow-x-auto">
         <Table stickyHeader className="min-w-xl" aria-labelledby="tableTitle">
           <OrdersTableHead
@@ -196,7 +197,7 @@ function OrdersTable(props) {
               data1,
               [
                 (o) => {
-                  switch (order.id) {
+                  switch (data1.id) {
                     case "id": {
                       return parseInt(o.id, 10);
                     }
@@ -206,8 +207,11 @@ function OrdersTable(props) {
                     case "payment": {
                       return o.payment.method;
                     }
+                    case "date": {
+                      return o.payment.method
+                    }
                     default: {
-                      return o[order.id];
+                      return o[data1.id];
                     }
                   }
                 },
@@ -228,23 +232,13 @@ function OrdersTable(props) {
                     selected={isSelected}
                     //onClick={(event) => handleClick(n)}
                   >
-                    <TableCell
-                      className="w-40 md:w-64 text-center"
-                      padding="none"
-                    >
-                      <Checkbox
-                        checked={isSelected}
-                        onClick={(event) => event.stopPropagation()}
-                        onChange={(event) => handleCheck(event, n.id)}
-                      />
-                    </TableCell>
 
                     <TableCell
                       className="p-4 md:p-16"
                       component="th"
                       scope="row"
                     >
-                      {n.id}
+                      {n.name}
                     </TableCell>
 
                     <TableCell
