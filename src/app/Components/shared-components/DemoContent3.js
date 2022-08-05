@@ -54,12 +54,16 @@ function DemoContent3() {
     //getEmailInfo();
     getData()
       .then((response) => {
-        if (response.checked.length !== 0 && response.checked.Result !== "null") {
+        if (
+          response.checked.length != 0 &&
+          response.checked[0].Result != null
+        ) {
+          console.log(response.checked);
           setstatus(true);
           setResult("Test Again");
           console.log(status);
+          setChecked(response.checked);
         }
-        setChecked(response.checked);
         setcamp(response);
         //getResult(response.checked[0].glockId);
       })
@@ -153,7 +157,6 @@ function DemoContent3() {
         initial="hidden"
         animate="show"
       >
-      
         <div className=" sm:col-span-6 lg:col-span-6 col-span-1 grid-cols-4 grid">
           <div className=" flex flex-col sm:col-span-3 ">
             <Typography className="username text-16 m-20 font-bold text-gray-700 whitespace-nowrap ">
@@ -222,6 +225,7 @@ function DemoContent3() {
         </div>
         {checked.map((value, index) => (
           <div className="sm:col-span-6  lg:col-span-6 grid grid-cols-1 md:grid-cols-4 md:gap-x-24 gap-y-24">
+          
             <div>
               <div className=" sm:col-span-6 lg:col-span-6 grid-cols-4 grid">
                 <div className=" flex flex-col col-span-3">
@@ -524,7 +528,7 @@ function DemoContent3() {
                     </Typography>
                     <div className="flex">
                       <Typography className="username text-16 pt-6  px-10 mr-10 bg-green-500 rounded-4 text-white whitespace-nowrap font-medium">
-                        Score: {value.Result.Barracuda.Score}
+                        Score: {value.Result?.Barracuda.Score}
                       </Typography>
                       <FuseSvgIcon
                         size={24}
@@ -619,7 +623,7 @@ function DemoContent3() {
                     </Typography>
                     <div className="flex">
                       <Typography className="username text-16 pt-6  px-10 mr-10 bg-red-500 rounded-4 text-white whitespace-nowrap font-medium">
-                        Score: {value.Result.SpamAssassin?.Score}
+                        Score: {value.Result?.SpamAssassin?.Score}
                       </Typography>
                       <FuseSvgIcon
                         size={24}
@@ -637,7 +641,7 @@ function DemoContent3() {
                       <div className="text-left mt-8 p-28">
                         <Typography className="text-xl p-10 ">
                           The famous spam filter SpamAssassin. Score:{" "}
-                          {value.Result.SpamAssassin.Score}. A score above 5 is
+                          {value.Result?.SpamAssassin.Score}. A score above 5 is
                           considered spam. You need to fix "red" and "yellow"
                           points to improve your deliverability.{" "}
                         </Typography>{" "}
@@ -663,7 +667,7 @@ function DemoContent3() {
                           <div className="table-responsive">
                             <Table className="w-full min-w-full">
                               <TableBody>
-                                {(value.Result.SpamAssassin.Headers || []).map(
+                                {(value.Result?.SpamAssassin.Headers || []).map(
                                   (data) => (
                                     <TableRow>
                                       <>
@@ -781,10 +785,14 @@ function DemoContent3() {
                               </TableCell>
                               <TableCell component="th" scope="row">
                                 {data.iType === "Inbox" ? (
-                                  <Typography className="text-xl  bg-green-500 w-fit rounded-8 p-5 text-white flex-1 ">{data.iType}</Typography>
+                                  <Typography className="text-xl  bg-green-500 w-fit rounded-8 p-5 text-white flex-1 ">
+                                    {data.iType}
+                                  </Typography>
                                 ) : (
-                                  <Typography className="text-xl bg-red-500 rounded-8 w-fit p-5 text-white flex-1 ">{data.iType}</Typography>
-                                ) }
+                                  <Typography className="text-xl bg-red-500 rounded-8 w-fit p-5 text-white flex-1 ">
+                                    {data.iType}
+                                  </Typography>
+                                )}
                               </TableCell>
                               <TableCell component="th" scope="row">
                                 <Typography className="text-xl  flex-2 ">
@@ -793,12 +801,15 @@ function DemoContent3() {
                               </TableCell>
                               <TableCell component="th" scope="row">
                                 <Typography className="text-xl  flex-2 ">
-                                {data.iType === "Pass" ? (
-                                  <Typography className="text-xl  bg-green-500 w-fit rounded-8 p-5 text-white flex-1 ">{data.spf}</Typography>
-                                ) : (
-                                  <Typography className="text-xl bg-red-500 rounded-8 w-fit p-5 text-white flex-1 ">{data.spf}</Typography>
-                                ) }
-                                  
+                                  {data.iType === "Pass" ? (
+                                    <Typography className="text-xl  bg-green-500 w-fit rounded-8 p-5 text-white flex-1 ">
+                                      {data.spf}
+                                    </Typography>
+                                  ) : (
+                                    <Typography className="text-xl bg-red-500 rounded-8 w-fit p-5 text-white flex-1 ">
+                                      {data.spf}
+                                    </Typography>
+                                  )}
                                 </Typography>
                               </TableCell>
                               <TableCell component="th" scope="row">
@@ -808,11 +819,15 @@ function DemoContent3() {
                               </TableCell>
                               <TableCell component="th" scope="row">
                                 <Typography className="text-xl  flex-2 ">
-                                {data.iType === "0" ? (
-                                  <Typography className="text-xl  bg-green-500 w-fit rounded-8 p-10 text-white flex-1 ">{data.bl}</Typography>
-                                ) : (
-                                  <Typography className="text-xl bg-red-500 rounded-8 w-fit p-10 text-white flex-1 ">{data.bl}</Typography>
-                                ) }
+                                  {data.iType === "0" ? (
+                                    <Typography className="text-xl  bg-green-500 w-fit rounded-8 p-10 text-white flex-1 ">
+                                      {data.bl}
+                                    </Typography>
+                                  ) : (
+                                    <Typography className="text-xl bg-red-500 rounded-8 w-fit p-10 text-white flex-1 ">
+                                      {data.bl}
+                                    </Typography>
+                                  )}
                                 </Typography>
                               </TableCell>
                               <TableCell component="th" scope="row">

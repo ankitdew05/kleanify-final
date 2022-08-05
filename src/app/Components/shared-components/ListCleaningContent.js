@@ -22,34 +22,36 @@ function ListCleaningContent() {
   const [nocheck, setnocheck] = useState("0");
   const [noemails, setnoemails] = useState("0");
   const [emailarray, setemailarray] = useState([""]);
-  const [ListCleaned , setListCleaned] = useState('')
+  const [ListCleaned, setListCleaned] = useState("");
   const [unengaged, setUnengaged] = useState([]);
   const [status, setstatus] = useState(false);
   useEffect(() => {
+    getData()
+      .then((res) => {
+        console.log(res);
+        setListCleaned(res[0].listCleaning);
+        if (res[0].segmentId) {
+          console.log("this is segment id", res[0].segmentId);
+          navigate(`/list-cleaning`);
+        } else {
+          console.log("On boarding");
+          navigate("/onboarding3");
+        }
+      })
+      .catch((err) => console.log(err));
     getData1()
       .then((res) => {
         console.log("Response", res.length);
         if (res.length > 0) {
-          setstatus(!status)
+          setstatus(!status);
           getUnengaged()
             .then((res) => {
               setUnengaged(res);
               console.log("Data", res);
             })
             .catch((err) => console.log(err));
-          getData()
-            .then((res) => {
-              console.log(res);
-              setListCleaned(res[0].listCleaning)
-              if (res[0].segmentId) {
-                navigate(`/list-cleaning`);
-              } else {
-                navigate("/onboarding3");
-              }
-            })
-            .catch((err) => console.log(err));
         } else {
-          setstatus(status)
+          setstatus(status);
           // navigate("/empty-list-cleaning");
         }
       })
