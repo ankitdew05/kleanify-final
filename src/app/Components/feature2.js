@@ -11,19 +11,19 @@ import FormControl from "@mui/material/FormControl";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import TextField from "@mui/material/TextField";
 import { Controller, useForm } from "react-hook-form";
-import {useParams , useNavigate} from 'react-router-dom'
+import { useParams, useNavigate } from "react-router-dom";
 import baseURL from "../common/baseURL";
 
 function Feature2() {
-  const auth = localStorage.getItem('user');
-useEffect(()=>{
-  document.title = "Onboarding to Kleanify";
-})
+  const auth = localStorage.getItem("user");
+  useEffect(() => {
+    document.title = "Onboarding to Kleanify";
+  });
   const [period, setPeriod] = useState("month");
-  const params = useParams()
-  const UserId = params.id
+  const params = useParams();
+  const UserId = params.id;
   const navigate = useNavigate();
-  async function onSubmit({segmentId}) {
+  async function onSubmit({ segmentId }) {
     let result = await fetch(`${baseURL}/segment/${JSON.parse(auth)._id}`, {
       method: "put",
       body: JSON.stringify({ segmentId }),
@@ -69,8 +69,7 @@ useEffect(()=>{
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1, transition: { delay: 0.05 } }}
-          >
-          </motion.div>
+          ></motion.div>
 
           <motion.div
             initial={{ opacity: 0, y: 40 }}
@@ -84,9 +83,7 @@ useEffect(()=>{
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1, transition: { delay: 0.15 } }}
-          >
-            
-          </motion.div>
+          ></motion.div>
 
           <motion.div
             initial={{ opacity: 0, y: 40 }}
@@ -94,7 +91,7 @@ useEffect(()=>{
             className="flex justify-center mt-40 sm:mt-80"
           >
             <Paper className="flex flex-col lg:flex-row max-w-sm lg:max-w-xl overflow-hidden">
-              <div className="p-24 sm:p-32 lg:p-40">
+              <div className="p-24 sm:p-32 lg:p-40 justify-center">
                 <Typography
                   className="mt-8 text-xl leading-relaxed"
                   color="text.secondary"
@@ -131,26 +128,37 @@ useEffect(()=>{
                       />
                     )}
                   />
+                  <div className="grid grid-cols-2 gap-x-7">
+                    <Button
+                      style={{
+                        backgroundColor: "#FCB900",
+                      }}
+                      variant="contained"
+                      color="secondary"
+                      className=" w-full mt-16"
+                      aria-label="Sign in"
+                      type="submit"
+                      size="large"
+                    >
+                      Finish
+                    </Button>
 
-                  <Button
-                    style={{
-                      backgroundColor: "#FCB900",
-                    }}
-                    variant="contained"
-                    color="secondary"
-                    className=" w-full mt-16"
-                    aria-label="Sign in"
-                    type="submit"
-                    size="large"
-                  >
-                    Finish
-                  </Button>
+                    <Link to='/'><Button
+                      style={{
+                        backgroundColor: "#FCB900",
+                      }}
+                      variant="contained"
+                      color="secondary"
+                      className=" w-full mt-16"
+                      aria-label="Sign in"
+                      type="submit"
+                      size="large"
+                    >
+                      Do it Later
+                    </Button>
+                    </Link>
+                  </div>
                 </form>
-                <div className="felx text-right  mt-24 ">
-                  <Typography className="text-3xl font-bold justify-center underline">
-                    <Link to="/">Do it Later</Link>
-                  </Typography>
-                </div>
               </div>
             </Paper>
           </motion.div>

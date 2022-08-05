@@ -29,7 +29,7 @@ function DemoContent2() {
   let [userData, setUserData] = useState({});
   const [emailBalance, setemailBalance] = useState("");
   const [campaignBalance, setcampaignBalance] = useState("");
-  const [customerId , setcustomerId] = useState('');
+  const [customerId, setcustomerId] = useState("");
   let [data, setData] = useState({});
   const userId = userData._id;
   const planId = userData.planId;
@@ -39,19 +39,18 @@ function DemoContent2() {
     getBounce();
   }, [emailCredit, campaignCredit]);
 
-
-  function handleEmailCredit(value){
-    if(value<1 || null ){
+  function handleEmailCredit(value) {
+    if (value < 1 || null) {
       setemailCredit(1);
-    }else{
+    } else {
       setemailCredit(value);
     }
   }
 
-  function handleCampaignCredit(value){
-    if(value<1 || null){
+  function handleCampaignCredit(value) {
+    if (value < 1 || null) {
       setCampaignCredit(1);
-    }else{
+    } else {
       setCampaignCredit(value);
     }
   }
@@ -61,7 +60,7 @@ function DemoContent2() {
         customerId,
         userId,
         emailCredit,
-        campaignCredit
+        campaignCredit,
       })
       .then((response) => {
         if (response.data.url) {
@@ -101,7 +100,7 @@ function DemoContent2() {
       .then((response) => {
         setemailBalance(response.data[0].credits.emailValidationCredit);
         setcampaignBalance(response.data[0].credits.testingCredit);
-        setcustomerId(response.data[0].customerId)
+        setcustomerId(response.data[0].customerId);
       })
       .catch((err) => console.error(err));
   };
@@ -188,10 +187,18 @@ function DemoContent2() {
             </Typography>
           </div>
           <div className="text-left mt-8 px-28 py-5 grid grid-cols-3 justify-items-center">
-            <Typography className="text-[10px] sm:text-3xl mb-4 font-bold tracking-tight leading-none text-gray-700">
-              <p className="mt-10 pt-10" >Buy Email Validation Credit </p>
-              <p className=" text-[1px] sm:text-lg text-green-500 font-light">You are buying in <b className="font-bold text-[1px] sm:text-lg">Lots</b> which contain <b className="font-bold text-[1px] sm:text-lg">1000 credits</b> </p>
-              <p className="text-lg text-green-500 font-light"> <b className="font-bold">1 Credit = .001 $</b></p>
+            <Typography className="text-lg sm:text-3xl mb-4 font-bold tracking-tight leading-none text-gray-700">
+              <p className="mt-10 pt-10">Buy Email Validation Credit </p>
+              <p className=" text-[10px] invisible sm:visible sm:text-lg text-green-500 font-light">
+                You are buying in{" "}
+                <b className="font-bold text-[10px] sm:text-lg">Lots</b> which
+                contain{" "}
+                <b className="font-bold text-[10px] sm:text-lg">1000 credits</b>{" "}
+              </p>
+              <p className="text-[10px] invisible md:visible sm:text-lg text-green-500 font-light">
+                {" "}
+                <b className="font-bold">1 Credit = .001 $</b>
+              </p>
             </Typography>
             <TextField
               className=" mb-4 w-1/2 "
@@ -202,7 +209,9 @@ function DemoContent2() {
                   <InputAdornment position="start"></InputAdornment>
                 ),
               }}
-              onChange={(e) => {handleEmailCredit(e.target.value) }}
+              onChange={(e) => {
+                handleEmailCredit(e.target.value);
+              }}
               value={emailCredit}
               type="number"
               variant="outlined"
@@ -212,7 +221,7 @@ function DemoContent2() {
             </Typography>
           </div>
           <div className="text-left mt-8 px-28 py-9 grid grid-cols-3 justify-items-center">
-            <Typography className="text-[10px] sm:text-3xl mb-4 font-bold tracking-tight leading-none text-gray-700">
+            <Typography className="text-lg sm:text-3xl mb-4 font-bold tracking-tight leading-none text-gray-700">
               Buy Campaign Testing Credit
             </Typography>
             <TextField
@@ -246,7 +255,12 @@ function DemoContent2() {
             <Typography className="text-md sm:text-3xl mb-4 font-bold tracking-tight leading-none text-green-500"></Typography>
             <Typography className="text-md sm:text-2xl mb-4 font-bold tracking-tight leading-none text-green-500"></Typography>
             <Typography className="text-md  sm:text-xl mb-4 font-bold tracking-tight leading-none text-green-500">
-              <button className="bg-green p-12 text-white rounded-12" onClick={() => handleCheckout()}>Buy Credits</button>
+              <button
+                className="bg-green p-12 text-white rounded-12"
+                onClick={() => handleCheckout()}
+              >
+                Buy Credits
+              </button>
             </Typography>
           </div>
           {/* <div className="flex items-center justify-evenly px-8 pt-12 pb-20">
