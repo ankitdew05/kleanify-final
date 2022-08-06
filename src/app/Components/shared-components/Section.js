@@ -5,7 +5,7 @@ import IconButton from "@mui/material/IconButton";
 import FuseSvgIcon from "@fuse/core/FuseSvgIcon";
 
 function Section(props) {
-  const { leftSidebarToggle, title } = props;
+  const { title } = props;
   const auth = localStorage.getItem('user');
   function handleClick() {}
 
