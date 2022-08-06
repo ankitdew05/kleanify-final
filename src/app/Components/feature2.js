@@ -109,7 +109,7 @@ function Feature2() {
                 <form
                   name="loginForm"
                   noValidate
-                  className="flex flex-col justify-center w-1/3 mt-32"
+                  className="flex flex-col justify-center w-full lg:w-1/2 mt-32"
                   onSubmit={handleSubmit(onSubmit)}
                 >
                   <Controller

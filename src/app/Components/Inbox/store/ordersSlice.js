@@ -1,8 +1,8 @@
 import { createAsyncThunk, createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import baseURL from 'src/app/common/baseURL';
-export const getOrders = createAsyncThunk('eCommerceApp/orders/getOrders', async () => {
-  const response = await axios.get(`${baseURL}/campaign`);
+export const getOrders = createAsyncThunk('eCommerceApp/orders/getOrders', async (id) => {
+  const response = await axios.get(`${baseURL}/campaign/${id}`);
   const data = await response.data;
   console.log('orders',data)
   return data;

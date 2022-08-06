@@ -152,22 +152,25 @@ function DemoContent3() {
 
   if (status) {
     return (
-      <motion.div
+      <div
         className="grid grid-cols-1 sm:grid-cols-6 gap-24 w-full min-w-0 p-24"
         initial="hidden"
         animate="show"
       >
-        <div className=" sm:col-span-6 lg:col-span-6 col-span-1 grid-cols-4 grid">
-          <div className=" flex flex-col sm:col-span-3 ">
+        <div className=" sm:col-span-6 lg:col-span-6 col-span-1 grid-cols-7 grid">
+          <div className=" flex flex-col sm:col-span-5 ">
             <Typography className="username text-16 m-20 font-bold text-gray-700 whitespace-nowrap ">
               Campaign ID: {camp.id}
+            </Typography>
+            <Typography className="username text-16 m-20 mt-0 text-gray-700 whitespace-nowrap ">
+              Name : {camp.name}
             </Typography>
             <Typography className="username text-16 m-20 mt-0 text-gray-700 whitespace-nowrap ">
               Subject : {camp.subject}
             </Typography>
             <Typography className="username text-16 m-20 mt-0 text-gray-700 whitespace-nowrap ">
               Last Updated :{" "}
-              {new Date(camp.Updated).toLocaleDateString(
+              {new Date(camp.updated).toLocaleDateString(
                 "locale",
 
                 {
@@ -180,56 +183,55 @@ function DemoContent3() {
             </Typography>
           </div>
 
-          <div className=" flex flex-row  col-span-1 justify-end self-start sm:m-20">
-            <div className="flex-1">
-              <Button
-                component="a"
-                onClick={() => check(camp.id, camp._id)}
-                target="_blank"
-                rel="noreferrer noopener"
-                role="button"
-                className="mx-5"
-                variant="contained"
-                color="secondary"
-                style={{
-                  backgroundColor: "#FFF6CF",
-                  color: "#000000",
-                  fontSize: "15px",
+          <div className="col-span-1">
+            <Button
+              component="a"
+              onClick={() => check(camp.id, camp._id)}
+              target="_blank"
+              rel="noreferrer noopener"
+              role="button"
+              className="mx-5 "
+              variant="contained"
+              color="secondary"
+              style={{
+                backgroundColor: "#FFF6CF",
+                color: "#000000",
+                fontSize: "15px",
+              }}
+            >
+              <Backdrop
+                sx={{
+                  opacity: 0,
+                  color: "#00000",
+                  zIndex: (theme) => theme.zIndex.drawer + 1,
                 }}
+                open={spinner}
               >
-                <Backdrop
-                  sx={{
-                    opacity: 0,
-                    color: "#00000",
-                    zIndex: (theme) => theme.zIndex.drawer + 1,
-                  }}
-                  open={spinner}
-                >
-                  <CircularProgress color="success" />
-                </Backdrop>
-                {result}
-              </Button>
-            </div>
-            <div className="flex-1">
-              <Button
-                component="a"
-                href="/campaign-test"
-                target="_blank"
-                rel="noreferrer noopener"
-                role="button"
-                variant="contained"
-                color="secondary"
-                style={{
-                  backgroundColor: "#FFF6CF",
-                  color: "#000000",
-                  fontSize: "15px",
-                }}
-              >
-                Go Back
-              </Button>
-            </div>
+                <CircularProgress color="success" />
+              </Backdrop>
+              {result}
+            </Button>
+          </div>
+          <div className="col-span-1">
+            <Button
+              component="a"
+              onClick={() => navigate(-1)}
+              target="_blank"
+              rel="noreferrer noopener"
+              role="button"
+              variant="contained"
+              color="secondary"
+              style={{
+                backgroundColor: "#FFF6CF",
+                color: "#000000",
+                fontSize: "15px",
+              }}
+            >
+              Go Back
+            </Button>
           </div>
         </div>
+
         {checked.map((value, index) => (
           <div className="sm:col-span-6  lg:col-span-6 grid grid-cols-1 md:grid-cols-4 md:gap-x-24 gap-y-24">
             <div>
@@ -914,7 +916,7 @@ function DemoContent3() {
             </div>
           </div>
         ))}
-      </motion.div>
+      </div>
     );
   } else {
     return (
@@ -923,16 +925,20 @@ function DemoContent3() {
         initial="hidden"
         animate="show"
       >
-        <div className=" sm:col-span-6 lg:col-span-6 grid-cols-4 grid">
-          <div className=" flex flex-col col-span-3">
+        <div className=" sm:col-span-6 lg:col-span-6 col-span-1 grid-cols-7 grid">
+          <div className=" flex flex-col sm:col-span-4 ">
             <Typography className="username text-16 m-20 font-bold text-gray-700 whitespace-nowrap ">
               Campaign ID: {camp.id}
+            </Typography>
+            <Typography className="username text-16 m-20 mt-0 text-gray-700 whitespace-nowrap ">
+              Name : {camp.name}
             </Typography>
             <Typography className="username text-16 m-20 mt-0 text-gray-700 whitespace-nowrap ">
               Subject : {camp.subject}
             </Typography>
             <Typography className="username text-16 m-20 mt-0 text-gray-700 whitespace-nowrap ">
-              Last Updated : {new Date(camp.updated).toLocaleDateString(
+              Last Updated :{" "}
+              {new Date(camp.updated).toLocaleDateString(
                 "locale",
 
                 {
@@ -944,56 +950,50 @@ function DemoContent3() {
               Current Status : {camp.status}
             </Typography>
           </div>
-          <div className=" flex flex-row col-span-1 justify-end self-start m-20">
+
+          <div className="col-span-2 text-right">
             <Button
               component="a"
               onClick={() => check(camp.id, camp._id)}
               target="_blank"
               rel="noreferrer noopener"
               role="button"
-              className="mx-5 text-sm"
+              className="mx-5 "
               variant="contained"
               color="secondary"
               style={{
                 backgroundColor: "#FFF6CF",
                 color: "#000000",
+                fontSize: "15px",
               }}
-              startIcon={
-                <FuseSvgIcon size={16}>
-                  heroicons-outline:currency-dollar
-                </FuseSvgIcon>
-              }
             >
-              Test Campaign
+              <Backdrop
+                sx={{
+                  opacity: 0,
+                  color: "#00000",
+                  zIndex: (theme) => theme.zIndex.drawer + 1,
+                }}
+                open={spinner}
+              >
+                <CircularProgress color="success" />
+              </Backdrop>
+              {result}
             </Button>
-            <Backdrop
-              sx={{
-                opacity: 0,
-                color: "#00000",
-                zIndex: (theme) => theme.zIndex.drawer + 1,
-              }}
-              open={spinner}
-            >
-              <CircularProgress color="success" />
-            </Backdrop>
+          </div>
+          <div className="col-span-1">
             <Button
               component="a"
-              href="/campaign-test"
+              onClick={() => navigate(-1)}
               target="_blank"
               rel="noreferrer noopener"
               role="button"
-              className="text-sm"
               variant="contained"
               color="secondary"
               style={{
                 backgroundColor: "#FFF6CF",
                 color: "#000000",
+                fontSize: "15px",
               }}
-              startIcon={
-                <FuseSvgIcon size={16}>
-                  heroicons-outline:currency-dollar
-                </FuseSvgIcon>
-              }
             >
               Go Back
             </Button>

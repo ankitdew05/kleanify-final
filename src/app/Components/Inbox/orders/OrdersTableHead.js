@@ -23,12 +23,12 @@ const rows = [
     align: "left",
     disablePadding: false,
     label: "Name",
-    tip: "Name of your campaigns in Klaviyo",
+    tip: "ID of your campaigns in Klaviyo",
     sort: true,
   },
 
   {
-    id: "customer",
+    id: "subject",
     align: "left",
     disablePadding: false,
     label: "Subject",
@@ -37,7 +37,7 @@ const rows = [
   },
 
   {
-    id: "reference",
+    id: "status",
     align: "left",
     disablePadding: false,
     label: "Status",
@@ -46,7 +46,7 @@ const rows = [
   },
 
   {
-    id: "payment",
+    id: "updated",
     align: "left",
     disablePadding: false,
     label: "Last Updated",
@@ -54,7 +54,7 @@ const rows = [
     sort: true,
   },
   {
-    id: "date",
+    id: "Updated",
     align: "left",
     disablePadding: false,
     label: "Update",
@@ -62,7 +62,7 @@ const rows = [
     sort: true,
   },
   {
-    id: "status",
+    id: "View Detail",
     align: "left",
     disablePadding: false,
     label: "View Details",
@@ -72,6 +72,7 @@ const rows = [
 ];
 
 function OrdersTableHead(props) {
+  console.log(props)
   const auth = localStorage.getItem("user");
   const { selectedOrderIds } = props;
   const numSelected = selectedOrderIds.length;
@@ -108,6 +109,7 @@ function OrdersTableHead(props) {
               }}
               className="p-4 md:p-16"
               key={row.id}
+              lauda={console.log("Props")}
               align={row.align}
               padding={row.disablePadding ? "none" : "normal"}
               sortDirection={

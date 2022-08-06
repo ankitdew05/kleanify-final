@@ -6,7 +6,7 @@ import Paper from "@mui/material/Paper";
 import Divider from "@mui/material/Divider";
 import FuseSvgIcon from "@fuse/core/FuseSvgIcon";
 import { motion } from "framer-motion";
-import { Link, useParams , useNavigate } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import baseURL from "../common/baseURL";
 
@@ -14,16 +14,16 @@ function Feature1() {
   const [period, setPeriod] = useState("month");
   const params = useParams();
   const id = params.id;
-  const auth = localStorage.getItem('user');
-const navigate = useNavigate()
+  const auth = localStorage.getItem("user");
+  const navigate = useNavigate();
   useEffect(() => {
-      document.title = "Onboarding to Kleanify";
+    document.title = "Onboarding to Kleanify";
     const data = getData()
       .then((res) => {
         console.log(res);
         if (res[0].segmentId) {
           navigate(`/`);
-        } 
+        }
       })
       .catch((err) => console.log(err));
     console.log("data", data);
@@ -65,8 +65,7 @@ const navigate = useNavigate()
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1, transition: { delay: 0.05 } }}
-          >
-          </motion.div>
+          ></motion.div>
 
           <motion.div
             initial={{ opacity: 0, y: 40 }}
@@ -80,16 +79,14 @@ const navigate = useNavigate()
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1, transition: { delay: 0.15 } }}
-          >
-            
-          </motion.div>
+          ></motion.div>
 
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0, transition: { delay: 0.1 } }}
             className="flex justify-center mt-40 sm:mt-80"
           >
-            <Paper className="flex flex-col lg:flex-row max-w-sm lg:max-w-xl overflow-hidden">
+            <Paper className="flex flex-col  lg:flex-row max-w-sm lg:max-w-xl overflow-hidden">
               <div className="p-24 sm:p-32 lg:p-40">
                 <Typography
                   className="mt-8 text-xl leading-relaxed"
@@ -99,12 +96,23 @@ const navigate = useNavigate()
                   new subscribers & automatically validates the emails. If
                   emails are found to be invalid, it automatically suppresses
                   these emails in your account.
-                  
                 </Typography>
-                <div className="felx  mt-24 ">
-                  <Typography className="text-3xl font-bold justify-center underline">
-                    <Link to="/onboarding2">Understood</Link>
-                  </Typography>
+                <div className="felx  w-1/3  mt-24 ">
+                  <Link to="/onboarding2">
+                    <Button
+                      style={{
+                        backgroundColor: "#FCB900",
+                      }}
+                      variant="contained"
+                      color="secondary"
+                      className=" w-full mt-16"
+                      aria-label="Sign in"
+                      type="submit"
+                      size="large"
+                    >
+                      Understood
+                    </Button>
+                  </Link>
                 </div>
               </div>
             </Paper>

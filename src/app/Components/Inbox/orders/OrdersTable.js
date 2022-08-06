@@ -40,7 +40,7 @@ function OrdersTable(props) {
   const [data, setData] = useState(orders);
   const [data1, setData1] = useState("");
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [rowsPerPage, setRowsPerPage] = useState(25);
   const navigate = useNavigate();
   const [order, setOrder] = useState({
     direction: "asc",
@@ -50,11 +50,12 @@ function OrdersTable(props) {
 
   useEffect(() => {
     document.title = "Campaign-Kleanify";
-    dispatch(getOrders()).then(() => setLoading(false));
+    dispatch(getOrders(JSON.parse(auth)._id)).then(() => setLoading(false));
     getBounce();
   }, [dispatch]);
 
   useEffect(() => {
+    handleRequestSort("Event","updated")
     if (searchText.length !== 0) {
       setData(FuseUtils.filterArrayByString(orders, searchText));
       setPage(0);
@@ -75,10 +76,10 @@ function OrdersTable(props) {
 
   function handleRequestSort(event, property) {
     const id = property;
-    let direction = "desc";
+    let direction = 'asc';
 
-    if (order.id === property && order.direction === "desc") {
-      direction = "asc";
+    if (order.id === property && order.direction === 'asc') {
+      direction = 'desc';
     }
 
     setOrder({
@@ -89,7 +90,7 @@ function OrdersTable(props) {
 
   function handleSelectAllClick(event) {
     if (event.target.checked) {
-      setSelected(data.map((n) => n.id));
+      setSelected(order.map((n) => n.id));
       return;
     }
     setSelected([]);
@@ -194,10 +195,10 @@ function OrdersTable(props) {
 
           <TableBody>
             {_.orderBy(
-              data1,
+              data,
               [
                 (o) => {
-                  switch (data1.id) {
+                  switch (order.id) {
                     case "id": {
                       return parseInt(o.id, 10);
                     }
@@ -211,7 +212,7 @@ function OrdersTable(props) {
                       return o.payment.method
                     }
                     default: {
-                      return o[data1.id];
+                      return o[order.id];
                     }
                   }
                 },
@@ -232,6 +233,7 @@ function OrdersTable(props) {
                     selected={isSelected}
                     //onClick={(event) => handleClick(n)}
                   >
+                  
 
                     <TableCell
                       className="p-4 md:p-16"
@@ -310,7 +312,7 @@ function OrdersTable(props) {
       </FuseScrollbars>
 
       <TablePagination
-        className="shrink-0 border-t-1"
+        className="shrink-0 border-t-1 "
         component="div"
         count={data.length}
         rowsPerPage={rowsPerPage}

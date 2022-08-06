@@ -9,10 +9,10 @@ import { motion } from "framer-motion";
 import { Link, useParams } from "react-router-dom";
 
 function Feature() {
-  useEffect(()=>{
+  useEffect(() => {
     document.title = "Onboarding to Kleanify";
-  })
-  const auth = localStorage.getItem('user');
+  });
+  const auth = localStorage.getItem("user");
   const [period, setPeriod] = useState("month");
   return (
     <div className="relative bg-[#FFF6CF] opacity-90  flex flex-col flex-auto min-w-0 overflow-hidden">
@@ -41,8 +41,7 @@ function Feature() {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1, transition: { delay: 0.05 } }}
-          >
-          </motion.div>
+          ></motion.div>
 
           <motion.div
             initial={{ opacity: 0, y: 40 }}
@@ -56,9 +55,7 @@ function Feature() {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1, transition: { delay: 0.15 } }}
-          >
-           
-          </motion.div>
+          ></motion.div>
 
           <motion.div
             initial={{ opacity: 0, y: 40 }}
@@ -84,9 +81,23 @@ function Feature() {
                   </p>
                 </Typography>
                 <div className="felx  mt-24 ">
-                  <Typography className="text-3xl font-bold justify-center underline">
-                    <Link to="/onboarding3">Got it</Link>
-                  </Typography>
+                  <div className="felx  w-1/3  mt-24 ">
+                    <Link to="/onboarding3">
+                      <Button
+                        style={{
+                          backgroundColor: "#FCB900",
+                        }}
+                        variant="contained"
+                        color="secondary"
+                        className=" w-full mt-16"
+                        aria-label="Sign in"
+                        type="submit"
+                        size="large"
+                      >
+                        Got it
+                      </Button>
+                    </Link>
+                  </div>
                 </div>
               </div>
             </Paper>
