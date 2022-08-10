@@ -89,6 +89,25 @@ function ListCleaningContent() {
     return data;
   }
 
+  // function putComma(arr) {
+
+  //   const result1 = Object.assign({}, arr);
+  //   var result = Object.keys(result1).map((key) => [ [[result1[key]]]])
+  //   return [result];
+  // }
+
+  // function csv(rows) {
+  //   let csvContent =
+  //   "data:text/csv;charset=utf-8," + rows.map((e) => e.join(",")).join("\n");
+
+  // var encodedUri = encodeURI(csvContent);
+  // window.open(encodedUri);
+  // }
+
+
+
+  
+
   if (status) {
     return (
       <motion.div
@@ -152,7 +171,12 @@ function ListCleaningContent() {
                       </TableCell>
                       <TableCell component="th" scope="row">
                         <Typography className="underline">
-                          <CSVLink columns="Emails" data={[value.array]}>
+                          <CSVLink
+                            columns="Emails"
+                            target="_blank"
+                            filename={`kleanify-uneng-subs-${value.date}.csv`}
+                            data={[value.array]}
+                          >
                             Download List
                           </CSVLink>
                         </Typography>

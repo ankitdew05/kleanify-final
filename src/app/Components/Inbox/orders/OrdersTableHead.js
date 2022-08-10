@@ -23,7 +23,7 @@ const rows = [
     align: "left",
     disablePadding: false,
     label: "Name",
-    tip: "ID of your campaigns in Klaviyo",
+    tip: "Name of your campaigns in Klaviyo",
     sort: true,
   },
 

@@ -77,7 +77,7 @@ const navigationData = [
 
 function DemoSidebar() {
   return (
-    <div className="px-12 py-24  bg-[#FFF6CF] min-h-6xl ">
+    <div className="px-[21px] py-24 fixed bg-[#FFF6CF] min-h-6xl h-max ">
       <div className="mx-12 text-3xl font-bold flex justify-between">
       <a href="https://app.kleanify.co">
             <img

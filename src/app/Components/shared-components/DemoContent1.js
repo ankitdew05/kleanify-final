@@ -37,7 +37,7 @@ function DemoContent1() {
 
   async function getData() {
      await axios
-      .get(`${baseURL}/paiduser/${JSON.parse(auth)._id}`)
+      .get(`${baseURL}/paiduser/${JSON.parse(auth)._id}`,)
       .then((response) => {
         console.log(response.data[0].newSubscriber)
         setnewsub(response.data[0].newSubscriber)

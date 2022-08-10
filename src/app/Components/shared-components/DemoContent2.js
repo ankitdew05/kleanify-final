@@ -96,7 +96,7 @@ function DemoContent2() {
 
   const getBounce = async () => {
     axios
-      .get(`${baseURL}/paiduser/${JSON.parse(auth)._id}`)
+      .get(`${baseURL}/paiduser/${JSON.parse(auth)._id}`,)
       .then((response) => {
         setemailBalance(response.data[0].credits.emailValidationCredit);
         setcampaignBalance(response.data[0].credits.testingCredit);

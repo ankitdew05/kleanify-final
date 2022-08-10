@@ -68,7 +68,7 @@ function OrdersTable(props) {
     axios
       .get(`${baseURL}/campaign/${JSON.parse(auth)._id}`)
       .then((response) => {
-        console.log("hi", response.data);
+        // console.log("hi", response.data);
         setData1(response.data);
       })
       .catch((err) => console.error(err));
@@ -154,7 +154,7 @@ function OrdersTable(props) {
     );
   }
 
-  const goto = async (userId, id) => {
+  const goto = async (userId, id, subject ) => {
     setSpinner(true);
     console.log(id);
     let result = await fetch(
@@ -169,9 +169,10 @@ function OrdersTable(props) {
     result = await result.json();
     setSpinner(false);
     if(result.Status === "Success"){
-      alert(`Sucssefuly Updated ${result.subject}`);
+      console.log(result)
+      alert(`Sucssefuly Updated ${subject} `);
     } else{
-      alert(`Oops! not able to update  ${result.subject}. Try Again in some time!!`);
+      alert(`Oops! not able to update  ${subject}. Try Again in some time!!`);
     }
   };
 
@@ -283,11 +284,12 @@ function OrdersTable(props) {
                       component="th"
                       scope="row"
                     >
-                      <Button onClick={() => goto(n._id, n.id)}>Update</Button>
+                      <Button onClick={() => goto(n._id, n.id , n.name)}>Update</Button>
                       <Backdrop
                         sx={{
-                          opacity: "0",
-                          color: "#000000",
+                        
+                          backgroundColor: "transparent",
+                          opacity : '1%',
                           zIndex: (theme) => theme.zIndex.drawer + 1,
                         }}
                         
