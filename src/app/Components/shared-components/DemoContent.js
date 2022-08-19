@@ -29,6 +29,7 @@ function DemoContent() {
       })
       .catch((err) => console.error(err));
   };
+  
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 gap-24 w-full min-w-0 p-24">
@@ -40,10 +41,10 @@ function DemoContent() {
           </Typography>
 
           <Typography className="text-7xl  sm:text-8xl mt-36 font-bold tracking-tight leading-none text-green-500">
-            {data.emailValidation}
+            {data.newSubscriber}
           </Typography>
           <Typography className="text-lg font-medium text-green-600">
-            Invalid Email Supressed
+            Emails Checked
           </Typography>
         </div>
         <div className="flex items-center justify-evenly px-8 pt-12 pb-20">
