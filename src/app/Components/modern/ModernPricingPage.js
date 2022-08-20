@@ -224,7 +224,7 @@ function ModernPricingPage() {
                   monthlyPrice="$49.00"
                   discountPrice = "$39.00"
                   buttonTitle="Get Started"
-                  yearLink= "https://buy.stripe.com/test_5kA5m9fpx9F1fLOeUV"
+                  yearLink= "https://buy.stripe.com/4gw7sN0a5fbO77i8wI"
                   monthLink = "https://buy.stripe.com/eVa00l6yt2p29fq7sD"
                   details={
                     <div className="flex flex-col mt-48">

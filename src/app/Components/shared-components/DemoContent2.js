@@ -61,7 +61,11 @@ function DemoContent2() {
         userId,
         emailCredit,
         campaignCredit,
-      })
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Content-Type': 'application/json',
+        },
+      },)
       .then((response) => {
         if (response.data.url) {
           window.location.href = response.data.url;
