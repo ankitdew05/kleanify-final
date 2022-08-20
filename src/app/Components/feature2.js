@@ -101,7 +101,8 @@ function Feature2() {
                   <p className="mt-7">
                     To start cleaning, please set-up a dynamic segment in
                     Klaviyo by following{" "}
-                    <spam className="underline">this guide</spam>. This takes
+                    <a href="https://kleanify.notion.site/Setup-Segment-in-Klaviyo-for-Unengaged-Subscribers-Kleanify-6ce6ac5f1cf649f086c71db9a2a034b0" target="_blank">
+                    <spam className="underline">this guide</spam></a>. This takes
                     less than 5 mins and is a one-time process. Copy the segment
                     id and paste it below.
                   </p>
