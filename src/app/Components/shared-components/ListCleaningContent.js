@@ -118,7 +118,7 @@ function ListCleaningContent() {
         <motion.div className="sm:col-span-6">
           <Paper className="flex flex-col flex-auto p-24 shadow rounded-2xl overflow-hidden ">
             <Typography className="text-3xl p-24 font-medium tracking-tight leading-6 ">
-              <b>{ListCleaned} </b>unengagged subscriber cleaned in last 30 days
+              <b>{ListCleaned} </b>Unengaged Subscribers Cleaned in last 30 days
             </Typography>
             <div className="table-responsive">
               <Table className="w-full min-w-full">
@@ -147,7 +147,7 @@ function ListCleaningContent() {
                         color="text.secondary"
                         className="font-semibold text-18 whitespace-nowrap"
                       >
-                        Download List ;
+                        Download List 
                       </Typography>
                     </TableCell>
                   </TableRow>

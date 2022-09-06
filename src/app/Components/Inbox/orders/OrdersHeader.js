@@ -71,7 +71,7 @@ function OrdersHeader(props) {
         delay={300}
         className="flex text-15 md:text-20 font-extrabold tracking-tight"
       >
-        Test Queued Campaigns Automatically (only if not tested alredy)
+        Test Queued Campaigns Automatically (only if not tested already)
       </Typography>
 
       <div class="flex justify-center ml-10">

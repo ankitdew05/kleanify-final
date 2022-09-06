@@ -71,7 +71,7 @@ function Contact() {
               </Typography>
               <Typography color="text.secondary">
                 Please fill out the form below to request support. We typically
-                reply within 24 hours htrough email.
+                reply within 24 hours through email.
               </Typography>
             </div>
             <div className="space-y-32">

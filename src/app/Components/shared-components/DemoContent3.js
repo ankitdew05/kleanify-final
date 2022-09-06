@@ -245,13 +245,9 @@ function DemoContent3() {
                   </Typography>
                   <Typography className="username text-16 m-20 mt-0 text-gray-700 whitespace-nowrap ">
                     Tested On :{" "}
-                    {new Date(value.date).toLocaleDateString(
-                      "locale",
-
-                      {
-                        dateStyle: "full",
-                      }
-                    )}
+                    {new Date(value.date).toLocaleDateString("locale", {
+                      dateStyle: "full",
+                    })}
                   </Typography>
                 </div>
               </div>
@@ -358,12 +354,24 @@ function DemoContent3() {
                       Senders Authentication
                     </Typography>
                     <div className="flex">
-                      <Typography className="username text-15 py-6 px-10 mr-10 bg-green-500 rounded-4 text-white whitespace-nowrap font-medium">
-                        DKIM: {value.Result?.DKIM}
-                      </Typography>
-                      <Typography className="username text-15 py-6  px-10 mr-10 bg-green-500 rounded-4 text-white whitespace-nowrap font-medium">
-                        SPF: {value.Result?.SPF}
-                      </Typography>
+                      {value.Result?.DKIM === "pass" ? (
+                        <Typography className="username text-15 py-6 px-10 mr-10 bg-green-500 rounded-4 text-white whitespace-nowrap font-medium">
+                          DKIM: {value.Result?.DKIM}
+                        </Typography>
+                      ) : (
+                        <Typography className="username text-15 py-6 px-10 mr-10 bg-red-500 rounded-4 text-white whitespace-nowrap font-medium">
+                          DKIM: {value.Result?.DKIM}
+                        </Typography>
+                      )}
+                      {value.Result?.SPF === "pass" ? (
+                        <Typography className="username text-15 py-6  px-10 mr-10 bg-green-500 rounded-4 text-white whitespace-nowrap font-medium">
+                          SPF: {value.Result?.SPF}
+                        </Typography>
+                      ) : (
+                        <Typography className="username text-15 py-6  px-10 mr-10 bg-red-500 rounded-4 text-white whitespace-nowrap font-medium">
+                          SPF: {value.Result?.SPF}
+                        </Typography>
+                      )}
                       <FuseSvgIcon
                         size={24}
                         className=" text-white mt-3"
@@ -406,25 +414,62 @@ function DemoContent3() {
               </div>
 
               <div className="sm:col-span-6 lg:col-span-6 grid  ">
-                <div className="flex flex-col bg-red-200 p-24 w-full sm:py-16 sm:px-40">
-                  <div className="flex justify-between">
-                    <Typography className="username text-24 text-white whitespace-nowrap font-medium">
-                      Sender Score
-                    </Typography>
-                    <div className="flex">
-                      <Typography className="username text-16 py-6 px-10 mr-10 bg-red-400 rounded-4 text-white whitespace-nowrap font-medium">
-                        {value.Result?.SenderScore}
+                {value.Result?.SenderScore >= 70 ? (
+                  <div className="flex flex-col bg-green-200 p-24 w-full sm:py-16 sm:px-40">
+                    <div className="flex justify-between">
+                      <Typography className="username text-24 text-white whitespace-nowrap font-medium">
+                        Sender Score
                       </Typography>
-                      <FuseSvgIcon
-                        size={24}
-                        className=" text-white mt-3"
-                        onClick={handleClick2}
-                      >
-                        heroicons-outline:chevron-down
-                      </FuseSvgIcon>
+                      <div className="flex">
+                        {value.Result?.SenderScore >= 70 ? (
+                          <Typography className="username text-16 py-6 px-10 mr-10 bg-green-400 rounded-4 text-white whitespace-nowrap font-medium">
+                            {value.Result?.SenderScore}
+                          </Typography>
+                        ) : (
+                          <Typography className="username text-16 py-6 px-10 mr-10 bg-red-400 rounded-4 text-white whitespace-nowrap font-medium">
+                            {value.Result?.SenderScore}
+                          </Typography>
+                        )}
+
+                        <FuseSvgIcon
+                          size={24}
+                          className=" text-white mt-3"
+                          onClick={handleClick2}
+                        >
+                          heroicons-outline:chevron-down
+                        </FuseSvgIcon>
+                      </div>
                     </div>
                   </div>
-                </div>
+                ) : (
+                  <div className="flex flex-col bg-red-200 p-24 w-full sm:py-16 sm:px-40">
+                    <div className="flex justify-between">
+                      <Typography className="username text-24 text-white whitespace-nowrap font-medium">
+                        Sender Score
+                      </Typography>
+                      <div className="flex">
+                        {value.Result?.SenderScore >= 70 ? (
+                          <Typography className="username text-16 py-6 px-10 mr-10 bg-green-400 rounded-4 text-white whitespace-nowrap font-medium">
+                            {value.Result?.SenderScore}
+                          </Typography>
+                        ) : (
+                          <Typography className="username text-16 py-6 px-10 mr-10 bg-red-400 rounded-4 text-white whitespace-nowrap font-medium">
+                            {value.Result?.SenderScore}
+                          </Typography>
+                        )}
+
+                        <FuseSvgIcon
+                          size={24}
+                          className=" text-white mt-3"
+                          onClick={handleClick2}
+                        >
+                          heroicons-outline:chevron-down
+                        </FuseSvgIcon>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
                 <Collapse in={open2}>
                   <motion.div className="sm:col-span-1">
                     <Paper className="flex flex-col flex-auto shadow rounded-2xl w-full h-full overflow-hidden">
@@ -624,25 +669,54 @@ function DemoContent3() {
               </div>
 
               <div className="sm:col-span-6 lg:col-span-6 grid  ">
-                <div className="flex flex-col bg-red-200 p-24 w-full sm:py-16 sm:px-40">
-                  <div className="flex justify-between">
-                    <Typography className="username text-24 text-white whitespace-nowrap font-medium">
-                      SpamAssassin Test.
-                    </Typography>
-                    <div className="flex">
-                      <Typography className="username text-16 pt-6  px-10 mr-10 bg-red-500 rounded-4 text-white whitespace-nowrap font-medium">
-                        Score: {value.Result?.SpamAssassin?.Score}
+                {value.Result?.SpamAssassin?.Score <= 5 ? (
+                  <div className="flex flex-col bg-green-200 p-24 w-full sm:py-16 sm:px-40">
+                    <div className="flex justify-between">
+                      <Typography className="username text-24 text-white whitespace-nowrap font-medium">
+                        SpamAssassin Test.
                       </Typography>
-                      <FuseSvgIcon
-                        size={24}
-                        className=" text-white mt-3"
-                        onClick={handleClick4}
-                      >
-                        heroicons-outline:chevron-down
-                      </FuseSvgIcon>
+                      <div className="flex">
+                        <Typography className="username text-16 pt-6  px-10 mr-10 bg-green-500 rounded-4 text-white whitespace-nowrap font-medium">
+                          Score: {value.Result?.SpamAssassin?.Score}
+                        </Typography>
+                        <FuseSvgIcon
+                          size={24}
+                          className=" text-white mt-3"
+                          onClick={handleClick4}
+                        >
+                          heroicons-outline:chevron-down
+                        </FuseSvgIcon>
+                      </div>
                     </div>
                   </div>
-                </div>
+                ) : (
+                  <div className="flex flex-col bg-red-200 p-24 w-full sm:py-16 sm:px-40">
+                    <div className="flex justify-between">
+                      <Typography className="username text-24 text-white whitespace-nowrap font-medium">
+                        SpamAssassin Test.
+                      </Typography>
+                      <div className="flex">
+                        {value.Result?.SpamAssassin?.Score <= 5 ? (
+                          <Typography className="username text-16 pt-6  px-10 mr-10 bg-green-500 rounded-4 text-white whitespace-nowrap font-medium">
+                            Score: {value.Result?.SpamAssassin?.Score}
+                          </Typography>
+                        ) : (
+                          <Typography className="username text-16 pt-6  px-10 mr-10 bg-red-500 rounded-4 text-white whitespace-nowrap font-medium">
+                            Score: {value.Result?.SpamAssassin?.Score}
+                          </Typography>
+                        )}
+                        <FuseSvgIcon
+                          size={24}
+                          className=" text-white mt-3"
+                          onClick={handleClick4}
+                        >
+                          heroicons-outline:chevron-down
+                        </FuseSvgIcon>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
                 <Collapse in={open4}>
                   <motion.div className="sm:col-span-1">
                     <Paper className="flex flex-col flex-auto justify-center shadow rounded-2xl w-full h-full overflow-hidden">
@@ -680,9 +754,15 @@ function DemoContent3() {
                                     <TableRow>
                                       <>
                                         <TableCell component="th" scope="row">
-                                          <Typography className="username w-fit text-16 px-10 mr-10  bg-red-500 rounded-4 text-white  font-medium">
+                                        {data.Score <= 1 ? (
+                                          <Typography className="username w-fit text-16 px-10 mr-10  bg-green-500 rounded-4 text-white  font-medium">
+                                            Score: {data.Score}
+                                          </Typography>):
+                                          (
+                                            <Typography className="username w-fit text-16 px-10 mr-10  bg-red-500 rounded-4 text-white  font-medium">
                                             Score: {data.Score}
                                           </Typography>
+                                          )}
                                         </TableCell>
                                         <TableCell component="th" scope="row">
                                           <Typography className="text-xl p-10 flex-1 ">
@@ -733,6 +813,7 @@ function DemoContent3() {
                             </TableCell>
 
                             <TableCell>
+                            
                               <Typography
                                 color="text.secondary"
                                 className="font-semibold text-12 whitespace-nowrap"
@@ -741,14 +822,14 @@ function DemoContent3() {
                               </Typography>
                             </TableCell>
 
-                            <TableCell>
+                            {/* <TableCell>
                               <Typography
                                 color="text.secondary"
                                 className="font-semibold text-12 whitespace-nowrap"
                               >
                                 Sender Ip
                               </Typography>
-                            </TableCell>
+                            </TableCell> */}
                             <TableCell>
                               <Typography
                                 color="text.secondary"
@@ -765,22 +846,22 @@ function DemoContent3() {
                                 Sender Score
                               </Typography>
                             </TableCell>
-                            <TableCell>
+                            {/* <TableCell>
                               <Typography
                                 color="text.secondary"
                                 className="font-semibold text-12 whitespace-nowrap"
                               >
                                 Black List
                               </Typography>
-                            </TableCell>
-                            <TableCell>
+                            </TableCell> */}
+                            {/* <TableCell>
                               <Typography
                                 color="text.secondary"
                                 className="font-semibold text-12 whitespace-nowrap"
                               >
                                 Delivered in
                               </Typography>
-                            </TableCell>
+                            </TableCell> */}
                           </TableRow>
                         </TableHead>
                         <TableBody>
@@ -797,19 +878,25 @@ function DemoContent3() {
                                     {data.iType}
                                   </Typography>
                                 ) : (
-                                  <Typography className="text-xl bg-red-500 rounded-8 w-fit p-5 text-white flex-1 ">
+                                  <Typography>
+                                  {data.iType === "Promotions" ? (
+                                  <Typography className="text-xl bg-orange-500 rounded-8 w-fit p-5 text-white flex-1 ">
                                     {data.iType}
+                                  </Typography>): 
+                                  (<Typography className="text-xl bg-red-500 rounded-8 w-fit p-5 text-white flex-1 ">
+                                    {data.iType}
+                                  </Typography>)}
                                   </Typography>
                                 )}
                               </TableCell>
-                              <TableCell component="th" scope="row">
+                              {/* <TableCell component="th" scope="row">
                                 <Typography className="text-xl  flex-2 ">
                                   {data.ip}
                                 </Typography>
-                              </TableCell>
+                              </TableCell> */}
                               <TableCell component="th" scope="row">
                                 <Typography className="text-xl  flex-2 ">
-                                  {data.iType === "Pass" ? (
+                                  {data.spf === "pass" ? (
                                     <Typography className="text-xl  bg-green-500 w-fit rounded-8 p-5 text-white flex-1 ">
                                       {data.spf}
                                     </Typography>
@@ -825,7 +912,7 @@ function DemoContent3() {
                                   {data.ss}
                                 </Typography>
                               </TableCell>
-                              <TableCell component="th" scope="row">
+                              {/* <TableCell component="th" scope="row">
                                 <Typography className="text-xl  flex-2 ">
                                   {data.iType === "0" ? (
                                     <Typography className="text-xl  bg-green-500 w-fit rounded-8 p-10 text-white flex-1 ">
@@ -837,12 +924,12 @@ function DemoContent3() {
                                     </Typography>
                                   )}
                                 </Typography>
-                              </TableCell>
-                              <TableCell component="th" scope="row">
+                              </TableCell> */}
+                              {/* <TableCell component="th" scope="row">
                                 <Typography className="text-xl  flex-2 ">
                                   {data.Delay}
                                 </Typography>
-                              </TableCell>
+                              </TableCell> */}
                             </>
                           </TableRow>
                         </TableBody>

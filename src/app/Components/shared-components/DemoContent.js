@@ -135,7 +135,7 @@ function DemoContent() {
                 {emailBalance}
               </Typography>
               <Typography className="text-lg font-medium text-red-600">
-                Email Validation Credit
+                Email Validation Credits
               </Typography>
             </div>
             <div className="flex-col flex-1">
@@ -143,7 +143,7 @@ function DemoContent() {
                 {campaignBalance}
               </Typography>
               <Typography className="text-lg font-medium text-red-600">
-                Camapign Testing Credit
+                Camapign Testing Credits
               </Typography>
             </div>
           </div>
