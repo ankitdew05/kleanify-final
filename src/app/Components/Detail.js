@@ -79,8 +79,14 @@ function Detail() {
       },
     });
     result = await result.json();
-    console.warn(result);
-    navigate(`/onboarding1`);
+    console.warn(result.result);
+    if(result.result == "Failed"){
+      alert("Api Key Wrong , Please Check")
+    }
+    else{
+      navigate(`/onboarding1`);
+    }
+    
   }
 
   return (
