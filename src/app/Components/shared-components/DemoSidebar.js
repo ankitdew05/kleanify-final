@@ -46,13 +46,13 @@ const navigationData = [
         url: '/buy-credits',
         icon: 'heroicons-outline:badge-check',
       },
-      // {
-      //   id: '3.1',
-      //   title: 'Setting',
-      //   type: 'item',
-      //   url: '/setting',
-      //   icon: 'heroicons-outline:cog',
-      // },
+      {
+        id: '3.1',
+        title: 'Setting',
+        type: 'item',
+        url: '/setting',
+        icon: 'heroicons-outline:cog',
+      },
       {
         id: '3.1',
         title: 'Support',

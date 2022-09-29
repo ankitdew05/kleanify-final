@@ -129,7 +129,7 @@ function DemoContent3() {
     let result = await fetch(
       `${baseURL}/campaignTest/${JSON.parse(auth).apiKey}/${id}/${
         JSON.parse(auth)._id
-      }/${campaignId}`,
+      }/${campaignId}/${JSON.parse(auth).SSemail}`,
       {
         method: "get",
         headers: {

@@ -49,6 +49,7 @@ import CampaignTestResult from "./Components/CampaignTestResult";
 import ListCleaningPage from './Components/ListCleaningPage'
 import EmptyListClean from "./Components/EmptyListClean";
 import SupportPage from "./Components/SupportPage";
+import Setting from "./Components/Setting";
 // import axios from 'axios';
 /**
  * Axios HTTP Request defaults
@@ -104,6 +105,7 @@ const App = () => {
               <Route path="/signin/:id/:period" element={<SignInPage />} />
               <Route path="/signin" element={<SignInPage />} />
               <Route path="/home" element={<HomePage />} />
+              <Route path="/setting" element={<Setting />} />
               <Route path="/pricing" element={<ModernPricingPage />} />
               <Route path="/new" element={<New/>} />
               <Route path="/forgot-password" element={<Forget />} />
