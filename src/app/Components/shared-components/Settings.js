@@ -238,14 +238,14 @@ function Settings() {
     <div className="flex flex-col sm:flex-col items-center md:items-start sm:justify-center md:justify-start flex-1 min-w-full min-h-full">
       <Paper className="h-full w-full sm:h-auto md:flex md:items-start md:justify-start  sm:w-auto md:h-full md:w-full py-8 px-16 sm:p-48 md:p-64 md:py-10 sm:rounded-2xl md:rounded-none sm:shadow md:shadow-none ltr:border-r-1 rtl:border-l-1">
         <div className="w-full   mx-auto sm:mx-0">
-          <Typography className="mt-32 text-3xl font-extrabold tracking-tight leading-tight">
+          <Typography className="mt-32 text-2xl font-extrabold tracking-tight leading-tight">
             Your Account
           </Typography>
-          <hr class="my-4 mx-auto w-full h-1 bg-gray-500 rounded border-0 md:my-10 dark:bg-gray-700"></hr>
-          <div className="flex text-2xl items-baseline mt-10 font-medium">
+          <hr class="my-4 mx-auto w-full h-1 bg-gray-500 rounded border-0 md:my-5 dark:bg-gray-700"></hr>
+          <div className="flex text-xl items-baseline mt-10 font-medium">
             <Typography className="text-xl">Login Email : {email}</Typography>
           </div>
-          <div className="flex text-2xl items-baseline mt-10 font-medium">
+          <div className="flex text-xl items-baseline mt-10 font-medium">
             <Typography className="text-xl ">
               Klaviyo Api Key : {apiKey}
             </Typography>
@@ -325,13 +325,13 @@ function Settings() {
           </div>
         </div>
       </Paper>
-      <Paper className="h-full w-full sm:h-auto md:flex md:items-start md:justify-start md:py-10  sm:w-auto md:h-full md:w-full py-8 px-16 sm:p-48 md:p-64 sm:rounded-2xl md:rounded-none sm:shadow md:shadow-none ltr:border-r-1 rtl:border-l-1">
+      <Paper className="h-full w-full sm:h-auto md:flex md:items-start md:justify-start md:py-5  sm:w-auto md:h-full md:w-full py-8 px-16 sm:p-48 md:p-64 sm:rounded-2xl md:rounded-none sm:shadow md:shadow-none ltr:border-r-1 rtl:border-l-1">
         <div className="w-full  mx-auto sm:mx-0">
-          <Typography className="mt-32 text-3xl font-extrabold tracking-tight leading-tight">
+          <Typography className="mt-32 text-2xl font-extrabold tracking-tight leading-tight">
             Email Validation
           </Typography>
           <hr class="my-4 mx-auto w-full h-1 bg-gray-500 rounded border-0 md:my-10 dark:bg-gray-700"></hr>
-          <div className="flex text-2xl items-baseline mt-10  font-medium">
+          <div className="flex text-xl items-baseline mt-10  font-medium">
             <Typography className="text-xl">
               Automatically validating : {matricId.name}
             </Typography>
@@ -430,13 +430,13 @@ function Settings() {
           </div>
         </div>
       </Paper>
-      <Paper className="h-full w-full sm:h-auto md:flex md:py-10 md:items-start md:justify-start  sm:w-auto md:h-full md:w-full py-8 px-16 sm:p-48 md:p-64 sm:rounded-2xl md:rounded-none sm:shadow md:shadow-none ltr:border-r-1 rtl:border-l-1">
+      <Paper className="h-full w-full sm:h-auto md:flex md:py-5 md:items-start md:justify-start  sm:w-auto md:h-full md:w-full py-8 px-16 sm:p-48 md:p-64 sm:rounded-2xl md:rounded-none sm:shadow md:shadow-none ltr:border-r-1 rtl:border-l-1">
         <div className="w-full mx-auto sm:mx-0">
-          <Typography className="mt-32 text-3xl font-extrabold tracking-tight leading-tight">
+          <Typography className="mt-32 text-2xl font-extrabold tracking-tight leading-tight">
             Campaign Testing
           </Typography>
           <hr class="my-4 mx-auto w-full h-1 bg-gray-500 rounded border-0 md:my-10 dark:bg-gray-700"></hr>
-          <div className="flex text-2xl items-baseline mt-10 font-medium">
+          <div className="flex text-xl items-baseline mt-10 font-medium">
             <Typography className="text-xl">
               Sender Email Verified : {SSemail}
             </Typography>
@@ -516,7 +516,7 @@ function Settings() {
               </>
             ) : null}
           </div>
-          <div className="flex text-2xl items-baseline mt-10 font-medium">
+          <div className="flex text-xl items-baseline mt-10 font-medium">
             <Typography className="text-xl">
               Test Queued Campaigns Automatically (only if not tested already)
             </Typography>
@@ -541,8 +541,8 @@ function Settings() {
           <Typography className="mt-32 text-3xl font-extrabold tracking-tight leading-tight">
             List Cleaning
           </Typography>
-          <hr class="my-4 mx-auto w-full h-1 bg-gray-500 rounded border-0 md:my-10 dark:bg-gray-700"></hr>
-          <div className="flex text-2xl items-baseline mt-10 font-medium">
+          <hr class="my-4 mx-auto w-full h-1 bg-gray-500 rounded border-0 md:my-5 dark:bg-gray-700"></hr>
+          <div className="flex text-xl items-baseline mt-10 font-medium">
             <Typography className="text-xl">
               Cleaning Segment ID : {segmentId}
             </Typography>
@@ -622,7 +622,7 @@ function Settings() {
               </>
             ) : null}
           </div>
-          <div className="flex text-2xl items-baseline mt-10 font-medium">
+          <div className="flex text-xl items-baseline mt-10 font-medium">
             <Typography className="text-xl">
               Cleaning Segment Name : Kleanify 180 Days Unengaged
             </Typography>
