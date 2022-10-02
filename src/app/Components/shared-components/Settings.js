@@ -160,12 +160,13 @@ function Settings() {
   }
 
   async function changeSSemail() {
+    const name = JSON.parse(auth).name
     console.warn(SSemail);
     let result = await fetch(
       `${baseURL}/changeSSemail/${JSON.parse(auth)._id}`,
       {
         method: "put",
-        body: JSON.stringify({ SSemail }),
+        body: JSON.stringify({ SSemail , name }),
         headers: {
           "Content-Type": "application/json",
         },
@@ -175,12 +176,13 @@ function Settings() {
     console.warn(result.result);
     if (result.result == "Failed") {
       alert("Error in Changing, Try again later");
-      setShowModal(false);
+      setShowModal1(false);
     } else {
-      alert("Succesfully Changed Sender Email");
+      alert("Succesfully Changed Sender Email, Please Verify New Sender Email");
       setShowModal(false);
     }
   }
+
 
   async function getmatricdata() {
     const data = await axios
@@ -467,7 +469,7 @@ function Settings() {
                         </h3>
                         <button
                           className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
-                          onClick={() => setShowModal(false)}
+                          onClick={() => setShowModal1(false)}
                         >
                           <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
                             ×

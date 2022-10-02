@@ -48,7 +48,7 @@ const navigationData = [
       },
       {
         id: '3.1',
-        title: 'Setting',
+        title: 'Settings',
         type: 'item',
         url: '/setting',
         icon: 'heroicons-outline:cog',
