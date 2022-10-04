@@ -49,9 +49,11 @@ function DemoContent3() {
   const [spinner, setSpinner] = useState(false);
   const [checked, setChecked] = useState("");
   const [result, setResult] = useState("Test Campaign");
+  const [paidUser, setpaidUser] = useState("")
   useEffect(() => {
     //getBounce();
     //getEmailInfo();
+    getPaidUser()
     getData()
       .then((response) => {
         if (
@@ -127,9 +129,9 @@ function DemoContent3() {
   const check = async (id, campaignId) => {
     setSpinner(true);
     let result = await fetch(
-      `${baseURL}/campaignTest/${JSON.parse(auth).apiKey}/${id}/${
-        JSON.parse(auth)._id
-      }/${campaignId}/${JSON.parse(auth).SSemail}`,
+      `${baseURL}/campaignTest/${paidUser.apiKey}/${id}/${
+        paidUser._id
+      }/${campaignId}/${paidUser.SSemail}`,
       {
         method: "get",
         headers: {
@@ -149,6 +151,16 @@ function DemoContent3() {
     }
     window.location.reload();
   };
+
+  async function getPaidUser() {
+    await axios
+     .get(`${baseURL}/paiduser/${JSON.parse(auth)._id}`,)
+     .then((response) => {
+       console.log("PaidUser",response.data[0])
+       setpaidUser(response.data[0])
+     })
+     .catch((err) => console.error(err));
+   }
 
   if (status) {
     return (
@@ -241,8 +253,9 @@ function DemoContent3() {
                     onClick={handleClick6}
                     className="username text-24 m-20 mt-0 font-bold text-gray-700 whitespace-nowrap "
                   >
-                    Test Results {index + 1}
+                    Test Results {index + 1} <Link >Load</Link>
                   </Typography>
+                  
                   <Typography className="username text-16 m-20 mt-0 text-gray-700 whitespace-nowrap ">
                     Tested On :{" "}
                     {new Date(value.date).toLocaleDateString("locale", {

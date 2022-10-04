@@ -45,8 +45,7 @@ function DemoContent1() {
         setnoemails(response.data[0].emailValidation)
       })
       .catch((err) => console.error(err));
-  
-  }
+    }
 
   return (
     <motion.div
