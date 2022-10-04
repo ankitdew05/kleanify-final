@@ -253,7 +253,7 @@ function DemoContent3() {
                     onClick={handleClick6}
                     className="username text-24 m-20 mt-0 font-bold text-gray-700 whitespace-nowrap "
                   >
-                    Test Results {index + 1} <Link >Load</Link>
+                    Test Results {index + 1} 
                   </Typography>
                   
                   <Typography className="username text-16 m-20 mt-0 text-gray-700 whitespace-nowrap ">
