@@ -14,6 +14,8 @@ import baseURL from "src/app/common/baseURL";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { CSVLink, CSVDownload } from "react-csv";
+import FuseLoading from "@fuse/core/FuseLoading";
+
 
 function ListCleaningContent() {
   const navigate = useNavigate();
@@ -24,6 +26,7 @@ function ListCleaningContent() {
   const [emailarray, setemailarray] = useState([""]);
   const [ListCleaned, setListCleaned] = useState("");
   const [unengaged, setUnengaged] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [status, setstatus] = useState(false);
   useEffect(() => {
     getData()
@@ -44,6 +47,7 @@ function ListCleaningContent() {
         console.log("Response", res.length);
         if (res.length > 0) {
           setstatus(!status);
+          setLoading(false)
           getUnengaged()
             .then((res) => {
               setUnengaged(res);
@@ -52,6 +56,7 @@ function ListCleaningContent() {
             .catch((err) => console.log(err));
         } else {
           setstatus(status);
+          setLoading(false)
           // navigate("/empty-list-cleaning");
         }
       })
@@ -106,7 +111,13 @@ function ListCleaningContent() {
 
 
 
-  
+  if (loading) {
+    return (
+      <div className="flex w-full items-center justify-center h-full">
+        <FuseLoading />
+      </div>
+    );
+  }
 
   if (status) {
     return (

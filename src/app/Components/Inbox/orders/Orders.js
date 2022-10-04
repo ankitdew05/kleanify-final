@@ -8,15 +8,20 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import baseURL from "src/app/common/baseURL";
 import OrdersTable2 from './OrdersTable2';
+import FuseLoading from "@fuse/core/FuseLoading";
+
 function Orders() {
   const auth = localStorage.getItem("user");
+  const [loading, setLoading] = useState(true);
   const [status, setstatus] = useState(false);
   useEffect( ()=>{
     getData().then((res)=>{
       if( res === "true" ){
         setstatus(!status);
+        setLoading(false)
       }else{
         setstatus(status)
+        setLoading(false)
       }
     })
   },[])
@@ -31,6 +36,14 @@ function Orders() {
     return data;
   }
   
+  if (loading) {
+    return (
+      <div className="flex w-full items-center justify-center h-full">
+        <FuseLoading />
+      </div>
+    );
+  }
+
 if(status){
   return (
     <FusePageCarded

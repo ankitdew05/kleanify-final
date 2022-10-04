@@ -27,7 +27,7 @@ function ListCleaningPage() {
   const [rightSidebarOpen, setRightSidebarOpen] = useState(!isMobile);
 
   useEffect(() => {
-    document.title = " Kleanify-Support";
+    document.title = " List Cleaning Klenify";
     setLeftSidebarOpen(!isMobile);
     setRightSidebarOpen(!isMobile);
   }, [isMobile]);

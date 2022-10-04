@@ -26,7 +26,7 @@ function Setting() {
   const [rightSidebarOpen, setRightSidebarOpen] = useState(!isMobile);
 
   useEffect(() => {
-    document.title = "List Cleaning Kleanify";
+    document.title = "Setting Kleanify";
     setLeftSidebarOpen(!isMobile);
     setRightSidebarOpen(!isMobile);
   }, [isMobile]);
