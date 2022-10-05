@@ -55,6 +55,10 @@ function DemoContent2() {
     }
   }
   const handleCheckout = () => {
+    console.log({customerId,
+      userId,
+      emailCredit,
+      campaignCredit,})
     axios
       .post(`${baseURL}/create-checkout-session`, {
         customerId,
