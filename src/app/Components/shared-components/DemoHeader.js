@@ -4,46 +4,33 @@ import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import FuseSvgIcon from "@fuse/core/FuseSvgIcon";
 import UserMenu from "./UserMenu";
-
+import { useEffect, useState } from "react";
+import axios from "axios";
+import baseURL from "src/app/common/baseURL";
 function DemoHeader(props) {
   const { leftSidebarToggle, title } = props;
+  const [status, setstatus] = useState(true);
+  useEffect(() => {
+    getPaidUser();
+  });
   const auth = localStorage.getItem("user");
+  async function getPaidUser() {
+    await axios
+      .get(`${baseURL}/paiduser/${JSON.parse(auth)._id}`)
+      .then((response) => {
+        console.log("PaidUser", response.data[0]);
+        if (response.data[0].paidStatus === false) {
+          setstatus(false);
+        } else {
+          setstatus(true);
+        }
+      })
+      .catch((err) => console.error(err));
+  }
   function handleClick() {}
 
   return (
     <div className="flex flex-col  p-24 w-full sm:py-32 sm:px-40">
-      <div>
-        {/* <Breadcrumbs
-          separator={<FuseSvgIcon size={20}>heroicons-solid:chevron-right</FuseSvgIcon>}
-          aria-label="breadcrumb"
-        >
-          <Link
-            className="font-medium"
-            underline="hover"
-            key="1"
-            color="inherit"
-            to="/"
-            onClick={handleClick}
-          >
-            Projects
-          </Link>
-          <Link
-            className="font-medium"
-            underline="hover"
-            key="2"
-            color="inherit"
-            to="/getting-started/installation/"
-            onClick={handleClick}
-          >
-            Weekend Project
-          </Link>
-          <Typography className="font-medium" key="3" color="text.primary">
-            Overview
-          </Typography>
-        </Breadcrumbs> */}
-
-        <div className="flex sm:hidden" />
-      </div>
       <div className="flex items-center w-full mt-8 -mx-10">
         {leftSidebarToggle && (
           <div className="flex lg:invisible shrink-0 items-center">
@@ -52,12 +39,29 @@ function DemoHeader(props) {
             </IconButton>
           </div>
         )}
-        <Typography
-          component="h2"
-          className="flex-1 text-3xl md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10  mx-10"
-        >
-          {title}
-        </Typography>
+        {status === true ? (
+          <Typography
+            component="h2"
+            className="flex-1 text-3xl md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10  mx-10"
+          >
+            {title}
+          </Typography>
+        ) : (
+         
+          <Typography
+            component="h2"
+            className="flex-1 text-3xl md:text-4xl font-bold text-red-500  tracking-tight leading-7 sm:leading-10  mx-10"
+
+          >
+          ! Opps..😥 [Your Account is Disabled]
+          </Typography>
+          
+          
+          
+        )}
+
+        {}
+
         <div className="flex">
           <div className="invisible md:visible flex-col">
             <Typography className="username text-14 whitespace-nowrap font-medium">
