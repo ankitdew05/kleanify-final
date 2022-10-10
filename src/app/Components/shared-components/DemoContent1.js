@@ -15,37 +15,50 @@ import axios from "axios";
 
 function DemoContent1() {
   const auth = localStorage.getItem("user");
+  const token = localStorage.getItem("token");
   const [newsub, setnewsub] = useState("0");
   const [nocheck, setnocheck] = useState("0");
   const [noemails, setnoemails] = useState("0");
   const [emailarray, setemailarray] = useState([""]);
-
+  const [count , setcount] = useState("")
+const[ newSub , setnewSub] = useState("")
   useEffect(() => {
-    getBounce();
-    getData()
+    getEmailValidationCount()
+    getnewSubscribers()
   }, []);
 
-  const getBounce = async () => {
-    await axios
-      .get(`${baseURL}/email/${JSON.parse(auth)._id}`)
-      .then((response) => {
-        console.log(response.data);
-        setemailarray(response.data);
-      })
-      .catch((err) => console.error(err));
-  };
 
-  async function getData() {
-     await axios
-      .get(`${baseURL}/paiduser/${JSON.parse(auth)._id}`,)
-      .then((response) => {
-        console.log(response.data[0].newSubscriber)
-        setnewsub(response.data[0].newSubscriber)
-        setnocheck(response.data[0].newSubscriber)
-        setnoemails(response.data[0].emailValidation)
-      })
-      .catch((err) => console.error(err));
-    }
+
+    const getEmailValidationCount = async () => {
+      console.log(JSON.parse(token))
+      await axios
+        .get(`${baseURL}/emailValidationTesting30/${JSON.parse(auth)._id}`, {
+          headers: { "authorization": JSON.parse(token) }
+        })
+        .then((response) => {
+          const array = response.data.Length
+          console.log("Hi",array.length);
+          setcount(array.length)
+          setemailarray(response.data.Length)
+        })
+        .catch((err) => console.error(err));
+    };
+
+    const getnewSubscribers = async () => {
+      console.log(JSON.parse(token))
+      await axios
+        .get(`${baseURL}/newSubscriber30/${JSON.parse(auth)._id}`, {
+          headers: { "authorization": JSON.parse(token) }
+        })
+        .then((response) => {
+      
+          const array = response.data.Json
+          console.log("Hi",array);
+          setnewSub(array)
+        })
+        .catch((err) => console.error(err));
+    };
+  
 
   return (
     <motion.div
@@ -63,7 +76,7 @@ function DemoContent1() {
               </Typography>
 
               <Typography className="text-7xl  sm:text-8xl mt-36 font-bold tracking-tight leading-none text-green-500">
-                {newsub}
+                {newSub}
               </Typography>
               {/* <Typography className="text-lg font-medium text-green-600">
                 Invalid Email Supressed
@@ -88,7 +101,7 @@ function DemoContent1() {
               </Typography>
 
               <Typography className="text-7xl  sm:text-8xl mt-36 font-bold tracking-tight leading-none text-amber-500">
-                {nocheck}
+                {newSub}
               </Typography>
               {/* <Typography className="text-lg font-medium text-amber-600">
                 Tests Done
@@ -113,7 +126,7 @@ function DemoContent1() {
               </Typography>
 
               <Typography className="text-7xl  sm:text-8xl mt-36 font-bold tracking-tight leading-none text-blue-500">
-                {noemails}
+                {count}
               </Typography>
               {/* <Typography className="text-lg font-medium text-blue-600">
                 Unengaged Subscribers Cleaned

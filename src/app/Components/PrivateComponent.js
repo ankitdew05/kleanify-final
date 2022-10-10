@@ -1,9 +1,10 @@
-import React from "react";
-import { Outlet,Navigate } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Outlet, Navigate } from "react-router-dom";
 
-const PrivateComponent=()=>{
-    const auth = localStorage.getItem('user');
-    return auth?<Outlet/>:<Navigate to="/signin"/>
-}
+const PrivateComponent = () => {
+ 
+  const auth = localStorage.getItem("user");
+  return auth ? <Outlet /> : <Navigate to="/signin" />;
+};
 
 export default PrivateComponent;

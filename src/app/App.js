@@ -50,6 +50,7 @@ import ListCleaningPage from './Components/ListCleaningPage'
 import EmptyListClean from "./Components/EmptyListClean";
 import SupportPage from "./Components/SupportPage";
 import Setting from "./Components/Setting";
+import { useEffect } from "react";
 // import axios from 'axios';
 /**
  * Axios HTTP Request defaults
@@ -72,10 +73,8 @@ const emotionCacheOptions = {
 };
 
 const App = () => {
-  
   const langDirection = useSelector(selectCurrentLanguageDirection);
   const mainTheme = useSelector(selectMainTheme);
-
   return (
     <CacheProvider value={createCache(emotionCacheOptions[langDirection])}>
       <FuseTheme theme={mainTheme} direction={langDirection}>

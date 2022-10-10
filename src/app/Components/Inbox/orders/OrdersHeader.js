@@ -18,6 +18,7 @@ import baseURL from "src/app/common/baseURL";
 
 function OrdersHeader(props) {
   const auth = localStorage.getItem("user");
+  const token = localStorage.getItem("token");
   const dispatch = useDispatch();
   const searchText = useSelector(selectOrdersSearchText);
   const [data , setData] = useState('')
@@ -30,15 +31,17 @@ function OrdersHeader(props) {
    window.location.reload()
   };
 
-  const getCamp = async () => {
-    console.log(JSON.parse(auth).apiKey)
-    axios
-      .get(`${baseURL}/campaign/${JSON.parse(auth).apiKey}/${JSON.parse(auth)._id}`)
-      .then((response) => {
-        console.log(response.data);
-      })
-      .catch((err) => console.error(err));
-  };
+  // const getCamp = async () => {
+  //   console.log(JSON.parse(auth).apiKey)
+  //   axios
+  //     .get(`${baseURL}/campaign/${JSON.parse(auth).apiKey}/${JSON.parse(auth)._id}`,
+  //     {
+  //       headers: { "authorization": JSON.parse(token) }})
+  //     .then((response) => {
+  //       console.log(response.data);
+  //     })
+  //     .catch((err) => console.error(err));
+  // };
 
   async function onchange(state) {
     const userId = JSON.parse(auth)._id
@@ -47,6 +50,7 @@ function OrdersHeader(props) {
       body: JSON.stringify({ userId, state }),
       headers: {
         "Content-Type": "application/json",
+        "authorization": JSON.parse(token),
       },
     });
     console.warn(result);
@@ -54,7 +58,9 @@ function OrdersHeader(props) {
 
   async function getData() {
     await axios
-      .get(`${baseURL}/paiduser/${JSON.parse(auth)._id}`)
+      .get(`${baseURL}/paiduser/${JSON.parse(auth)._id}`, {
+        headers: { "authorization": JSON.parse(token) }
+      })
       .then((response) => {
         setData(response.data[0])
       })

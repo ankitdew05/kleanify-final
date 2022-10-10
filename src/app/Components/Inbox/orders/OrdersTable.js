@@ -47,6 +47,7 @@ function OrdersTable(props) {
     id: null,
   });
   const auth = localStorage.getItem("user");
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
     document.title = "Campaign-Kleanify";
@@ -66,7 +67,10 @@ function OrdersTable(props) {
 
   const getBounce = async () => {
     axios
-      .get(`${baseURL}/campaign/${JSON.parse(auth)._id}`)
+      .get(`${baseURL}/campaign/${JSON.parse(auth)._id}`,
+      {
+        headers: { "authorization": JSON.parse(token) }}
+      )
       .then((response) => {
         // console.log("hi", response.data);
         setData1(response.data);
@@ -163,6 +167,7 @@ function OrdersTable(props) {
         method: "put",
         headers: {
           "Content-Type": "application/json",
+          "authorization": JSON.parse(token),
         },
       }
     );

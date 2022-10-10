@@ -1,8 +1,12 @@
 import { createAsyncThunk, createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import baseURL from 'src/app/common/baseURL';
+const token = localStorage.getItem("token");
+
 export const getOrders = createAsyncThunk('eCommerceApp/orders/getOrders', async (id) => {
-  const response = await axios.get(`${baseURL}/campaign/${id}`);
+  const response = await axios.get(`${baseURL}/campaign/${id}`,{
+    headers: { "authorization": JSON.parse(token) }
+  });
   const data = await response.data;
   console.log('orders',data)
   return data;

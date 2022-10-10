@@ -12,6 +12,7 @@ import FuseLoading from "@fuse/core/FuseLoading";
 
 function Orders() {
   const auth = localStorage.getItem("user");
+  const token = localStorage.getItem("token");
   const [loading, setLoading] = useState(true);
   const [status, setstatus] = useState(false);
   useEffect( ()=>{
@@ -28,7 +29,9 @@ function Orders() {
   const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down('md'));
   async function getData() {
     const data = await  axios
-    .get(`${baseURL}/senderSignature/${JSON.parse(auth)._id}`)
+    .get(`${baseURL}/senderSignature/${JSON.parse(auth)._id}`,
+    {
+      headers: { "authorization": JSON.parse(token) }})
     .then((response) => {
       return response.data.Status
     })

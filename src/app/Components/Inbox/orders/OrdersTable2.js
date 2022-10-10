@@ -15,6 +15,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import baseURL from "src/app/common/baseURL";
 function OrdersTable2() {
   const auth = localStorage.getItem("user");
+  const token = localStorage.getItem("token");
+
   useEffect(() => {
     document.title = "Onboarding to Kleanify";
   },[]);
@@ -29,6 +31,7 @@ function OrdersTable2() {
       body: JSON.stringify({ email, name }),
       headers: {
         "Content-Type": "application/json",
+        "authorization": JSON.parse(token),
       },
     });
     result = await result.json();

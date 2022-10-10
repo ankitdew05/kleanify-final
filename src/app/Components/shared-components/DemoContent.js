@@ -9,17 +9,26 @@ import { Link } from "react-router-dom";
 import baseURL from "src/app/common/baseURL";
 
 function DemoContent() {
+  const token = localStorage.getItem("token");
   const auth = localStorage.getItem("user");
   const [data, setData] = useState("");
+  const [ unengeged , setUnengaged] = useState("")
+  const [campaignTesting , setcampaignTesting] = useState("")
+  const [newSub , setnewSub] = useState("")
   const [emailBalance, setemailBalance] = useState("0");
   const [campaignBalance, setcampaignBalance] = useState("0");
   useEffect(() => {
     getBounce();
+    getcampaignTest();
+    getUnengaged();
+    getnewSubscribers();
   }, []);
 
   const getBounce = async () => {
+    console.log(JSON.parse(token))
     await axios
       .get(`${baseURL}/paiduser/${JSON.parse(auth)._id}`, {
+        headers: { "authorization": JSON.parse(token) }
       })
       .then((response) => {
         console.log(response.data[0]);
@@ -29,6 +38,56 @@ function DemoContent() {
       })
       .catch((err) => console.error(err));
   };
+
+  const getnewSubscribers = async () => {
+    console.log(JSON.parse(token))
+    await axios
+      .get(`${baseURL}/newSubscriber30/${JSON.parse(auth)._id}`, {
+        headers: { "authorization": JSON.parse(token) }
+      })
+      .then((response) => {
+    
+        const array = response.data.Json
+        console.log("Hi",array);
+        setnewSub(array)
+      })
+      .catch((err) => console.error(err));
+  };
+
+  const getcampaignTest = async () => {
+    console.log(JSON.parse(token))
+    await axios
+      .get(`${baseURL}/campaignTesting30/${JSON.parse(auth)._id}`, {
+        headers: { "authorization": JSON.parse(token) }
+      })
+      .then((response) => {
+    
+        const array = response.data.Length
+        console.log("Hi",array.length);
+        setcampaignTesting(array.length)
+      })
+      .catch((err) => console.error(err));
+  };
+
+  const getUnengaged = async () => {
+    console.log(JSON.parse(token))
+    await axios
+      .get(`${baseURL}/unengaged30/${JSON.parse(auth)._id}`, {
+        headers: { "authorization": JSON.parse(token) }
+      })
+      .then((response) => {
+        const array = response.data
+        console.log("Hi",array);
+        let sum = 0
+        array.map((value)=>{
+          sum = sum + value.creditUsed
+        })
+        setUnengaged(sum)
+      })
+      .catch((err) => console.error(err));
+  };
+
+
   
 
   return (
@@ -41,7 +100,7 @@ function DemoContent() {
           </Typography>
 
           <Typography className="text-7xl  sm:text-8xl mt-36 font-bold tracking-tight leading-none text-green-500">
-            {data.newSubscriber}
+            {newSub}
           </Typography>
           <Typography className="text-lg font-medium text-green-600">
             Emails Checked
@@ -71,7 +130,7 @@ function DemoContent() {
           </Typography>
 
           <Typography className="text-7xl  sm:text-8xl mt-36 font-bold tracking-tight leading-none text-amber-500">
-            {data.campaignTesting}
+            {campaignTesting}
           </Typography>
           <Typography className="text-lg font-medium text-amber-600">
             Tests Done
@@ -101,7 +160,7 @@ function DemoContent() {
           </Typography>
 
           <Typography className="text-7xl  sm:text-8xl mt-36 font-bold tracking-tight leading-none text-blue-500">
-            {data.listCleaning}
+            {unengeged}
           </Typography>
           <Typography className="text-lg font-medium text-blue-600">
             Unengaged Subscribers Cleaned

@@ -83,6 +83,7 @@ function SignInPage() {
         body: JSON.stringify({ email, password }),
         headers: {
           "Content-Type": "application/json",
+          
         },
       });
       result = await result.json();

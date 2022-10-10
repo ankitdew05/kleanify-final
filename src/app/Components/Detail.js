@@ -18,6 +18,10 @@ import FormHelperText from "@mui/material/FormHelperText";
 import { useEffect, useState } from "react";
 import baseURL from "../common/baseURL";
 import axios from "axios";
+import FuseLoading from "@fuse/core/FuseLoading";
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
+
 /**
  * Form Validation Schema
  */
@@ -56,12 +60,16 @@ function Detail() {
   const navigate = useNavigate();
   const params = useParams();
   const auth = localStorage.getItem("user");
-
+  const token = localStorage.getItem("token");
+  const [loading, setLoading] = useState(false);
+  const [spinner, setSpinner] = useState(false);
   const { isValid, dirtyFields, errors, setError } = formState;
 
   async function getData() {
     const data = await axios
-      .get(`${baseURL}/paiduser/${JSON.parse(auth)._id}`)
+      .get(`${baseURL}/paiduser/${JSON.parse(auth)._id}`, {
+        headers: { "authorization": JSON.parse(token) }
+      })
       .then((response) => {
         return response.data;
       })
@@ -70,15 +78,18 @@ function Detail() {
   }
 
   async function onSubmit({ apiKey, url }) {
+    setSpinner(true);
     console.warn(apiKey, url);
     let result = await fetch(`${baseURL}/paiduser/${JSON.parse(auth)._id}`, {
       method: "put",
       body: JSON.stringify({ apiKey, url }),
       headers: {
         "Content-Type": "application/json",
+        "authorization": JSON.parse(token)
       },
     });
     result = await result.json();
+    setSpinner(false)
     console.warn(result.result);
     if(result.result == "Failed"){
       alert("Api Key Wrong , Please Check")
@@ -88,6 +99,7 @@ function Detail() {
     }
     
   }
+
 
   return (
     <div className="relative bg-[#FFF6CF] opacity-90  flex flex-col flex-auto min-w-0 overflow-hidden">
@@ -210,6 +222,16 @@ function Detail() {
                     >
                       Submit
                     </Button>
+                    <Backdrop
+                sx={{
+                  opacity: 0,
+                  color: "#00000",
+                  zIndex: (theme) => theme.zIndex.drawer + 1,
+                }}
+                open={spinner}
+              >
+                <CircularProgress color="success" />
+              </Backdrop>
                   </div>
                 </form>
               </div>

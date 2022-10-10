@@ -36,6 +36,7 @@ const defaultValues = {
 
 function Settings() {
   const auth = localStorage.getItem("user");
+  const token = localStorage.getItem("token");
   const [data, setData] = useState("");
   const [email, setEmail] = useState("");
   const [apiKey, setapiKey] = useState("");
@@ -60,7 +61,8 @@ function Settings() {
 
   async function getData() {
     const data = await axios
-      .get(`${baseURL}/paiduser/${JSON.parse(auth)._id}`)
+      .get(`${baseURL}/paiduser/${JSON.parse(auth)._id}`, 
+      {headers: { "authorization": JSON.parse(token) }})
       .then((response) => {
         return response.data;
       })
@@ -75,6 +77,7 @@ function Settings() {
       body: JSON.stringify({ apiKey, url }),
       headers: {
         "Content-Type": "application/json",
+        "authorization": JSON.parse(token)
       },
     });
     result = await result.json();
@@ -105,7 +108,9 @@ function Settings() {
 
   async function getData() {
     const data = await axios
-      .get(`${baseURL}/paiduser/${JSON.parse(auth)._id}`)
+      .get(`${baseURL}/paiduser/${JSON.parse(auth)._id}`,{
+        headers: { "authorization": JSON.parse(token) 
+  }})
       .then((response) => {
         return response.data;
       })
@@ -122,6 +127,7 @@ function Settings() {
         body: JSON.stringify({ apiKey }),
         headers: {
           "Content-Type": "application/json",
+          "authorization": JSON.parse(token)
         },
       }
     );
@@ -145,6 +151,7 @@ function Settings() {
         body: JSON.stringify({ segmentId }),
         headers: {
           "Content-Type": "application/json",
+          "authorization": JSON.parse(token)
         },
       }
     );
@@ -169,6 +176,7 @@ function Settings() {
         body: JSON.stringify({ SSemail , name }),
         headers: {
           "Content-Type": "application/json",
+          "authorization": JSON.parse(token)
         },
       }
     );
@@ -189,7 +197,10 @@ function Settings() {
       .get(
         `${baseURL}/changeEmailValidation/${JSON.parse(auth)._id}/${
           JSON.parse(auth).apiKey
-        }`
+        }`,
+        {
+          headers: { "authorization": JSON.parse(token) 
+    }}
       )
       .then((response) => {
         //console.log(response.data);
@@ -206,6 +217,7 @@ function Settings() {
         body: JSON.stringify({ matricId, name }),
         headers: {
           "Content-Type": "application/json",
+          "authorization": JSON.parse(token)
         },
       }
     );
@@ -231,6 +243,7 @@ function Settings() {
       body: JSON.stringify({ userId, state }),
       headers: {
         "Content-Type": "application/json",
+        "authorization": JSON.parse(token)
       },
     });
     console.warn(result);

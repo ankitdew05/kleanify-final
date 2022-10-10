@@ -29,6 +29,7 @@ function Feature2() {
       body: JSON.stringify({ segmentId }),
       headers: {
         "Content-Type": "application/json",
+        "authorization": JSON.parse(token) 
       },
     });
     result = await result.json();

@@ -32,6 +32,7 @@ function DemoContent3() {
   const params = useParams();
   const navigate = useNavigate();
   const auth = localStorage.getItem("user");
+  const token = localStorage.getItem("token");
   const [newsub, setnewsub] = useState("0");
   const [nocheck, setnocheck] = useState("0");
   const [noemails, setnoemails] = useState("0");
@@ -49,11 +50,12 @@ function DemoContent3() {
   const [spinner, setSpinner] = useState(false);
   const [checked, setChecked] = useState("");
   const [result, setResult] = useState("Test Campaign");
-  const [paidUser, setpaidUser] = useState("")
+  const [paidUser, setpaidUser] = useState("");
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     //getBounce();
     //getEmailInfo();
-    getPaidUser()
+    getPaidUser();
     getData()
       .then((response) => {
         if (
@@ -119,7 +121,9 @@ function DemoContent3() {
 
   async function getData() {
     const result = await axios
-      .get(`${baseURL}/getsingleCampaign/${params.id}`)
+      .get(`${baseURL}/getsingleCampaign/${params.id}`, {
+        headers: { authorization: JSON.parse(token) },
+      })
       .then((response) => {
         return response.data;
       })
@@ -127,7 +131,7 @@ function DemoContent3() {
     return result;
   }
   const check = async (id, campaignId) => {
-    setSpinner(true);
+    setLoading(true);
     let result = await fetch(
       `${baseURL}/campaignTest/${paidUser.apiKey}/${id}/${
         paidUser._id
@@ -136,11 +140,12 @@ function DemoContent3() {
         method: "get",
         headers: {
           "Content-Type": "text/html",
+          "authorization": JSON.parse(token)
         },
       }
     );
     result = await result.json();
-    setSpinner(false);
+    setLoading(false);
     console.warn(result);
     if (result.Status === "Success") {
       alert(`Succesfully Tested Camapign ${result.CamapignId}`);
@@ -154,13 +159,23 @@ function DemoContent3() {
 
   async function getPaidUser() {
     await axios
-     .get(`${baseURL}/paiduser/${JSON.parse(auth)._id}`,)
-     .then((response) => {
-       console.log("PaidUser",response.data[0])
-       setpaidUser(response.data[0])
-     })
-     .catch((err) => console.error(err));
-   }
+      .get(`${baseURL}/paiduser/${JSON.parse(auth)._id}`, {
+        headers: { authorization: JSON.parse(token) },
+      })
+      .then((response) => {
+        console.log("PaidUser", response.data[0]);
+        setpaidUser(response.data[0]);
+      })
+      .catch((err) => console.error(err));
+  }
+
+  if (loading) {
+    return (
+      <div className="flex w-full items-center justify-center h-full">
+        <FuseLoading />
+      </div>
+    );
+  }
 
   if (status) {
     return (
@@ -170,7 +185,10 @@ function DemoContent3() {
         animate="show"
       >
         <div className=" sm:col-span-6 lg:col-span-6 col-span-1 grid-cols-7 grid">
-          <div className=" flex flex-col sm:col-span-5 ">
+        {loading ? (
+                <FuseLoading />
+              ) : (
+                <div className=" flex flex-col sm:col-span-5 ">
             <Typography className="username text-16 m-20 font-bold text-gray-700 whitespace-nowrap ">
               Campaign ID: {camp.id}
             </Typography>
@@ -195,6 +213,8 @@ function DemoContent3() {
             </Typography>
           </div>
 
+              )}
+         
           <div className="col-span-1">
             <Button
               component="a"
@@ -245,7 +265,9 @@ function DemoContent3() {
         </div>
 
         {checked.map((value, index) => (
+      
           <div className="sm:col-span-6  lg:col-span-6 grid grid-cols-1 md:grid-cols-4 md:gap-x-24 gap-y-24">
+          
             <div>
               <div className=" sm:col-span-6 lg:col-span-6 grid-cols-4 grid">
                 <div className=" flex flex-col col-span-3">
@@ -253,9 +275,9 @@ function DemoContent3() {
                     onClick={handleClick6}
                     className="username text-24 m-20 mt-0 font-bold text-gray-700 whitespace-nowrap "
                   >
-                    Test Results {index + 1} 
+                    Test Results {index + 1}
                   </Typography>
-                  
+
                   <Typography className="username text-16 m-20 mt-0 text-gray-700 whitespace-nowrap ">
                     Tested On :{" "}
                     {new Date(value.date).toLocaleDateString("locale", {
@@ -767,14 +789,14 @@ function DemoContent3() {
                                     <TableRow>
                                       <>
                                         <TableCell component="th" scope="row">
-                                        {data.Score <= 1 ? (
-                                          <Typography className="username w-fit text-16 px-10 mr-10  bg-green-500 rounded-4 text-white  font-medium">
-                                            Score: {data.Score}
-                                          </Typography>):
-                                          (
+                                          {data.Score <= 1 ? (
+                                            <Typography className="username w-fit text-16 px-10 mr-10  bg-green-500 rounded-4 text-white  font-medium">
+                                              Score: {data.Score}
+                                            </Typography>
+                                          ) : (
                                             <Typography className="username w-fit text-16 px-10 mr-10  bg-red-500 rounded-4 text-white  font-medium">
-                                            Score: {data.Score}
-                                          </Typography>
+                                              Score: {data.Score}
+                                            </Typography>
                                           )}
                                         </TableCell>
                                         <TableCell component="th" scope="row">
@@ -826,7 +848,6 @@ function DemoContent3() {
                             </TableCell>
 
                             <TableCell>
-                            
                               <Typography
                                 color="text.secondary"
                                 className="font-semibold text-12 whitespace-nowrap"
@@ -892,13 +913,15 @@ function DemoContent3() {
                                   </Typography>
                                 ) : (
                                   <Typography>
-                                  {data.iType === "Promotions" ? (
-                                  <Typography className="text-xl bg-orange-500 rounded-8 w-fit p-5 text-white flex-1 ">
-                                    {data.iType}
-                                  </Typography>): 
-                                  (<Typography className="text-xl bg-red-500 rounded-8 w-fit p-5 text-white flex-1 ">
-                                    {data.iType}
-                                  </Typography>)}
+                                    {data.iType === "Promotions" ? (
+                                      <Typography className="text-xl bg-orange-500 rounded-8 w-fit p-5 text-white flex-1 ">
+                                        {data.iType}
+                                      </Typography>
+                                    ) : (
+                                      <Typography className="text-xl bg-red-500 rounded-8 w-fit p-5 text-white flex-1 ">
+                                        {data.iType}
+                                      </Typography>
+                                    )}
                                   </Typography>
                                 )}
                               </TableCell>
@@ -1102,10 +1125,14 @@ function DemoContent3() {
         <motion.div className=" sm:col-span-6  lg:col-span-6  ">
           <Paper className="flex flex-col  flex-auto justify-center shadow rounded-2xl w-full h-full overflow-hidden">
             <div className="flex justify-center">
-              <Typography className="text-2xl p-10 font-bold m-16 ">
-                Campaign Not Yet Tested. Click the Test Campaign button above to
-                test the campaign
-              </Typography>
+              {loading ? (
+                <FuseLoading />
+              ) : (
+                <Typography className="text-2xl p-10 font-bold m-16 ">
+                  Campaign Not Yet Tested. Click the Test Campaign button above
+                  to test the campaign
+                </Typography>
+              )}
             </div>
           </Paper>
         </motion.div>

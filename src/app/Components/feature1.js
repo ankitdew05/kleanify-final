@@ -15,6 +15,7 @@ function Feature1() {
   const params = useParams();
   const id = params.id;
   const auth = localStorage.getItem("user");
+  const token = localStorage.getItem("token");
   const navigate = useNavigate();
   useEffect(() => {
     document.title = "Onboarding to Kleanify";
@@ -31,7 +32,9 @@ function Feature1() {
 
   async function getData() {
     const data = await axios
-      .get(`${baseURL}/paiduser/${JSON.parse(auth)._id}`)
+      .get(`${baseURL}/paiduser/${JSON.parse(auth)._id}`, {
+        headers: { "authorization": JSON.parse(token) }
+      })
       .then((response) => {
         return response.data;
       })

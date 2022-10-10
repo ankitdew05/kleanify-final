@@ -21,6 +21,7 @@ const schema = yup.object().shape({
 
 function Contact() {
   const auth = localStorage.getItem("user");
+  const token = localStorage.getItem("token")
   useEffect(() => {
     document.title = "Contact to Kleanify";
   });
@@ -43,6 +44,7 @@ function Contact() {
       body: JSON.stringify({ name, email, message, subject, userId }),
       headers: {
         "Content-Type": "application/json",
+        "authorization": JSON.parse(token)
       },
     });
     result = await result.json();

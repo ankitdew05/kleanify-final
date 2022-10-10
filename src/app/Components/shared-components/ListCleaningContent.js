@@ -20,6 +20,7 @@ import FuseLoading from "@fuse/core/FuseLoading";
 function ListCleaningContent() {
   const navigate = useNavigate();
   const auth = localStorage.getItem("user");
+  const token = localStorage.getItem("token");
   const [newsub, setnewsub] = useState("0");
   const [nocheck, setnocheck] = useState("0");
   const [noemails, setnoemails] = useState("0");
@@ -28,7 +29,9 @@ function ListCleaningContent() {
   const [unengaged, setUnengaged] = useState([]);
   const [loading, setLoading] = useState(true);
   const [status, setstatus] = useState(false);
+  const [count , setCount] = useState("")
   useEffect(() => {
+    getUnengagedCount()
     getData()
       .then((res) => {
         console.log(res);
@@ -50,8 +53,11 @@ function ListCleaningContent() {
           setLoading(false)
           getUnengaged()
             .then((res) => {
-              setUnengaged(res);
-              console.log("Data", res);
+              const numAscending = res.sort(function(a, b) {
+                return (a.date > b.date) ? -1 : ((a.date < b.date) ? 1 : 0);
+            });
+              setUnengaged(numAscending);
+              console.log("Data", res, numAscending);
             })
             .catch((err) => console.log(err));
         } else {
@@ -65,7 +71,8 @@ function ListCleaningContent() {
 
   async function getData() {
     const data = await axios
-      .get(`${baseURL}/paiduser/${JSON.parse(auth)._id}`)
+      .get(`${baseURL}/paiduser/${JSON.parse(auth)._id}`, 
+      {headers: { "authorization": JSON.parse(token) }})
       .then((response) => {
         return response.data;
       })
@@ -75,7 +82,8 @@ function ListCleaningContent() {
 
   async function getData1() {
     const data = await axios
-      .get(`${baseURL}/unengaged/${JSON.parse(auth)._id}`)
+      .get(`${baseURL}/unengaged/${JSON.parse(auth)._id}`,
+      {headers: { "authorization": JSON.parse(token) }})
       .then((response) => {
         return response.data;
       })
@@ -85,7 +93,8 @@ function ListCleaningContent() {
 
   async function getUnengaged() {
     const data = await axios
-      .get(`${baseURL}/unengaged30/${JSON.parse(auth)._id}`)
+      .get(`${baseURL}/unengaged30/${JSON.parse(auth)._id}`,
+      {headers: { "authorization": JSON.parse(token) }})
       .then((response) => {
         console.log(response);
         return response.data;
@@ -93,6 +102,24 @@ function ListCleaningContent() {
       .catch((err) => console.error(err));
     return data;
   }
+
+  const getUnengagedCount = async () => {
+    console.log(JSON.parse(token))
+    await axios
+      .get(`${baseURL}/unengaged30/${JSON.parse(auth)._id}`, {
+        headers: { "authorization": JSON.parse(token) }
+      })
+      .then((response) => {
+        const array = response.data
+        console.log("Hi",array);
+        let sum = 0
+        array.map((value)=>{
+          sum = sum + value.creditUsed
+        })
+        setCount(sum)
+      })
+      .catch((err) => console.error(err));
+  };
 
   // function putComma(arr) {
 
@@ -129,7 +156,7 @@ function ListCleaningContent() {
         <motion.div className="sm:col-span-6">
           <Paper className="flex flex-col flex-auto p-24 shadow rounded-2xl overflow-hidden ">
             <Typography className="text-3xl p-24 font-medium tracking-tight leading-6 ">
-              <b>{ListCleaned} </b>Unengaged Subscribers Cleaned in last 30 days
+              <b>{count} </b>Unengaged Subscribers Cleaned in last 30 days
             </Typography>
             <div className="table-responsive">
               <Table className="w-full min-w-full">

@@ -23,6 +23,7 @@ import "react-toastify/dist/ReactToastify.css";
 function DemoContent2() {
   const navigate = useNavigate();
   const auth = localStorage.getItem("user");
+  const token = localStorage.getItem("token");
   const [emailCredit, setemailCredit] = useState("1");
   const [campaignCredit, setCampaignCredit] = useState("1");
   let [total, setTotal] = useState("0");
@@ -68,6 +69,7 @@ function DemoContent2() {
         headers: {
           'Access-Control-Allow-Origin': '*',
           'Content-Type': 'application/json',
+          "authorization": JSON.parse(token)
         },
       },)
       .then((response) => {
@@ -78,33 +80,35 @@ function DemoContent2() {
       .catch((err) => console.log(err.message));
   };
 
-  async function handleToken(token, addresses) {
-    const response = await axios.post(`${baseURL}/checkout`, {
-      token,
-      total,
-      userId,
-      planId,
-      emailCredit,
-      campaignCredit,
-    });
-    console.log(response);
-    console.log(response.status, response.id);
-    let clientSecret = await response.data.id;
-    console.log(clientSecret);
+  // async function handleToken(token, addresses) {
+  //   const response = await axios.post(`${baseURL}/checkout`, {
+  //     token,
+  //     total,
+  //     userId,
+  //     planId,
+  //     emailCredit,
+  //     campaignCredit,
+  //   });
+  //   console.log(response);
+  //   console.log(response.status, response.id);
+  //   let clientSecret = await response.data.id;
+  //   console.log(clientSecret);
 
-    if (response.status === 200) {
-      navigate("/");
-      alert("Succesful Payment");
-    } else {
-      alert("Payment Failed");
-    }
-  }
+  //   if (response.status === 200) {
+  //     navigate("/");
+  //     alert("Succesful Payment");
+  //   } else {
+  //     alert("Payment Failed");
+  //   }
+  // }
 
   // Confirm Card Payment.
 
   const getBounce = async () => {
     axios
-      .get(`${baseURL}/paiduser/${JSON.parse(auth)._id}`,)
+      .get(`${baseURL}/paiduser/${JSON.parse(auth)._id}`,{
+        headers: { "authorization": JSON.parse(token) }
+      })
       .then((response) => {
         setemailBalance(response.data[0].credits.emailValidationCredit);
         setcampaignBalance(response.data[0].credits.testingCredit);

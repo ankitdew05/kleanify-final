@@ -14,9 +14,11 @@ function DemoHeader(props) {
     getPaidUser();
   });
   const auth = localStorage.getItem("user");
+  const token = localStorage.getItem("token");
   async function getPaidUser() {
     await axios
-      .get(`${baseURL}/paiduser/${JSON.parse(auth)._id}`)
+      .get(`${baseURL}/paiduser/${JSON.parse(auth)._id}`,
+      {headers: { "authorization": JSON.parse(token) }})
       .then((response) => {
         console.log("PaidUser", response.data[0]);
         if (response.data[0].paidStatus === false) {
