@@ -25,7 +25,7 @@ function DemoContent() {
   }, []);
 
   const getBounce = async () => {
-    console.log(JSON.parse(token))
+    //console.log(JSON.parse(token))
     await axios
       .get(`${baseURL}/paiduser/${JSON.parse(auth)._id}`, {
         headers: { "authorization": JSON.parse(token) }

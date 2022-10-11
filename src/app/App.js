@@ -50,7 +50,7 @@ import ListCleaningPage from './Components/ListCleaningPage'
 import EmptyListClean from "./Components/EmptyListClean";
 import SupportPage from "./Components/SupportPage";
 import Setting from "./Components/Setting";
-import { useEffect } from "react";
+
 // import axios from 'axios';
 /**
  * Axios HTTP Request defaults
