@@ -39,6 +39,7 @@ const defaultValues = {
 };
 
 function Detail() {
+  const [spinner, setSpinner] = useState(false);
   const { control, formState, handleSubmit, reset } = useForm({
     mode: "onChange",
     defaultValues,
@@ -46,15 +47,23 @@ function Detail() {
   });
   useEffect(() => {
     document.title = "Onboarding to Kleanify";
+    setSpinner(true);
+    setLoading(true)
     const data = getData()
       .then((res) => {
+        setLoading(false)
+        setSpinner(false);
         console.log(res);
         if (res[0].apiKey) {
-          navigate(`/`);
+          navigate(`/dashboard`);
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        setSpinner(false);
+        console.log(err)
+      });
     console.log("data", data);
+    
   }, []);
 
   const navigate = useNavigate();
@@ -62,7 +71,6 @@ function Detail() {
   const auth = localStorage.getItem("user");
   const token = localStorage.getItem("token");
   const [loading, setLoading] = useState(false);
-  const [spinner, setSpinner] = useState(false);
   const { isValid, dirtyFields, errors, setError } = formState;
 
   async function getData() {
@@ -99,7 +107,13 @@ function Detail() {
     }
     
   }
-
+  if (loading) {
+    return (
+      <div className="flex items-center bg-[#FFF6CF] justify-center h-[1000px] w-full">
+        <FuseLoading />
+      </div>
+    );
+  }
 
   return (
     <div className="relative bg-[#FFF6CF] opacity-90  flex flex-col flex-auto min-w-0 overflow-hidden">

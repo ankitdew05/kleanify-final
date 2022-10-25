@@ -61,14 +61,13 @@ function DemoContent() {
         headers: { "authorization": JSON.parse(token) }
       })
       .then((response) => {
-    
         const array = response.data.Length
         console.log("Hi",array.length);
         setcampaignTesting(array.length)
       })
       .catch((err) => console.error(err));
   };
-
+  
   const getUnengaged = async () => {
     console.log(JSON.parse(token))
     await axios
@@ -86,9 +85,6 @@ function DemoContent() {
       })
       .catch((err) => console.error(err));
   };
-
-
-  
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 gap-24 w-full min-w-0 p-24">

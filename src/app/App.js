@@ -89,9 +89,9 @@ const App = () => {
               <Route path="/failure" element={<FailurePage />} />
               <Route path="/buy-credits" element={<BuyCredits />} />
               <Route path="/" element={<Dashboard />}/>
+              <Route path="/dashboard" element={<Dashboard />}/>
               <Route path="/email-validation" element={<EmailValidation />}/>
               <Route path="/campaign-test-result/:id" element={<CampaignTestResult />}/>
-              <Route path="/dashboard" element={<ProjectDashboardApp />} />
               <Route path="/list-cleaning" element={<ListCleaningPage />} />
               <Route path="/empty-list-cleaning" element={<EmptyListClean />} />
               <Route path="/onboarding" element={<Detail />} />

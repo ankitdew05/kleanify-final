@@ -15,7 +15,7 @@ const navigationData = [
         id: '1.1',
         title: 'Dashboard',
         type: 'item',
-        url: '/',
+        url: '/dashboard',
         icon: 'heroicons-outline:plus-circle',
       },
       {
@@ -25,6 +25,7 @@ const navigationData = [
         url: '/email-validation',
         icon: 'heroicons-outline:badge-check',
       },
+      
       {
         id: '1.3',
         title: 'Campaign Tests',
