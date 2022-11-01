@@ -50,6 +50,7 @@ import ListCleaningPage from './Components/ListCleaningPage'
 import EmptyListClean from "./Components/EmptyListClean";
 import SupportPage from "./Components/SupportPage";
 import Setting from "./Components/Setting";
+import Planchecker from "./Components/PlanChecker";
 
 // import axios from 'axios';
 /**
@@ -106,6 +107,7 @@ const App = () => {
               <Route path="/home" element={<HomePage />} />
               <Route path="/setting" element={<Setting />} />
               <Route path="/pricing" element={<ModernPricingPage />} />
+              <Route path="/planchecker" element={<Planchecker />}/>
               <Route path="/new" element={<New/>} />
               <Route path="/forgot-password" element={<Forget />} />
               <Route path="/reset-password/:id/:token" element={<Reset/>} />

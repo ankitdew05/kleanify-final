@@ -16,7 +16,6 @@ import { useNavigate } from "react-router-dom";
 import { CSVLink, CSVDownload } from "react-csv";
 import FuseLoading from "@fuse/core/FuseLoading";
 
-
 function ListCleaningContent() {
   const navigate = useNavigate();
   const auth = localStorage.getItem("user");
@@ -29,9 +28,9 @@ function ListCleaningContent() {
   const [unengaged, setUnengaged] = useState([]);
   const [loading, setLoading] = useState(true);
   const [status, setstatus] = useState(false);
-  const [count , setCount] = useState("")
+  const [count, setCount] = useState("");
   useEffect(() => {
-    getUnengagedCount()
+    getUnengagedCount();
     getData()
       .then((res) => {
         console.log(res);
@@ -50,29 +49,42 @@ function ListCleaningContent() {
         console.log("Response", res.length);
         if (res.length > 0) {
           setstatus(!status);
-          setLoading(false)
+          setLoading(false);
           getUnengaged()
             .then((res) => {
-              const numAscending = res.sort(function(a, b) {
-                return (a.date > b.date) ? -1 : ((a.date < b.date) ? 1 : 0);
-            });
+              const numAscending = res.sort(function (a, b) {
+                return a.date > b.date ? -1 : a.date < b.date ? 1 : 0;
+              });
               setUnengaged(numAscending);
               console.log("Data", res, numAscending);
             })
             .catch((err) => console.log(err));
         } else {
           setstatus(status);
-          setLoading(false)
+          setLoading(false);
           // navigate("/empty-list-cleaning");
         }
       })
       .catch((err) => console.log(err));
   }, []);
 
+  async function convert(array) {
+    let arr=[{email : "cfkfndskf"}, {email : "dvdsfv"}];
+    array.forEach(element => {
+      arr.push({ email: element });
+    })
+    return arr
+  }
+
+  const Headers = [
+    { label : "Email" , key : "email"}
+  ]
+
   async function getData() {
     const data = await axios
-      .get(`${baseURL}/paiduser/${JSON.parse(auth)._id}`, 
-      {headers: { "authorization": JSON.parse(token) }})
+      .get(`${baseURL}/paiduser/${JSON.parse(auth)._id}`, {
+        headers: { authorization: JSON.parse(token) },
+      })
       .then((response) => {
         return response.data;
       })
@@ -82,8 +94,9 @@ function ListCleaningContent() {
 
   async function getData1() {
     const data = await axios
-      .get(`${baseURL}/unengaged/${JSON.parse(auth)._id}`,
-      {headers: { "authorization": JSON.parse(token) }})
+      .get(`${baseURL}/unengaged/${JSON.parse(auth)._id}`, {
+        headers: { authorization: JSON.parse(token) },
+      })
       .then((response) => {
         return response.data;
       })
@@ -93,8 +106,9 @@ function ListCleaningContent() {
 
   async function getUnengaged() {
     const data = await axios
-      .get(`${baseURL}/unengaged30/${JSON.parse(auth)._id}`,
-      {headers: { "authorization": JSON.parse(token) }})
+      .get(`${baseURL}/unengaged30/${JSON.parse(auth)._id}`, {
+        headers: { authorization: JSON.parse(token) },
+      })
       .then((response) => {
         console.log(response);
         return response.data;
@@ -104,29 +118,33 @@ function ListCleaningContent() {
   }
 
   const getUnengagedCount = async () => {
-    console.log(JSON.parse(token))
+    console.log(JSON.parse(token));
     await axios
       .get(`${baseURL}/unengaged30/${JSON.parse(auth)._id}`, {
-        headers: { "authorization": JSON.parse(token) }
+        headers: { authorization: JSON.parse(token) },
       })
       .then((response) => {
-        const array = response.data
-        console.log("Hi",array);
-        let sum = 0
-        array.map((value)=>{
-          sum = sum + value.creditUsed
-        })
-        setCount(sum)
+        const array = response.data;
+        console.log("Hi", array);
+        let sum = 0;
+        array.map((value) => {
+          sum = sum + value.creditUsed;
+        });
+        setCount(sum);
       })
       .catch((err) => console.error(err));
   };
 
-  // function putComma(arr) {
-
-  //   const result1 = Object.assign({}, arr);
-  //   var result = Object.keys(result1).map((key) => [ [[result1[key]]]])
-  //   return [result];
-  // }
+//   function putComma(arr) {
+//     const obj3 = [];
+//      arr.forEach((element, index) => {
+//      obj3['emails'] = element;
+//      return [obj3]
+// });
+//     // const result1 = Object.assign({}, arr);
+//     // var result = Object.keys(result1).map((key) => [ [[result1[key]]]])
+//     // return [result];
+//   }
 
   // function csv(rows) {
   //   let csvContent =
@@ -135,8 +153,6 @@ function ListCleaningContent() {
   // var encodedUri = encodeURI(csvContent);
   // window.open(encodedUri);
   // }
-
-
 
   if (loading) {
     return (
@@ -185,7 +201,7 @@ function ListCleaningContent() {
                         color="text.secondary"
                         className="font-semibold text-18 whitespace-nowrap"
                       >
-                        Download List 
+                        Download List
                       </Typography>
                     </TableCell>
                   </TableRow>
@@ -210,10 +226,11 @@ function ListCleaningContent() {
                       <TableCell component="th" scope="row">
                         <Typography className="underline">
                           <CSVLink
+                          
                             columns="Emails"
                             target="_blank"
                             filename={`kleanify-uneng-subs-${value.date}.csv`}
-                            data={[value.array]}
+                            data= {[value.array]}
                           >
                             Download List
                           </CSVLink>
