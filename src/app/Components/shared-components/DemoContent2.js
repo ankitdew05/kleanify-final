@@ -62,22 +62,22 @@ function DemoContent2() {
       campaignCredit,})
     axios
       .post(`${baseURL}/create-checkout-session`, {
+        headers: {
+          //'Access-Control-Allow-Origin': '*',
+          'Content-Type': 'application/json',
+          "authorization": JSON.parse(token)
+        },
         customerId,
         userId,
         emailCredit,
         campaignCredit,
-        headers: {
-          'Access-Control-Allow-Origin': '*',
-          'Content-Type': 'application/json',
-          "authorization": JSON.parse(token)
-        },
       },)
       .then((response) => {
         if (response.data.url) {
           window.location.href = response.data.url;
         }
       })
-      .catch((err) => console.log(err.message));
+      .catch((err) => console.log(err));
   };
 
   // async function handleToken(token, addresses) {

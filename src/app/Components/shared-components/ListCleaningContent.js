@@ -226,7 +226,6 @@ function ListCleaningContent() {
                       <TableCell component="th" scope="row">
                         <Typography className="underline">
                           <CSVLink
-                          
                             columns="Emails"
                             target="_blank"
                             filename={`kleanify-uneng-subs-${value.date}.csv`}

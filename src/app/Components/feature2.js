@@ -15,6 +15,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import baseURL from "../common/baseURL";
 
 function Feature2() {
+  const token = localStorage.getItem("token");
+
   const auth = localStorage.getItem("user");
   useEffect(() => {
     document.title = "Onboarding to Kleanify";
