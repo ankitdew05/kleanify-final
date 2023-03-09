@@ -118,7 +118,7 @@ function DemoContent() {
         </div>
       </Paper>
 
-      <Paper className="flex flex-col flex-auto shadow rounded-2xl w-full h-full overflow-hidden">
+      {/* <Paper className="flex flex-col flex-auto shadow rounded-2xl w-full h-full overflow-hidden">
         <div className="flex items-center justify-between px-8 pt-12"></div>
         <div className="text-center mt-8 p-28">
           <Typography className="text-3xl sm:text-4xl mb-8 font-bold tracking-tight leading-none text-amber-500">
@@ -146,7 +146,7 @@ function DemoContent() {
             <Link to="/campaign-test">View Details</Link>
           </Typography>
         </div>
-      </Paper>
+      </Paper> */}
 
       <Paper className="flex flex-col flex-auto shadow rounded-2xl w-full h-full overflow-hidden">
         <div className="flex items-center justify-between px-8 pt-12"></div>
@@ -193,14 +193,14 @@ function DemoContent() {
                 Email Validation Credits
               </Typography>
             </div>
-            <div className="flex-col flex-1">
+            {/* <div className="flex-col flex-1">
               <Typography className="text-7xl  sm:text-8xl mt-36 font-bold tracking-tight leading-none text-red-500">
                 {campaignBalance}
               </Typography>
               <Typography className="text-lg font-medium text-red-600">
                 Camapign Testing Credits
               </Typography>
-            </div>
+            </div> */}
           </div>
         </div>
         <div className="flex items-center justify-evenly px-8 pt-12 pb-20">

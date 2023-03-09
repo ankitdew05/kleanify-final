@@ -101,7 +101,7 @@ function Feature1() {
                   these emails in your account.
                 </Typography>
                 <div className="felx  w-1/3  mt-24 ">
-                  <Link to="/onboarding2">
+                  <Link to="/onboarding3">
                     <Button
                       style={{
                         backgroundColor: "#FCB900",

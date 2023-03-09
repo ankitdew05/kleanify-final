@@ -16,8 +16,8 @@ import { Route, Routes } from "react-router-dom";
 import settingsConfig from "app/configs/settingsConfig";
 import withAppProviders from "./withAppProviders";
 import { AuthProvider } from "./auth/AuthContext";
-import  PrivateComponent  from "./Components/PrivateComponent";
-import  HomePage  from "./Components/HomePage";
+import PrivateComponent from "./Components/PrivateComponent";
+import HomePage from "./Components/HomePage";
 import SignInPage from "./Components/SignInPage";
 import SignUpPage from "./Components/SignUpPage";
 import Forget from "./Components/Forget";
@@ -51,6 +51,8 @@ import EmptyListClean from "./Components/EmptyListClean";
 import SupportPage from "./Components/SupportPage";
 import Setting from "./Components/Setting";
 import Planchecker from "./Components/PlanChecker";
+import BulkValidation from "./Components/BulkValidation";
+import SelectBulkSide from "./Components/SelectBulkSide";
 
 // import axios from 'axios';
 /**
@@ -83,34 +85,37 @@ const App = () => {
           <BrowserRouter>
             <Routes>
               <Route element={<PrivateComponent />}>
-              <Route path="/campaign-test" element={<CampaignTest />} />
-              <Route path="/checkout" element={<Checkout />} />
-              <Route path="/dashboard/:id" element={<ProjectDashboardApp />} />
-              <Route path="/success" element={<SuccessPage />} />
-              <Route path="/failure" element={<FailurePage />} />
-              <Route path="/buy-credits" element={<BuyCredits />} />
-              <Route path="/" element={<Dashboard />}/>
-              <Route path="/dashboard" element={<Dashboard />}/>
-              <Route path="/email-validation" element={<EmailValidation />}/>
-              <Route path="/campaign-test-result/:id" element={<CampaignTestResult />}/>
-              <Route path="/list-cleaning" element={<ListCleaningPage />} />
-              <Route path="/empty-list-cleaning" element={<EmptyListClean />} />
-              <Route path="/onboarding" element={<Detail />} />
-              <Route path="/onboarding2" element={<Feature />} />
-              <Route path="/onboarding3" element={<Feature2 />} />
-              <Route path="/onboarding1" element={<Feature1 />} />
-              <Route path="/signout" element={<SignOutPage />} />
-              <Route path="/support" element={<SupportPage />} />
+                <Route path="/campaign-test" element={<CampaignTest />} />
+                <Route path="/checkout" element={<Checkout />} />
+                <Route path="/dashboard/:id" element={<ProjectDashboardApp />} />
+                <Route path="/success" element={<SuccessPage />} />
+                <Route path="/failure" element={<FailurePage />} />
+                <Route path="/buy-credits" element={<BuyCredits />} />
+                <Route path="/" element={<Dashboard />} />
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/email-validation" element={<EmailValidation />} />
+                <Route path="/campaign-test-result/:id" element={<CampaignTestResult />} />
+                <Route path="/list-cleaning" element={<ListCleaningPage />} />
+                <Route path="/empty-list-cleaning" element={<EmptyListClean />} />
+                <Route path="/onboarding" element={<Detail />} />
+                <Route path="/onboarding2" element={<Feature />} />
+                <Route path="/onboarding3" element={<Feature2 />} />
+                <Route path="/onboarding1" element={<Feature1 />} />
+             
+                <Route path="/signout" element={<SignOutPage />} />
+                <Route path="/support" element={<SupportPage />} />
               </Route>
               <Route path="/signin/:id/:period" element={<SignInPage />} />
               <Route path="/signin" element={<SignInPage />} />
               <Route path="/home" element={<HomePage />} />
               <Route path="/setting" element={<Setting />} />
               <Route path="/pricing" element={<ModernPricingPage />} />
-              <Route path="/planchecker" element={<Planchecker />}/>
-              <Route path="/new" element={<New/>} />
+              <Route path="/selectbulk" element={<SelectBulkSide />} />
+              <Route path="/planchecker" element={<Planchecker />} />
+              <Route path="/bulk-email-validation" element={<BulkValidation />} />
+              <Route path="/new" element={<New />} />
               <Route path="/forgot-password" element={<Forget />} />
-              <Route path="/reset-password/:id/:token" element={<Reset/>} />
+              <Route path="/reset-password/:id/:token" element={<Reset />} />
               <Route path="/basic" element={<Basic />} />
               <Route path="/signup/:id" element={<SignUpPage />} />
             </Routes>

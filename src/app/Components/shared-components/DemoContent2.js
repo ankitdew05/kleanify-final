@@ -36,10 +36,11 @@ function DemoContent2() {
   const planId = userData.planId;
   useEffect(() => {
     setUserData(JSON.parse(auth));
-    setTotal(parseFloat(emailCredit) + parseFloat(campaignCredit));
+    setTotal(parseFloat(emailCredit));
+    //+ parseFloat(campaignCredit)
     getBounce();
-  }, [emailCredit, campaignCredit]);
-
+  }, [emailCredit]);
+  //campaignCredit
   function handleEmailCredit(value) {
     if (value < 1 || null) {
       setemailCredit(1);
@@ -48,18 +49,20 @@ function DemoContent2() {
     }
   }
 
-  function handleCampaignCredit(value) {
-    if (value < 1 || null) {
-      setCampaignCredit(1);
-    } else {
-      setCampaignCredit(value);
-    }
-  }
+  // function handleCampaignCredit(value) {
+  //   if (value < 1 || null) {
+  //     setCampaignCredit(1);
+  //   } else {
+  //     setCampaignCredit(value);
+  //   }
+  // }
   const handleCheckout = () => {
-    console.log({customerId,
+    console.log({
+      customerId,
       userId,
       emailCredit,
-      campaignCredit,})
+      campaignCredit,
+    })
     axios
       .post(`${baseURL}/create-checkout-session`, {
         headers: {
@@ -106,7 +109,7 @@ function DemoContent2() {
 
   const getBounce = async () => {
     axios
-      .get(`${baseURL}/paiduser/${JSON.parse(auth)._id}`,{
+      .get(`${baseURL}/paiduser/${JSON.parse(auth)._id}`, {
         headers: { "authorization": JSON.parse(token) }
       })
       .then((response) => {
@@ -154,37 +157,7 @@ function DemoContent2() {
             </div> */}
           </Paper>
         </motion.div>
-        <motion.div className="sm:col-span-1">
-          <Paper className="flex flex-col flex-auto shadow rounded-2xl w-full h-full overflow-hidden">
-            <div className="flex items-center justify-between px-8 pt-12"></div>
-            <div className="text-center mt-8 p-12">
-              <Typography className="text-3xl sm:text-3xl mb-8 font-bold tracking-tight leading-none text-amber-500">
-                Campaign Test
-              </Typography>
-
-              <Typography className="text-3xl  sm:text-5xl mt-36 font-bold tracking-tight leading-none text-amber-500">
-                {campaignBalance}
-              </Typography>
-              <Typography className="text-lg font-medium text-amber-600">
-                Credit Balance
-              </Typography>
-            </div>
-            {/* <div className="flex items-center justify-evenly px-8 pt-12 pb-20">
-              <Typography
-                className="px-16 text-xl font-medium tracking-tight leading-6 truncate"
-                color="text.secondary"
-              >
-                Last 30 Days
-              </Typography>
-              <Typography
-                className="px-16 text-xl font-medium tracking-tight leading-6 truncate underline"
-                color="text.secondary"
-              >
-                View Details
-              </Typography>
-            </div> */}
-          </Paper>
-        </motion.div>
+        
       </div>
 
       <motion.div className="sm:col-span-6 md:col-span-5">
@@ -232,7 +205,7 @@ function DemoContent2() {
               ${emailCredit}
             </Typography>
           </div>
-          <div className="text-left mt-8 px-28 py-9 grid grid-cols-3 justify-items-center">
+          {/* <div className="text-left mt-8 px-28 py-9 grid grid-cols-3 justify-items-center">
             <Typography className="text-lg sm:text-3xl mb-4 font-bold tracking-tight leading-none text-gray-700">
               Buy Campaign Testing Credit
             </Typography>
@@ -253,7 +226,7 @@ function DemoContent2() {
             <Typography className="text-md sm:text-2xl mb-4 font-bold tracking-tight leading-none text-gray-700">
               ${campaignCredit}
             </Typography>
-          </div>
+          </div> */}
           <div className="text-center mt-8 px-28 py-9 grid grid-cols-3">
             <Typography className="text-md sm:text-3xl mb-4 font-bold tracking-tight leading-none text-gray-700">
               Total

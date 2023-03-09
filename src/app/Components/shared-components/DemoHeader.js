@@ -10,6 +10,8 @@ import baseURL from "src/app/common/baseURL";
 function DemoHeader(props) {
   const { leftSidebarToggle, title } = props;
   const [status, setstatus] = useState(true);
+  const [liststatus, setliststatus] = useState(true);
+  const [message, setmessage] = useState("! Opps..😥 [Your Account is Disabled]")
   useEffect(() => {
     getPaidUser();
   });
@@ -18,19 +20,22 @@ function DemoHeader(props) {
   async function getPaidUser() {
     await axios
       .get(`${baseURL}/paiduser/${JSON.parse(auth)._id}`,
-      {headers: { "authorization": JSON.parse(token) }})
+        { headers: { "authorization": JSON.parse(token) } })
       .then((response) => {
         console.log("PaidUser", response.data[0]);
+        if (response.data[0].listcleaningstatus === false) {
+          setliststatus(false);
+          setmessage("! Opps..😥 [Your List Cleaning is Disabled] Upgrade your Plan")
+        }
         if (response.data[0].paidStatus === false) {
           setstatus(false);
+          setmessage("! Opps..😥 [Your Account is Disabled]")
         } else {
           setstatus(true);
         }
       })
       .catch((err) => console.error(err));
   }
-  function handleClick() {}
-
   return (
     <div className="flex flex-col  p-24 w-full sm:py-32 sm:px-40">
       <div className="flex items-center w-full mt-8 -mx-10">
@@ -41,28 +46,50 @@ function DemoHeader(props) {
             </IconButton>
           </div>
         )}
-        {status === true ? (
-          <Typography
-            component="h2"
-            className="flex-1 text-3xl md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10  mx-10"
-          >
-            {title}
-          </Typography>
-        ) : (
-         
-          <Typography
-            component="h2"
-            className="flex-1 text-3xl md:text-4xl font-bold text-red-500  tracking-tight leading-7 sm:leading-10  mx-10"
+        {title === "Clean Unengaged Subscribers" ? (
+        <>
+            {status === false || liststatus === false ? (
+              <Typography
+                component="h2"
+                className="flex-1 text-3xl md:text-4xl font-extrabold  text-red-500 tracking-tight leading-7 sm:leading-10  mx-10"
+              >
+                {message}
+              </Typography>
+            ) : (
 
-          >
-          ! Opps..😥 [Your Account is Disabled]
-          </Typography>
-          
-          
-          
+              <Typography
+                component="h2"
+                className="flex-1  text-3xl md:text-4xl font-bold  tracking-tight leading-7 sm:leading-10  mx-10"
+              >
+                {title}
+              </Typography>
+            )}
+            </>
+        ) : (
+          <>
+            {status === true ? (
+              <Typography
+                component="h2"
+                className="flex-1 text-3xl text-black md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10  mx-10"
+              >
+                {title}
+              </Typography>
+            ) : (
+
+              <Typography
+                component="h2"
+                className="flex-1 text-3xl md:text-4xl font-bold text-red-500  tracking-tight leading-7 sm:leading-10  mx-10"
+
+              >
+                ! Opps..😥 [Your List Cleaning is Disabled] Upgrade your Plan
+              </Typography>
+            )}
+            </>
+
         )}
 
-        {}
+
+        { }
 
         <div className="flex">
           <div className="invisible md:visible flex-col">

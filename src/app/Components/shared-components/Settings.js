@@ -61,8 +61,8 @@ function Settings() {
 
   async function getData() {
     const data = await axios
-      .get(`${baseURL}/paiduser/${JSON.parse(auth)._id}`, 
-      {headers: { "authorization": JSON.parse(token) }})
+      .get(`${baseURL}/paiduser/${JSON.parse(auth)._id}`,
+        { headers: { "authorization": JSON.parse(token) } })
       .then((response) => {
         return response.data;
       })
@@ -108,9 +108,11 @@ function Settings() {
 
   async function getData() {
     const data = await axios
-      .get(`${baseURL}/paiduser/${JSON.parse(auth)._id}`,{
-        headers: { "authorization": JSON.parse(token) 
-  }})
+      .get(`${baseURL}/paiduser/${JSON.parse(auth)._id}`, {
+        headers: {
+          "authorization": JSON.parse(token)
+        }
+      })
       .then((response) => {
         return response.data;
       })
@@ -173,7 +175,7 @@ function Settings() {
       `${baseURL}/changeSSemail/${JSON.parse(auth)._id}`,
       {
         method: "put",
-        body: JSON.stringify({ SSemail , name }),
+        body: JSON.stringify({ SSemail, name }),
         headers: {
           "Content-Type": "application/json",
           "authorization": JSON.parse(token)
@@ -195,12 +197,13 @@ function Settings() {
   async function getmatricdata() {
     const data = await axios
       .get(
-        `${baseURL}/changeEmailValidation/${JSON.parse(auth)._id}/${
-          JSON.parse(auth).apiKey
+        `${baseURL}/changeEmailValidation/${JSON.parse(auth)._id}/${JSON.parse(auth).apiKey
         }`,
         {
-          headers: { "authorization": JSON.parse(token) 
-    }}
+          headers: {
+            "authorization": JSON.parse(token)
+          }
+        }
       )
       .then((response) => {
         //console.log(response.data);
@@ -234,7 +237,7 @@ function Settings() {
   const handleChange = async () => {
     await onchange(!data.campaignAutoTest);
     window.location.reload()
-   };
+  };
 
   async function onchange(state) {
     const userId = JSON.parse(auth)._id
@@ -445,112 +448,7 @@ function Settings() {
           </div>
         </div>
       </Paper>
-      <Paper className="h-full w-full sm:h-auto md:flex md:py-5 md:items-start md:justify-start  sm:w-auto md:h-full md:w-full py-8 px-16 sm:p-48 md:p-64 sm:rounded-2xl md:rounded-none sm:shadow md:shadow-none ltr:border-r-1 rtl:border-l-1">
-        <div className="w-full mx-auto sm:mx-0">
-          <Typography className="mt-32 text-2xl font-extrabold tracking-tight leading-tight">
-            Campaign Testing
-          </Typography>
-          <hr class="my-4 mx-auto w-full h-1 bg-gray-500 rounded border-0 md:my-10 dark:bg-gray-700"></hr>
-          <div className="flex text-xl items-baseline mt-10 font-medium">
-            <Typography className="text-xl">
-              Sender Email Verified : {SSemail}
-            </Typography>
-            <Button
-              variant="contained"
-              color="secondary"
-              style={{
-                backgroundColor: "#FCB900",
-              }}
-              className="w-1/8 ml-16 "
-              aria-label="Register"
-              type="submit"
-              size="large"
-              onClick={() => setShowModal1(true)}
-            >
-              Update Email
-            </Button>
-            {showModal1 ? (
-              <>
-                <div className="justify-center items-center flex w-full overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
-                  <div className="relative w-auto my-6 mx-auto max-w-">
-                    {/*content*/}
-                    <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
-                      {/*header*/}
-                      <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
-                        <h3 className="text-3xl font-semibold">
-                          Edit Sender Email
-                        </h3>
-                        <button
-                          className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
-                          onClick={() => setShowModal1(false)}
-                        >
-                          <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
-                            ×
-                          </span>
-                        </button>
-                      </div>
-                      {/*body*/}
-                      <div className="relative p-6 flex-auto">
-                        <div className="grid mb-24 grid-cols-2">
-                          <Typography className="pt-5 md:text-xl leading-5 col-span-1">
-                            Your New Sender Email
-                          </Typography>
-                          <input
-                            type="text"
-                            id="SSemail"
-                            name="SSemail"
-                            onChange={(e) => {
-                              setSSemail(e.target.value);
-                            }}
-                            value={SSemail}
-                          />
-                        </div>
-                      </div>
-                      {/*footer*/}
-                      <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
-                        <button
-                          className="text-red-500 mr-10 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                          type="button"
-                          onClick={() => setShowModal1(false)}
-                        >
-                          Close
-                        </button>
 
-                        <button
-                          className="bg-emerald-500 text-[#FCB900] active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                          type="button"
-                          onClick={() => changeSSemail()}
-                        >
-                          Save Changes
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
-              </>
-            ) : null}
-          </div>
-          <div className="flex text-xl items-baseline mt-10 font-medium">
-            <Typography className="text-xl">
-              Test Queued Campaigns Automatically (only if not tested already)
-            </Typography>
-            <div class="flex justify-center ml-10">
-              <FormGroup>
-                <FormControlLabel
-                  control={
-                    <Switch
-                      checked={data.campaignAutoTest}
-                      onChange={handleChange}
-                    />
-                  }
-                  inputProps={{ "aria-label": "controlled" }}
-                />
-              </FormGroup>
-            </div>
-          </div>
-        </div>
-      </Paper>
       <Paper className="h-full w-full sm:h-auto md:flex md:py-10 md:items-start md:justify-start  sm:w-auto md:h-full md:w-full py-8 px-16 sm:p-48 md:p-64 sm:rounded-2xl md:rounded-none sm:shadow md:shadow-none ltr:border-r-1 rtl:border-l-1">
         <div className="w-full mx-auto sm:mx-0">
           <Typography className="mt-32 text-3xl font-extrabold tracking-tight leading-tight">
@@ -649,3 +547,110 @@ function Settings() {
 }
 
 export default Settings;
+
+//<Paper className="h-full w-full sm:h-auto md:flex md:py-5 md:items-start md:justify-start  sm:w-auto md:h-full md:w-full py-8 px-16 sm:p-48 md:p-64 sm:rounded-2xl md:rounded-none sm:shadow md:shadow-none ltr:border-r-1 rtl:border-l-1">
+// {/* <div className="w-full mx-auto sm:mx-0">
+//   <Typography className="mt-32 text-2xl font-extrabold tracking-tight leading-tight">
+//     Campaign Testing
+//   </Typography>
+//   <hr class="my-4 mx-auto w-full h-1 bg-gray-500 rounded border-0 md:my-10 dark:bg-gray-700"></hr>
+//   <div className="flex text-xl items-baseline mt-10 font-medium">
+//     <Typography className="text-xl">
+//       Sender Email Verified : {SSemail}
+//     </Typography>
+//     <Button
+//       variant="contained"
+//       color="secondary"
+//       style={{
+//         backgroundColor: "#FCB900",
+//       }}
+//       className="w-1/8 ml-16 "
+//       aria-label="Register"
+//       type="submit"
+//       size="large"
+//       onClick={() => setShowModal1(true)}
+//     >
+//       Update Email
+//     </Button>
+//     {showModal1 ? (
+//       <>
+//         <div className="justify-center items-center flex w-full overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
+//           <div className="relative w-auto my-6 mx-auto max-w-">
+//             {/*content*/}
+//             <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+//               {/*header*/}
+//               <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
+//                 <h3 className="text-3xl font-semibold">
+//                   Edit Sender Email
+//                 </h3>
+//                 <button
+//                   className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
+//                   onClick={() => setShowModal1(false)}
+//                 >
+//                   <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
+//                     ×
+//                   </span>
+//                 </button>
+//               </div>
+//               {/*body*/}
+//               <div className="relative p-6 flex-auto">
+//                 <div className="grid mb-24 grid-cols-2">
+//                   <Typography className="pt-5 md:text-xl leading-5 col-span-1">
+//                     Your New Sender Email
+//                   </Typography>
+//                   <input
+//                     type="text"
+//                     id="SSemail"
+//                     name="SSemail"
+//                     onChange={(e) => {
+//                       setSSemail(e.target.value);
+//                     }}
+//                     value={SSemail}
+//                   />
+//                 </div>
+//               </div>
+//               {/*footer*/}
+//               <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
+//                 <button
+//                   className="text-red-500 mr-10 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+//                   type="button"
+//                   onClick={() => setShowModal1(false)}
+//                 >
+//                   Close
+//                 </button>
+
+//                 <button
+//                   className="bg-emerald-500 text-[#FCB900] active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+//                   type="button"
+//                   onClick={() => changeSSemail()}
+//                 >
+//                   Save Changes
+//                 </button>
+//               </div>
+//             </div>
+//           </div>
+//         </div>
+//         <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+//       </>
+//     ) : null}
+//   </div>
+//   <div className="flex text-xl items-baseline mt-10 font-medium">
+//     <Typography className="text-xl">
+//       Test Queued Campaigns Automatically (only if not tested already)
+//     </Typography>
+//     <div class="flex justify-center ml-10">
+//       <FormGroup>
+//         <FormControlLabel
+//           control={
+//             <Switch
+//               checked={data.campaignAutoTest}
+//               onChange={handleChange}
+//             />
+//           }
+//           inputProps={{ "aria-label": "controlled" }}
+//         />
+//       </FormGroup>
+//     </div>
+//   </div>
+// </div>
+//       </Paper > */}

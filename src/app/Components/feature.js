@@ -48,7 +48,7 @@ function Feature() {
             animate={{ opacity: 1, y: 0, transition: { delay: 0.1 } }}
           >
             <div className="mt-4 text-4xl sm:text-7xl font-extrabold tracking-tight leading-tight text-center">
-              Content Spam and Inbox Placement Test
+              Bulk email validation
             </div>
           </motion.div>
 
@@ -68,16 +68,9 @@ function Feature() {
                   className="mt-8 text-xl leading-relaxed"
                   color="text.secondary"
                 >
-                  Kleanify scans your Klaviyo account every 15 mins to check for
-                  new campaigns. If a campaign is in "scheduled" state and
-                  hasn't been tested before, it is automatically tested for
-                  content spam score and inbox placement test. You will get an
-                  email report with the test results once the test is done.
+                  Kleanify can check your subscriber list from Klaviyo account and can automatically suppress invalid or expired emails.
                   <p className="pt-7">
-                    Campaigns in "draft" state or "scheduled" campaigns which
-                    have been tested before, won't be tested automatically to
-                    save your testing credits. You can manually initiate the
-                    test for such campaigns to re-test them.
+                    To start cleaning, please select a list or segment. Depending on the size, this can take a few minutes. You will be alerted through email once it's done.
                   </p>
                 </Typography>
                 <div className="felx  mt-24 ">

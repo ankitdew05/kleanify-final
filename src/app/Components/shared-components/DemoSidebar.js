@@ -24,13 +24,12 @@ const navigationData = [
         type: 'item',
         url: '/email-validation',
         icon: 'heroicons-outline:badge-check',
-      },
-      
+      }, 
       {
         id: '1.3',
-        title: 'Campaign Tests',
+        title: 'Bulk Validation',
         type: 'item',
-        url: '/campaign-test',
+        url: '/bulk-email-validation',
         icon: 'heroicons-outline:beaker',
       },
       {
