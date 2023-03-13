@@ -42,9 +42,9 @@ function Feature1() {
     return data;
   }
   return (
-    <div className="relative bg-[#FFF6CF] opacity-90  flex flex-col flex-auto min-w-0 overflow-hidden">
+    <div className="relative  bg-[#F1F5F9]   flex flex-col flex-auto min-w-0 overflow-hidden">
       <div className="relative pt-32 pb-48 sm:pt-80 sm:pb-96 px-24 sm:px-64 overflow-hidden">
-        <svg
+        {/* <svg
           className="-z-1 absolute inset-0 pointer-events-none"
           viewBox="0 0 960 540"
           width="100%"
@@ -63,7 +63,7 @@ function Feature1() {
             <circle r="234" cx="196" cy="23" />
             <circle r="234" cx="790" cy="491" />
           </Box>
-        </svg>
+        </svg> */}
         <div className="flex flex-col items-center">
           <motion.div
             initial={{ opacity: 0 }}

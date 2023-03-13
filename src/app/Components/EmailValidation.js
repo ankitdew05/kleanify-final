@@ -41,7 +41,7 @@ function EmailValidation() {
           rightSidebarToggle={(ev) => {
             setRightSidebarOpen(!rightSidebarOpen);
           }}
-          title= "Email Validation"
+          title= "Automated Email Validation"
         />
       }
       content={<DemoContent1 />}

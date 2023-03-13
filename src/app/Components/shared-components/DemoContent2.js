@@ -19,6 +19,7 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import baseURL from "src/app/common/baseURL";
 import "react-toastify/dist/ReactToastify.css";
+import FuseLoading from "@fuse/core/FuseLoading";
 
 function DemoContent2() {
   const navigate = useNavigate();
@@ -31,14 +32,16 @@ function DemoContent2() {
   const [emailBalance, setemailBalance] = useState("");
   const [campaignBalance, setcampaignBalance] = useState("");
   const [customerId, setcustomerId] = useState("");
-  let [data, setData] = useState({});
+  let [value, setValue] = useState(.002);
+  const [status, setStatus] = useState(true)
   const userId = userData._id;
   const planId = userData.planId;
   useEffect(() => {
-    setUserData(JSON.parse(auth));
-    setTotal(parseFloat(emailCredit));
-    //+ parseFloat(campaignCredit)
     getBounce();
+    setUserData(JSON.parse(auth));
+    setTotal(parseFloat(emailCredit * value * 1000));
+    //+ parseFloat(campaignCredit)
+
   }, [emailCredit]);
   //campaignCredit
   function handleEmailCredit(value) {
@@ -108,7 +111,7 @@ function DemoContent2() {
   // Confirm Card Payment.
 
   const getBounce = async () => {
-    axios
+    await axios
       .get(`${baseURL}/paiduser/${JSON.parse(auth)._id}`, {
         headers: { "authorization": JSON.parse(token) }
       })
@@ -116,9 +119,29 @@ function DemoContent2() {
         setemailBalance(response.data[0].credits.emailValidationCredit);
         setcampaignBalance(response.data[0].credits.testingCredit);
         setcustomerId(response.data[0].customerId);
+        setStatus(false)
+        if (response.data[0].planId == "62d71c57b575b6145237c64a" || response.data[0].planId == "62c280722a9afa5b6ac4c0d5") {
+          setValue(.002)
+
+        } else if (response.data[0].planId == "62d71cdcb575b6145237c64b" || response.data[0].planId == "62c282b2aaa596ff1a697564") {
+          setValue(.0015)
+
+        } else {
+          setValue(.001)
+        }
       })
       .catch((err) => console.error(err));
   };
+
+
+
+  if (status) {
+    return (
+      <div className="flex w-full items-center justify-center h-full">
+        <FuseLoading />
+      </div>
+    );
+  }
   return (
     <motion.div
       className="grid grid-cols-1 sm:grid-cols-6 gap-24 w-full min-w-0 p-24"
@@ -157,7 +180,7 @@ function DemoContent2() {
             </div> */}
           </Paper>
         </motion.div>
-        
+
       </div>
 
       <motion.div className="sm:col-span-6 md:col-span-5">
@@ -182,7 +205,7 @@ function DemoContent2() {
               </p>
               <p className="text-[10px] invisible md:visible sm:text-lg text-green-500 font-light">
                 {" "}
-                <b className="font-bold">1 Credit = .001 $</b>
+                <b className="font-bold">1 Credit = {value} $</b>
               </p>
             </Typography>
             <TextField
@@ -202,7 +225,7 @@ function DemoContent2() {
               variant="outlined"
             />
             <Typography className="text-md sm:text-2xl mb-4 font-bold tracking-tight leading-none text-gray-700">
-              ${emailCredit}
+              ${value * 1000 * emailCredit}
             </Typography>
           </div>
           {/* <div className="text-left mt-8 px-28 py-9 grid grid-cols-3 justify-items-center">
@@ -233,7 +256,7 @@ function DemoContent2() {
             </Typography>
             <Typography className="text-md sm:text-2xl mb-4 font-bold tracking-tight leading-none text-green-500"></Typography>
             <Typography className="text-md sm:text-2xl mb-4 font-bold tracking-tight leading-none text-gray-700">
-              ${total}
+              ${value * 1000 * emailCredit}
             </Typography>
           </div>
           <div className="text-center mt-8 px-28 py-9 grid grid-cols-3">

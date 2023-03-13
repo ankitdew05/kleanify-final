@@ -12,16 +12,18 @@ function DemoContent() {
   const token = localStorage.getItem("token");
   const auth = localStorage.getItem("user");
   const [data, setData] = useState("");
-  const [ unengeged , setUnengaged] = useState("")
+  const [ unengeged , setUnengaged] = useState("0")
   const [campaignTesting , setcampaignTesting] = useState("")
-  const [newSub , setnewSub] = useState("")
+  const [newSub , setnewSub] = useState("0")
   const [emailBalance, setemailBalance] = useState("0");
   const [campaignBalance, setcampaignBalance] = useState("0");
+  const [bulkcount , setbulkcount] = useState("0")
   useEffect(() => {
     getBounce();
     getcampaignTest();
     getUnengaged();
     getnewSubscribers();
+    getCount();
   }, []);
 
   const getBounce = async () => {
@@ -46,7 +48,6 @@ function DemoContent() {
         headers: { "authorization": JSON.parse(token) }
       })
       .then((response) => {
-    
         const array = response.data.Json
         console.log("Hi",array);
         setnewSub(array)
@@ -86,13 +87,33 @@ function DemoContent() {
       .catch((err) => console.error(err));
   };
 
+  const getCount = async () => {
+    try {
+      const response = await axios.get(`${baseURL}/bulkemailValidationTesting30/${JSON.parse(auth)._id}`);
+      console.log(response)
+      if (response.data.Array.length > 0) {
+        const array = response.data.Array;
+        console.log("Hi", array);
+        let sum = 0;
+        array.map((value) => {
+          sum = sum + value.validemails;
+        });
+        setbulkcount(sum);
+      } else {
+        setbulkcount(0);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 gap-24 w-full min-w-0 p-24">
       <Paper className="flex flex-col flex-auto shadow rounded-2xl w-full h-full overflow-hidden">
         <div className="flex items-center justify-between px-8 pt-12"></div>
         <div className="text-center mt-8 p-28">
           <Typography className="text-3xl sm:text-4xl mb-8 font-bold tracking-tight leading-none text-green-500">
-            Email Validation
+           Automated Email Validation
           </Typography>
 
           <Typography className="text-7xl  sm:text-8xl mt-36 font-bold tracking-tight leading-none text-green-500">
@@ -118,18 +139,18 @@ function DemoContent() {
         </div>
       </Paper>
 
-      {/* <Paper className="flex flex-col flex-auto shadow rounded-2xl w-full h-full overflow-hidden">
+      <Paper className="flex flex-col flex-auto shadow rounded-2xl w-full h-full overflow-hidden">
         <div className="flex items-center justify-between px-8 pt-12"></div>
         <div className="text-center mt-8 p-28">
           <Typography className="text-3xl sm:text-4xl mb-8 font-bold tracking-tight leading-none text-amber-500">
-            Campaigns Testing
+            Bulk Email Validation
           </Typography>
 
           <Typography className="text-7xl  sm:text-8xl mt-36 font-bold tracking-tight leading-none text-amber-500">
-            {campaignTesting}
+            {bulkcount}
           </Typography>
           <Typography className="text-lg font-medium text-amber-600">
-            Tests Done
+          Emails Checked
           </Typography>
         </div>
         <div className="flex items-center justify-evenly px-8 pt-12 pb-20">
@@ -143,10 +164,10 @@ function DemoContent() {
             className="px-16 text-xl font-medium tracking-tight leading-6 truncate underline"
             color="text.secondary"
           >
-            <Link to="/campaign-test">View Details</Link>
+            <Link to="/bulk-email-validation">View Details</Link>
           </Typography>
         </div>
-      </Paper> */}
+      </Paper>
 
       <Paper className="flex flex-col flex-auto shadow rounded-2xl w-full h-full overflow-hidden">
         <div className="flex items-center justify-between px-8 pt-12"></div>

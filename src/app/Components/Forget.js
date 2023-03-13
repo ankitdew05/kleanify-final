@@ -70,9 +70,9 @@ function Forget() {
 
 
   return (
-    <div className="flex flex-col sm:flex-row items-center md:items-start sm:justify-center md:justify-start flex-1 min-w-0">
-      <Box className="bg-[#FFF6CF] relative hidden md:flex flex-auto items-center justify-center h-full p-64 lg:px-112 overflow-hidden">
-        <svg
+    <div className="flex  bg-[#F1F5F9]   flex-col sm:flex-row items-center md:items-start sm:justify-center md:justify-start flex-1 min-w-0">
+      <Box className=" bg-[#F1F5F9]   relative hidden md:flex flex-auto items-center justify-center h-full p-64 lg:px-112 overflow-hidden">
+        {/* <svg
           className="absolute inset-0 pointer-events-none"
           viewBox="0 0 960 540"
           width="100%"
@@ -91,7 +91,7 @@ function Forget() {
             <circle r="234" cx="196" cy="23" />
             <circle r="234" cx="790" cy="491" />
           </Box>
-        </svg>
+        </svg> */}
         <Box
           component="svg"
           className="absolute -top-64 -right-64 opacity-20"

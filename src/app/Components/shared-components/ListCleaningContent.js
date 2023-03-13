@@ -23,7 +23,7 @@ function ListCleaningContent() {
   const [newsub, setnewsub] = useState("0");
   const [nocheck, setnocheck] = useState("0");
   const [noemails, setnoemails] = useState("0");
-  const [emailarray, setemailarray] = useState([""]);
+  const [emailarray, setemailarray] = useState(['']);
   const [ListCleaned, setListCleaned] = useState("");
   const [unengaged, setUnengaged] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -35,8 +35,8 @@ function ListCleaningContent() {
       .then((res) => {
         console.log(res);
         setListCleaned(res[0].listCleaning);
-        if (res[0].segmentId) {
-          console.log("this is segment id", res[0].segmentId);
+        if (res[0].segmentId.length !=0) {
+          //console.log("this is segment id", res[0].segmentId);
           navigate(`/list-cleaning`);
         } else {
           console.log("On boarding");
@@ -55,6 +55,7 @@ function ListCleaningContent() {
               const numAscending = res.sort(function (a, b) {
                 return a.date > b.date ? -1 : a.date < b.date ? 1 : 0;
               });
+              const array = []
               setUnengaged(numAscending);
               console.log("Data", res, numAscending);
             })
@@ -229,7 +230,7 @@ function ListCleaningContent() {
                             columns="Emails"
                             target="_blank"
                             filename={`kleanify-uneng-subs-${value.date}.csv`}
-                            data= {[value.array]}
+                            data= {value.array.map((item) => [item])}
                           >
                             Download List
                           </CSVLink>

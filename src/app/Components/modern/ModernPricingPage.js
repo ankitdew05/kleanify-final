@@ -12,13 +12,15 @@ import ModernPricingFeatureItem from "./ModernPricingFeatureItem";
 import axios from "axios";
 import baseURL from "../../common/baseURL";
 import Navbar from "../navbar";
-
+import FuseLoading from "@fuse/core/FuseLoading";
 function ModernPricingPage() {
   const [period, setPeriod] = useState("year");
   const [data, setData] = useState([""]);
+  const [status , setStatus] = useState(true)
   useEffect(() => {
     document.title = "Pricing-Kleanify";
-    getBounce();
+    loader();
+    //getBounce();
   }, []);
   const container = {
     show: {
@@ -27,7 +29,9 @@ function ModernPricingPage() {
       },
     },
   };
-
+  const loader = async () => {
+    window.location.assign('https://kleanify.co/pricing/')
+  }
   const getBounce = async () => {
     axios
       .get(`${baseURL}/plan`)
@@ -42,6 +46,14 @@ function ModernPricingPage() {
     hidden: { opacity: 0, y: 100 },
     show: { opacity: 1, y: 0 },
   };
+  if (status) {
+    return (
+      <div className="flex w-full bg-[#FFF6CF]  min-h-full">
+        <FuseLoading />
+      </div>
+    );
+  }
+
 
   return (
     <div className="relative bg-[#FFF6CF] opacity-[99%]  flex flex-col flex-auto min-w-0 overflow-hidden">

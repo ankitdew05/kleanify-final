@@ -49,21 +49,27 @@ function Detail() {
     document.title = "Onboarding to Kleanify";
     setSpinner(true);
     setLoading(true)
-    const data = getData()
-      .then((res) => {
-        setLoading(false)
-        setSpinner(false);
-        console.log(res);
-        if (res[0].apiKey) {
-          navigate(`/dashboard`);
-        }
-      })
-      .catch((err) => {
-        setSpinner(false);
-        console.log(err)
-      });
-    console.log("data", data);
-    
+    const fetchData = async () => {
+      try {
+        await axios
+          .get(`http://localhost:5000/paiduser/${JSON.parse(auth)._id}`, {
+            headers: { "authorization": JSON.parse(token) }
+          })
+          .then((response) => {
+            console.log(response.data);
+            setLoading(false)
+            setSpinner(false);
+            if (response.data[0].apiKey) {
+              navigate(`/dashboard`);
+            }
+          })
+          .catch((err) => console.error(err));
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchData();
+
   }, []);
 
   const navigate = useNavigate();
@@ -73,22 +79,10 @@ function Detail() {
   const [loading, setLoading] = useState(false);
   const { isValid, dirtyFields, errors, setError } = formState;
 
-  async function getData() {
-    const data = await axios
-      .get(`${baseURL}/paiduser/${JSON.parse(auth)._id}`, {
-        headers: { "authorization": JSON.parse(token) }
-      })
-      .then((response) => {
-        return response.data;
-      })
-      .catch((err) => console.error(err));
-    return data;
-  }
-
   async function onSubmit({ apiKey, url }) {
     setSpinner(true);
     console.warn(apiKey, url);
-    let result = await fetch(`${baseURL}/paiduser/${JSON.parse(auth)._id}`, {
+    let result = await fetch(`${baseURL}/paiduser/${JSON.parse(auth)._id}/${apiKey}`, {
       method: "put",
       body: JSON.stringify({ apiKey, url }),
       headers: {
@@ -99,13 +93,13 @@ function Detail() {
     result = await result.json();
     setSpinner(false)
     console.warn(result.result);
-    if(result.result == "Failed"){
+    if (result.result == "Failed") {
       alert("Api Key Wrong , Please Check")
     }
-    else{
+    else {
       navigate(`/onboarding1`);
     }
-    
+
   }
   if (loading) {
     return (
@@ -116,9 +110,9 @@ function Detail() {
   }
 
   return (
-    <div className="relative bg-[#FFF6CF] opacity-90  flex flex-col flex-auto min-w-0 overflow-hidden">
+    <div className="relative bg-[#F1F5F9]  opacity-90  flex flex-col flex-auto min-w-0 overflow-hidden">
       <div className="relative pt-32 pb-48 sm:pt-80 sm:pb-96 px-24 sm:px-64 overflow-hidden">
-        <svg
+        {/* <svg
           className="-z-1 absolute inset-0 pointer-events-none"
           viewBox="0 0 960 540"
           width="100%"
@@ -137,7 +131,7 @@ function Detail() {
             <circle r="234" cx="196" cy="23" />
             <circle r="234" cx="790" cy="491" />
           </Box>
-        </svg>
+        </svg> */}
         <div className="flex flex-col items-center">
           <motion.div
             initial={{ opacity: 0 }}
@@ -237,15 +231,15 @@ function Detail() {
                       Submit
                     </Button>
                     <Backdrop
-                sx={{
-                  opacity: 0,
-                  color: "#00000",
-                  zIndex: (theme) => theme.zIndex.drawer + 1,
-                }}
-                open={spinner}
-              >
-                <CircularProgress color="success" />
-              </Backdrop>
+                      sx={{
+                        opacity: 0,
+                        color: "#00000",
+                        zIndex: (theme) => theme.zIndex.drawer + 1,
+                      }}
+                      open={spinner}
+                    >
+                      <CircularProgress color="success" />
+                    </Backdrop>
                   </div>
                 </form>
               </div>

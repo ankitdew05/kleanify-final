@@ -8,47 +8,92 @@ import FuseSvgIcon from "@fuse/core/FuseSvgIcon";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import FormControl from "@mui/material/FormControl";
-import FormControlLabel from "@mui/material/FormControlLabel";
 import TextField from "@mui/material/TextField";
 import { Controller, useForm } from "react-hook-form";
+import InputLabel from '@mui/material/InputLabel';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
 import { useParams, useNavigate } from "react-router-dom";
 import baseURL from "../common/baseURL";
-
+import FuseLoading from "@fuse/core/FuseLoading";
+import axios from "axios";
 function Feature2() {
   const token = localStorage.getItem("token");
 
   const auth = localStorage.getItem("user");
   useEffect(() => {
     document.title = "Onboarding to Kleanify";
-  });
+    fetchsegments();
+  }, []);
   const [period, setPeriod] = useState("month");
+  const [status, setstatus] = useState(false)
+  const [segment, setSegment] = useState([]);
   const params = useParams();
   const UserId = params.id;
   const navigate = useNavigate();
-  async function onSubmit({ segmentId }) {
-    let result = await fetch(`${baseURL}/segment/${JSON.parse(auth)._id}`, {
-      method: "put",
-      body: JSON.stringify({ segmentId }),
-      headers: {
-        "Content-Type": "application/json",
-        "authorization": JSON.parse(token) 
-      },
-    });
-    result = await result.json();
-    console.warn(result);
-    navigate("/list-cleaning");
+  async function handleSubmit1() {
+    console.log(selectedOption)
+    if (selectedOption == null) {
+      alert("Please Select Some Id")
+    } else {
+      let segmentID = selectedOption.id;
+      let name = selectedOption.name
+      let result = await fetch(`${baseURL}/segment/${JSON.parse(auth)._id}`, {
+        method: "put",
+        body: JSON.stringify({ segmentID, name }),
+        headers: {
+          "Content-Type": "application/json",
+          "authorization": JSON.parse(token)
+        },
+      });
+      result = await result.json();
+      console.log(result)
+      if (result.result == "Pass") {
+        alert("Succesfully Submited Segment Id");
+        navigate("/list-cleaning");
+      } else {
+        alert("Opps! Not Submited Segment Id");
+      }
+    }
+
+
   }
 
-  const { control, formState, handleSubmit, setError, setValue } = useForm({
+  const { control, formState, setError, setValue } = useForm({
     mode: "onChange",
   });
 
   const { isValid, dirtyFields, errors } = formState;
 
+  const fetchsegments = async () => {
+    try {
+      setstatus(true)
+      const response = await axios.get(`${baseURL}/getallsegment/${JSON.parse(auth).apiKey}`);
+      setSegment(response.data.Array);
+      console.log("Segments", response.data.Array)
+      setstatus(false)
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  const [selectedOption, setSelectedOption] = useState(null);
+  const setSelection = async (event) => {
+    console.log(event.target.value)
+    setSelectedOption(event.target.value);
+  };
+
+  if (status) {
+    return (
+      <div className="flex w-full bg-[#FFF6CF]  min-h-full">
+        <FuseLoading />
+      </div>
+    );
+  }
+
   return (
-    <div className="relative bg-[#FFF6CF] opacity-90  flex flex-col flex-auto min-w-0 overflow-hidden">
+    <div className="relative bg-[#F1F5F9] flex flex-col flex-auto min-w-0 overflow-hidden">
       <div className="relative pt-32 pb-48 sm:pt-80 sm:pb-96 px-24 sm:px-64 overflow-hidden">
-        <svg
+        {/* <svg
           className="-z-1 absolute inset-0 pointer-events-none"
           viewBox="0 0 960 540"
           width="100%"
@@ -67,7 +112,7 @@ function Feature2() {
             <circle r="234" cx="196" cy="23" />
             <circle r="234" cx="790" cy="491" />
           </Box>
-        </svg>
+        </svg> */}
         <div className="flex flex-col items-center">
           <motion.div
             initial={{ opacity: 0 }}
@@ -105,33 +150,26 @@ function Feature2() {
                     To start cleaning, please set-up a dynamic segment in
                     Klaviyo by following{" "}
                     <a href="https://kleanify.notion.site/Setup-Segment-in-Klaviyo-for-Unengaged-Subscribers-Kleanify-6ce6ac5f1cf649f086c71db9a2a034b0" target="_blank">
-                    <spam className="underline">this guide</spam></a>. This takes
+                      <spam className="underline">this guide</spam></a>. This takes
                     less than 5 mins and is a one-time process. Copy the segment
                     id and paste it below.
                   </p>
                 </Typography>
-                <form
-                  name="loginForm"
-                  noValidate
+                <div
+
                   className="flex flex-col justify-center w-full lg:w-1/2 mt-32"
-                  onSubmit={handleSubmit(onSubmit)}
                 >
-                  <Controller
-                    name="segmentId"
-                    control={control}
-                    render={({ field }) => (
-                      <TextField
-                        {...field}
-                        className="mb-24"
-                        label="Segment Id"
-                        autoFocus
-                        type="name"
-                        variant="outlined"
-                        required
-                        fullWidth
-                      />
-                    )}
-                  />
+                  <FormControl>
+                    <InputLabel>Segment Id</InputLabel>
+                    <Select value={selectedOption} onChange={setSelection}>
+                      {segment.map((option) => (
+                        <MenuItem key={option} value={option}>
+                          {option.name}
+                        </MenuItem>
+                      ))}
+
+                    </Select>
+                  </FormControl>
                   <div className="grid grid-cols-2 gap-x-7">
                     <Button
                       style={{
@@ -143,10 +181,10 @@ function Feature2() {
                       aria-label="Sign in"
                       type="submit"
                       size="large"
+                      onClick={() => handleSubmit1()}
                     >
                       Finish
                     </Button>
-
                     <Link to='/'><Button
                       style={{
                         backgroundColor: "#FCB900",
@@ -162,7 +200,7 @@ function Feature2() {
                     </Button>
                     </Link>
                   </div>
-                </form>
+                </div>
               </div>
             </Paper>
           </motion.div>

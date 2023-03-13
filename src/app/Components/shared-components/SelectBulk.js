@@ -12,13 +12,17 @@ import MenuItem from '@mui/material/MenuItem';
 import Backdrop from "@mui/material/Backdrop";
 import FuseLoading from "@fuse/core/FuseLoading";
 import CircularProgress from "@mui/material/CircularProgress";
-
+import Snackbar from '@mui/material/Snackbar';
+import Button from "@mui/material/Button";
 import axios from "axios";
+
 function SelectBulk() {
     const token = localStorage.getItem("token");
     const [dataArray, setDataArray] = useState([]);
     const [loading, setLoading] = useState(true);
     const [status, setstatus] = useState(false);
+    const [open, setOpen] = useState(false);
+    const [message, setMessage] = useState('');
     const auth = localStorage.getItem("user");
     useEffect(() => {
         document.title = "Bulk Validation Kleanify";
@@ -36,26 +40,31 @@ function SelectBulk() {
     }, []);
     const navigate = useNavigate();
     const [selectedOption, setSelectedOption] = useState('');
-    const handleChange = async (event) => {
-        setSelectedOption(event.target.value);
+    const setSelection = async (event) => {
         console.log(event.target.value)
+        setSelectedOption(event.target.value);
+
+    };
+    const handleSubmit = async () => {
         setstatus(true)
         try {
-            const response = await axios.get(`${baseURL}/getsegment/${event.target.value.id}/${event.target.value.type}/${JSON.parse(auth)._id}/${event.target.value.name}`);
+            const response = await axios.get(`${baseURL}/getsegment/${selectedOption.id}/${selectedOption.type}/${JSON.parse(auth)._id}/${selectedOption.name}`);
             console.log(response.data)
             if (response.data.Result == "Fail") {
+                setOpen(true);
+                setMessage(`Sorry, you don’t have enough email validation credits. Buy more credits here.`);
                 setstatus(false)
-                alert("Sorry, you don’t have enough email validation credits. Buy more credits here.")
             } else {
                 setstatus(false)
-                alert("Email validation started. You will get an email alert once it’s completed.")
-                navigate('/bulk-email-validation')
+                setOpen(true);
+                setMessage('Email validation started. You will get an email alert once it’s completed.');
+                //navigate('/bulk-email-validation')
             }
         } catch (error) {
             console.error(error);
         }
-
     };
+    
     if (loading) {
         return (
             <div className="flex w-full items-center justify-center h-full">
@@ -65,9 +74,9 @@ function SelectBulk() {
     }
 
     return (
-        <div className="relative bg-[#FFF6CF] opacity-90 h-full  flex flex-col flex-auto min-w-0 overflow-hidden">
+        <div className="relative opacity-90 h-full  flex flex-col flex-auto min-w-0 overflow-hidden">
             <div className="relative pt-32 pb-48 sm:pt-80 sm:pb-96 px-24 sm:px-64 overflow-hidden">
-                <svg
+                {/* <svg
                     className="-z-1 absolute inset-0 pointer-events-none"
                     viewBox="0 0 960 540"
                     width="100%"
@@ -86,7 +95,7 @@ function SelectBulk() {
                         <circle r="234" cx="196" cy="23" />
                         <circle r="234" cx="790" cy="491" />
                     </Box>
-                </svg>
+                </svg> */}
                 <div className="flex flex-col items-center">
                     <motion.div
                         initial={{ opacity: 0 }}
@@ -119,12 +128,13 @@ function SelectBulk() {
                                 >
                                     <FormControl>
                                         <InputLabel>List or Segment</InputLabel>
-                                        <Select value={selectedOption} onChange={handleChange}>
+                                        <Select value={selectedOption} onChange={setSelection}>
                                             {dataArray.map((option) => (
                                                 <MenuItem key={option} value={option}>
                                                     {option.name}
                                                 </MenuItem>
                                             ))}
+
                                         </Select>
                                         <Backdrop
                                             sx={{
@@ -136,7 +146,37 @@ function SelectBulk() {
                                         >
                                             <CircularProgress color="success" />
                                         </Backdrop>
+                                        {message == "Sorry, you don’t have enough email validation credits. Buy more credits here."
+                                            ? (<Snackbar
+                                                open={open}
+                                                autoHideDuration={6000}
+                                                onClose={() => setOpen(false)}
+                                                message={message}
+                                                action={
+                                                    <Button color="warning" size="medium" onClick={() => {
+                                                        navigate('/buy-credits')
+                                                    }}>
+                                                        Buy
+                                                    </Button>
+                                                }
+                                                
+                                            />) : (<Snackbar
+                                                open={open}
+                                                autoHideDuration={6000}
+                                                onClose={() => setOpen(false)}
+                                                message={message}
+                                                severity="success"
+                                            />)
+                                        }
+
+                                        <Button
+                                            className="bg-green p-8 w-1/2 text-lg mt-11 text-white rounded-12"
+                                            onClick={() => handleSubmit()}
+                                        >
+                                            Start Validation
+                                        </Button>
                                     </FormControl>
+
 
                                 </form>
                             </div>

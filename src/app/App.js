@@ -12,7 +12,7 @@ import { selectUser } from "app/store/userSlice";
 import themeLayouts from "app/theme-layouts/themeLayouts";
 import { selectMainTheme } from "app/store/fuse/settingsSlice";
 import FuseAuthorization from "@fuse/core/FuseAuthorization";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, redirect  } from "react-router-dom";
 import settingsConfig from "app/configs/settingsConfig";
 import withAppProviders from "./withAppProviders";
 import { AuthProvider } from "./auth/AuthContext";
