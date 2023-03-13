@@ -52,7 +52,7 @@ function Detail() {
     const fetchData = async () => {
       try {
         await axios
-          .get(`${baseURL}/${JSON.parse(auth)._id}`, {
+          .get(`${baseURL}/paiduser/${JSON.parse(auth)._id}`, {
             headers: { "authorization": JSON.parse(token) }
           })
           .then((response) => {
