@@ -126,7 +126,7 @@
         "uuid": "^8.3.2"
     },
     "scripts": {
-        "start": "node index.js",
+        "start": "node index.js ",
         "build": "cross-env GENERATE_SOURCEMAP=false react-app-rewired build ",
         "test": "react-app-rewired test --env=node",
         "eject": "react-app-rewired eject",

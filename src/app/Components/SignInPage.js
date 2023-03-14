@@ -46,7 +46,7 @@ const defaultValues = {
 };
 
 function SignInPage() {
-  const [id , setid] = useState('')
+  const [id, setid] = useState('')
   const navigate = useNavigate();
   const { control, formState, handleSubmit, setError, setValue } = useForm({
     mode: "onChange",
@@ -54,7 +54,7 @@ function SignInPage() {
     resolver: yupResolver(schema),
   });
 
-  useEffect(()=>{
+  useEffect(() => {
     document.title = 'Sign-in to Kleanify';
     // const auth = localStorage.getItem('user');
     // if(planId){
@@ -69,7 +69,7 @@ function SignInPage() {
     //     navigate(`/pricing`)
     //   }  
     // } 
-  },[])
+  }, [])
 
   const { isValid, dirtyFields, errors } = formState;
   const params = useParams();
@@ -77,27 +77,27 @@ function SignInPage() {
   // const period = params.period;
 
   async function onSubmit({ email, password }) {
-      console.warn("email,password", email, password);
-      let result = await fetch(`${baseURL}/login`, {
-        method: "post",
-        body: JSON.stringify({ email, password }),
-        headers: {
-          "Content-Type": "application/json",
-          
-        },
-      });
-      result = await result.json();
-      console.warn(result.user);
-      if (result.auth) {
-        localStorage.setItem("user", JSON.stringify(result.user));
-        console.log("localstorageset")
-        localStorage.setItem("token", JSON.stringify(result.auth));
-          navigate(`/onboarding`);
-      } else {
-        alert("Email Does not exist");
-      }
-     }
- // else{
+    console.warn("email,password", email, password);
+    let result = await fetch(`${baseURL}/login`, {
+      method: "post",
+      body: JSON.stringify({ email, password }),
+      headers: {
+        "Content-Type": "application/json",
+
+      },
+    });
+    result = await result.json();
+    console.warn(result.user);
+    if (result.auth) {
+      localStorage.setItem("user", JSON.stringify(result.user));
+      console.log("localstorageset")
+      localStorage.setItem("token", JSON.stringify(result.auth));
+      navigate(`/onboarding`);
+    } else {
+      alert("Email Does not exist");
+    }
+  }
+  // else{
   //     console.warn("email,password", email, password);
   //     let result = await fetch(`${baseURL}/login`, {
   //       method: "post",
@@ -130,7 +130,7 @@ function SignInPage() {
   //       alert("Email Does not exist");
   //     }
 
-      
+
   //   }
   // }
 
@@ -248,23 +248,20 @@ function SignInPage() {
               <div>Deliverability Solution</div>
             </div>
             <div className="mt-24 text-lg tracking-tight leading-6 text-black">
-              Kleanify automatically validates emails, cleans subscriber lists,
-              checks content spam score & performs automated inbox placement
-              tests with your Klaviyo account so you never land in the spam
-              folder.
+              Kleanify cleans unengaged subscribers and automatically validates emails from your Klaviyo account so you never land in the spam folder.
             </div>
           </div>
         </Box>
 
         <Paper className="h-full sm:h-auto md:flex md:items-center md:justify-start w-full sm:w-auto md:h-full md:w-1/2 py-8 px-16 sm:p-48 md:p-64 sm:rounded-2xl md:rounded-none sm:shadow md:shadow-none ltr:border-r-1 rtl:border-l-1">
           <div className="w-full max-w-320 sm:w-320 mx-auto sm:mx-0">
-          <a href="https://app.kleanify.co">
-            <img
-              className="w-128 h-36"
-              src="https://kleanify.co/wp-content/uploads/2022/05/Kleanify-Full-Logo.png"
-              alt="Kleanify-Logo"
-            />
-          </a>
+            <a href="https://app.kleanify.co">
+              <img
+                className="w-128 h-36"
+                src="https://kleanify.co/wp-content/uploads/2022/05/Kleanify-Full-Logo.png"
+                alt="Kleanify-Logo"
+              />
+            </a>
 
             <Typography className="mt-32 text-4xl font-extrabold tracking-tight leading-tight">
               Sign in

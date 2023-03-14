@@ -87,7 +87,7 @@ function SignUpPage() {
       localStorage.setItem("user", JSON.stringify(result.result));
       console.log("localstorageset")
       localStorage.setItem("token", JSON.stringify(result.auth));
-        navigate(`/onboarding`);
+      navigate(`/onboarding`);
     } else {
       alert("Email Does not exist");
     }
@@ -215,9 +215,7 @@ function SignUpPage() {
             <div>Deliverability Solution</div>
           </div>
           <div className="mt-24 text-lg tracking-tight leading-6 text-black">
-            Kleanify automatically validates emails, cleans subscriber lists,
-            checks content spam score & performs automated inbox placement tests
-            with your Klaviyo account so you never land in the spam folder.
+            Kleanify cleans unengaged subscribers and automatically validates emails from your Klaviyo account so you never land in the spam folder.
           </div>
         </div>
       </Box>
@@ -262,7 +260,7 @@ function SignUpPage() {
                   helperText={errors?.displayName?.message}
                   variant="outlined"
                   input
-                
+
                   required
                   fullWidth
                 />
@@ -282,7 +280,7 @@ function SignUpPage() {
                   helperText={errors?.email?.message}
                   variant="outlined"
                   contentEditab="false"
-                  value = {email}
+                  value={email}
                   required
                   fullWidth
                 />
