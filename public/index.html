@@ -60,7 +60,7 @@
                 z-index: 999999;
                 pointer-events: none;
                 opacity: 1;
-                visibility: visible;
+                visibility: hidden;
                 transition: opacity 400ms cubic-bezier(0.4, 0, 0.2, 1);
             }
 
@@ -120,6 +120,27 @@
 
         </style>
         <!-- / FUSE Splash Screen CSS -->
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get the current URL
+            var currentUrl = window.location.href;
+            
+            // Check if the URL includes the excluded URL
+            var excludedUrl = 'your-excluded-url';
+            var hideSplashScreen = currentUrl.includes(excludedUrl);
+            
+            // Modify the display property of the splash screen element based on the URL
+            var splashScreen = document.getElementById('fuse-splash-screen');
+            console.log(splashScreen)
+            if (splashScreen) {
+              if (hideSplashScreen) {
+                splashScreen.style.visibility = 'hidden';
+              } else {
+                splashScreen.style.display = 'visible';
+              }
+            }
+          });
+        </script>
     </head>
     <body>
 

@@ -55,8 +55,10 @@
         "react-csv": "^2.2.2",
         "react-dom": "18.1.0",
         "react-draft-wysiwyg": "1.14.7",
+        "react-helmet": "^6.1.0",
         "react-hook-form": "7.31.1",
         "react-i18next": "11.16.9",
+        "react-meta-tags": "^1.0.1",
         "react-popper": "2.3.0",
         "react-redux": "8.0.1",
         "react-router-dom": "^6.9.0",
@@ -126,7 +128,7 @@
         "uuid": "^8.3.2"
     },
     "scripts": {
-        "start": "node index.js ",
+        "start": "node index.js",
         "build": "cross-env GENERATE_SOURCEMAP=false react-app-rewired build ",
         "test": "react-app-rewired test --env=node",
         "eject": "react-app-rewired eject",

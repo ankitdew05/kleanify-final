@@ -51,8 +51,11 @@ import EmptyListClean from "./Components/EmptyListClean";
 import SupportPage from "./Components/SupportPage";
 import Setting from "./Components/Setting";
 import Planchecker from "./Components/PlanChecker";
+import ShortenUrll from "./Components/ShortenUrll";
 import BulkValidation from "./Components/BulkValidation";
 import SelectBulkSide from "./Components/SelectBulkSide";
+import ShortenUrl from "./Components/shared-components/ShortenUrl";
+import ProfileApp from "./Components/profile/ProfileApp";
 
 // import axios from 'axios';
 /**
@@ -106,12 +109,16 @@ const App = () => {
                 <Route path="/support" element={<SupportPage />} />
               </Route>
               <Route path="/signin/:id/:period" element={<SignInPage />} />
+              <Route path="/:id" element={<ShortenUrl />} />
               <Route path="/signin" element={<SignInPage />} />
               <Route path="/home" element={<HomePage />} />
               <Route path="/setting" element={<Setting />} />
+              <Route path="/shortenurl/:id" element={<ShortenUrl />} />
               <Route path="/pricing" element={<ModernPricingPage />} />
               <Route path="/selectbulk" element={<SelectBulkSide />} />
               <Route path="/planchecker" element={<Planchecker />} />
+              <Route path="/sms-preview-link" element={<ProfileApp />} />
+              <Route path="/sms-preview-link/:step/:id" element={<ProfileApp />} />
               <Route path="/bulk-email-validation" element={<BulkValidation />} />
               <Route path="/new" element={<New />} />
               <Route path="/forgot-password" element={<Forget />} />
