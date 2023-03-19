@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const app = express();
+app.use(require('prerender-node').set('prerenderToken', '7Chn38gADzpMesoT5Or7'));
 
 app.use(express.static(path.join(__dirname, 'build')));
 
