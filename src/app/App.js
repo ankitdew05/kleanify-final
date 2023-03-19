@@ -56,7 +56,7 @@ import BulkValidation from "./Components/BulkValidation";
 import SelectBulkSide from "./Components/SelectBulkSide";
 import ShortenUrl from "./Components/shared-components/ShortenUrl";
 import ProfileApp from "./Components/profile/ProfileApp";
-
+import { HelmetProvider } from 'react-helmet-async';
 // import axios from 'axios';
 /**
  * Axios HTTP Request defaults
@@ -82,6 +82,7 @@ const App = () => {
   const langDirection = useSelector(selectCurrentLanguageDirection);
   const mainTheme = useSelector(selectMainTheme);
   return (
+    <HelmetProvider>
     <CacheProvider value={createCache(emotionCacheOptions[langDirection])}>
       <FuseTheme theme={mainTheme} direction={langDirection}>
         <AuthProvider>
@@ -130,6 +131,7 @@ const App = () => {
         </AuthProvider>
       </FuseTheme>
     </CacheProvider>
+    </HelmetProvider>
   );
 };
 

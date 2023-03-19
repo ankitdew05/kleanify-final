@@ -55,6 +55,7 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { Helmet } from 'react-helmet';
 import baseURL from 'src/app/common/baseURL';
+import  { HelmetProvider } from 'react-helmet-async';
 
 function ShortenUrl() {
     const [ogImageUrl, setOgImageUrl] = useState('');
@@ -78,16 +79,18 @@ function ShortenUrl() {
     }, [params.id]);
     if (loading) {
         return (
-            <div className="flex items-center bg-[#fff] justify-center h-[1000px] w-full">
-                <div >
-                    <Helmet>
-                        <title>{name}</title>
-                        <meta property="og:url" content={ogImageUrl} />
-                        <meta property="og:image" content={ogImageUrl} />
-                        <meta property="og:description" content="Powered by Kleanify Preview Link" />
-                    </Helmet>
+            <HelmetProvider>
+                <div className="flex items-center bg-[#fff] justify-center h-[1000px] w-full">
+                    <div >
+                        <Helmet>
+                            <title>{name}</title>
+                            <meta property="og:url" content={ogImageUrl} />
+                            <meta property="og:image" content={ogImageUrl} />
+                            <meta property="og:description" content="Powered by Kleanify Preview Link" />
+                        </Helmet>
+                    </div>
                 </div>
-            </div>
+            </HelmetProvider>
         );
     }
 }
