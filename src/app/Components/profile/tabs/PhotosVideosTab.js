@@ -68,7 +68,9 @@ function PhotosVideosTab() {
       } else {
         setOpen(true)
         setmessage("Check Your Email, Link is Successfully Send..")
-        window.location.replace(`https://app.kleanify.co/sms-preview-link/`);
+        setTimeout(() => {
+          window.location.replace(`https://app.kleanify.co/sms-preview-link/`);
+        }, 3000);
       }
 
       // do something with the response from the backend
@@ -132,7 +134,7 @@ function PhotosVideosTab() {
 
                     <li><a>The preview link will be sent to this Email Id immediately so it can be saved  </a>
                       <a className="pl-[27px]">in your mailbox</a>
-                      </li>
+                    </li>
                     <li>The link will be active always</li>
                     <li>If you want to change the link, you can create another link</li>
 
