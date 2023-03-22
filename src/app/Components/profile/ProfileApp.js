@@ -49,14 +49,14 @@ function ProfileApp(props) {
             />
           </a>
         </div>
-        <div className="mt-4 text-4xl sm:text-7xl font-bold tracking-tight leading-tight text-center">
-          SMS Preview Link Generator
+        <div className="mt-4 text-4xl sm:text-7xl font-semibold tracking-tight leading-tight text-center">
+        SMS Preview Link Generator
         </div>
         <div className="flex flex-col flex-0 lg:flex-row items-center w-full mx-auto px-32 lg:h-72">
           <div className="flex flex-1 justify-center lg:my-0">
             <Tabs
               value={selectedTab}
-              onChange={handleTabChange}
+              //onChange={handleTabChange}
               indicatorColor="primary"
               textColor="inherit"
               variant="scrollable"

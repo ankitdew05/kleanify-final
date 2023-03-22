@@ -4,14 +4,14 @@
     <meta charset="utf-8" />
     <meta
       name="description"
-      content="Kleanify automatically validates emails, cleans subscriber lists, checks content spam score & performs automated inbox placement tests with your Klaviyo account so you never land in the spam folder."
+      content="Kleanify cleans unengaged subscribers and automatically validates emails from your Klaviyo account so you never land in the spam folder."
     />
     <meta name="keywords" content="Kleanify,Klavio" />
     <meta name="author" content="Kleanify" />
-    <meta property="og:title" content="__OG_TITLE__" />
-    <meta property="og:image" content="__IMAGE__" />
-    <meta property="og:url" content="__OG_URL__" />
-    <meta property="og:description" content="__OG_DESCRIPTION__" />
+    <meta property="og:title" content="Kleanify" />
+    <meta property="og:image" content="https://kleanify.co/wp-content/uploads/2022/04/Kleanify-Favicon.png" />
+    <meta property="og:url" content="https://kleanify.co/wp-content/uploads/2022/04/Kleanify-Favicon.png" />
+    <meta property="og:description" content="Kleanify cleans unengaged subscribers and automatically validates emails from your Klaviyo account so you never land in the spam folder." />
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
@@ -140,58 +140,6 @@
       }
     </style>
     <!-- / FUSE Splash Screen CSS -->
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script>
-  
-      document.addEventListener('DOMContentLoaded', function () {
-        // Get the current URL
-        var currentUrl = window.location.href
-
-        // Check if the URL includes the excluded URL
-        var excludedUrl = 'https://app.kleanify.co/:id'
-        var hideSplashScreen = currentUrl.includes(excludedUrl)
-
-        // Modify the display property of the splash screen element based on the URL
-        var splashScreen = document.getElementById('fuse-splash-screen')
-        console.log(splashScreen)
-        if (splashScreen) {
-          if (hideSplashScreen) {
-            splashScreen.style.visibility = 'hidden'
-          } else {
-            splashScreen.style.display = 'visible'
-          }
-        }
-        const url = window.location.href
-        const parts = url.split('/')
-        const code = parts[parts.length - 1]
-        console.log('Code', code)
-
-        axios
-          .get(`https://goldfish-app-das3k.ondigitalocean.app/${code}`)
-          .then((response) => {
-            console.log("HTML", response)
-            document.querySelector('title').innerText = response.data.name
-            document
-              .querySelector('meta[property="og:title"]')
-              .setAttribute('content', response.data.name)
-            document
-              .querySelector('meta[property="og:description"]')
-              .setAttribute('content', 'Powered by Kleanify Preview Link')
-            document
-              .querySelector('meta[property="og:image"]')
-              .setAttribute('content', response.data.ogImageUrl)
-            document
-              .querySelector('meta[property="og:url"]')
-              .setAttribute('content', response.data.ogImageUrl)
-              console.log( document
-              .querySelector('meta[property="og:image"]')
-              .getAttribute('content'))
-          })
-          .catch((error) => {
-            console.log(error)
-          })
-      })
-    </script>
   </head>
   <body>
     <noscript>

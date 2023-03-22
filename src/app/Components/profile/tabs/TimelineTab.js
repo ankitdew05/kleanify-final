@@ -97,8 +97,8 @@ function TimelineTab() {
           animate={{ opacity: 1, y: 0, transition: { delay: 0.1 } }}
           className="flex justify-center"
         >
-          <Paper className="flex flex-col lg:flex-row max-w-sm lg:max-w-xl overflow-hidden">
-            <div className="p-24 sm:p-32 lg:p-40">
+          <Paper className="flex justify-center flex-col lg:flex-row max-w-sm lg:max-w-xl overflow-hidden">
+            <div className="p-24 min-w-640  sm:p-32 lg:p-40">
               <form
                 name="registerForm"
                 noValidate
@@ -106,7 +106,7 @@ function TimelineTab() {
                 onSubmit={handleSubmit(onSubmit)}
               >
                 <div className="grid mb-24 grid-cols-2">
-                  <Typography className="pt-5 md:text-xl leading-5 col-span-1">
+                  <Typography className="pt-12  md:text-xl leading-5 col-span-1">
                     Your Campaign Name
                   </Typography>
                   <Controller
@@ -116,7 +116,7 @@ function TimelineTab() {
                       <TextField
                         {...field}
                         className=" col-span-1"
-                        label="Your Campaign Name"
+                        label="Campaign Name"
                         type="name"
                         error={!!errors.url}
                         helperText={errors?.url?.message}
@@ -128,7 +128,7 @@ function TimelineTab() {
                   />
                 </div>
                 <div className="grid mb-24 grid-cols-2">
-                  <Typography className="pt-5 md:text-xl leading-5 col-span-1 ">
+                  <Typography className="pt-12 md:text-xl leading-5 col-span-1 ">
                     Your Landing Page URL
                   </Typography>
                   <Controller
@@ -138,7 +138,7 @@ function TimelineTab() {
                       <TextField
                         {...field}
                         className=" col-span-1"
-                        label="Your Landing Page URL"
+                        label="URL"
                         autoFocus
                         type="name"
                         error={!!errors.name}
@@ -165,7 +165,7 @@ function TimelineTab() {
                     type="submit"
                     size="large"
                   >
-                    Submit
+                    Next
                   </Button>
                   <Backdrop
                     sx={{

@@ -17,6 +17,7 @@ import Paper from "@mui/material/Paper";
 import FormHelperText from "@mui/material/FormHelperText";
 import { useEffect, useState } from "react";
 import baseURL from "src/app/common/baseURL";
+import Snackbar from '@mui/material/Snackbar';
 import axios from "axios";
 import FuseLoading from "@fuse/core/FuseLoading";
 import Backdrop from "@mui/material/Backdrop";
@@ -27,7 +28,7 @@ import CircularProgress from "@mui/material/CircularProgress";
  */
 const schema = yup.object().shape({
   email: yup.string().required("You must enter Email Correctly"),
- 
+
 });
 
 const defaultValues = {
@@ -36,6 +37,8 @@ const defaultValues = {
 
 function PhotosVideosTab() {
   const [spinner, setSpinner] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [message, setmessage] = useState("")
   const { control, formState, handleSubmit, reset } = useForm({
     mode: "onChange",
     defaultValues,
@@ -52,20 +55,22 @@ function PhotosVideosTab() {
   const [loading, setLoading] = useState(false);
   const { isValid, dirtyFields, errors, setError } = formState;
 
-  async function onSubmit({email}) {
+  async function onSubmit({ email }) {
     console.warn(email);
     try {
       setSpinner(true);
       const response = await axios.post(`${baseURL}/shorten-url/step2/${params.id}`, { email });
       setSpinner(false)
       console.log(response.data);
-      if(response.data.Status == "Failed"){
-        alert(response.data.message)
-      } else{
-        alert("Check Your Email, Link is Successfully Send..")
+      if (response.data.Status == "Failed") {
+        setOpen(true)
+        setmessage(response.data.Message)
+      } else {
+        setOpen(true)
+        setmessage("Check Your Email, Link is Successfully Send..")
         window.location.replace(`https://app.kleanify.co/sms-preview-link/`);
       }
-    
+
       // do something with the response from the backend
     } catch (error) {
       console.error(error);
@@ -111,8 +116,8 @@ function PhotosVideosTab() {
                         className="h-10 rounded-0 flex-1 "
                         label="Email ID"
                         type="email"
-                        error={!!errors.url}
-                        helperText={errors?.url?.message}
+                        error={!!errors.email}
+                        helperText={errors?.email?.message}
                         variant="outlined"
                         required
                         fullWidth
@@ -123,10 +128,14 @@ function PhotosVideosTab() {
 
                 </div>
                 <div className="px-16 max-w-640 mt-16">
-                  <Typography className="ml-2 md:text-xl leading-5 ">
-                    <li>The preview link will be sent to this Email Id immediately so it can be saved in your mailbox</li>
+                  <Typography className="md:text-lg leading-5 ">
+
+                    <li><a>The preview link will be sent to this Email Id immediately so it can be saved  </a>
+                      <a className="pl-[27px]">in your mailbox</a>
+                      </li>
                     <li>The link will be active always</li>
-                    <li>if you want to change the link, you can create another link</li>
+                    <li>If you want to change the link, you can create another link</li>
+
                   </Typography>
                 </div>
                 <div className="flex mt-52 justify-center ">
@@ -154,6 +163,12 @@ function PhotosVideosTab() {
                   >
                     <CircularProgress color="success" />
                   </Backdrop>
+                  <Snackbar
+                    open={open}
+                    autoHideDuration={6000}
+                    onClose={() => setOpen(false)}
+                    message={message}
+                  ></Snackbar>
                 </div>
               </form>
             </div>

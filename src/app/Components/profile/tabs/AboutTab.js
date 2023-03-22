@@ -22,6 +22,7 @@ import FuseLoading from "@fuse/core/FuseLoading";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 import Fab from "@mui/material/Fab";
+import Snackbar from '@mui/material/Snackbar';
 import FuseSvgIcon from "@fuse/core/FuseSvgIcon";/**
  * Form Validation Schema
  */
@@ -40,6 +41,8 @@ const defaultValues = {
 
 function AboutTab() {
   const [spinner, setSpinner] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [message, setmessage] = useState("")
   const { control, formState, handleSubmit, reset } = useForm({
     mode: "onChange",
     defaultValues,
@@ -51,7 +54,7 @@ function AboutTab() {
 
   const navigate = useNavigate();
   const params = useParams();
-  console.log("About",params)
+  console.log("About", params)
   const auth = localStorage.getItem("user");
   const token = localStorage.getItem("token");
   const [loading, setLoading] = useState(false);
@@ -71,13 +74,14 @@ function AboutTab() {
         },
       });
       setSpinner(false)
-      console.log(response.data);
-      if(response.data.Status == "Failed"){
-        alert(response.data.message)
-      } else{
+      //console.log(response.data);
+      if (response.data.Status == "Failed") {
+        setOpen(true)
+        setmessage(response.data.Message)
+      } else {
         window.location.replace(`http://app.kleanify.co/sms-preview-link/2/${params.id}`);
       }
-    
+
       // do something with the response from the backend
     } catch (error) {
       console.error(error);
@@ -151,11 +155,9 @@ function AboutTab() {
                         />
 
                         <input
-                          accept="image/*"
+                          accept="image/jpeg, image/png, image/gif"
                           id="contained-button-file"
-                          multiple
                           type="file"
-
                           style={{
                             display: "none"
                           }}
@@ -188,7 +190,7 @@ function AboutTab() {
                   />
                 </div>
               </div>
-              <Typography className="ml-2 md:text-xl leading-5 px-16">
+              <Typography className="ml-2 md:text-lg leading-5 px-16">
                 <li>Ideal image size is 600x600px</li>
                 <li>Compress & optimize the image before uploading for best performance</li>
                 <li>Supported Formats: jpg , png , gif</li>
@@ -208,6 +210,13 @@ function AboutTab() {
                 >
                   Next
                 </Button>
+                <Snackbar
+                  open={open}
+                  autoHideDuration={3000}
+                  onClose={() => setOpen(false)}
+                  message={message}
+                ></Snackbar>
+
                 <Backdrop
                   sx={{
                     opacity: 0,
