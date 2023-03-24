@@ -67,7 +67,7 @@ function PhotosVideosTab() {
         setmessage(response.data.Message)
       } else {
         setOpen(true)
-        setmessage("Check Your Email, Link is Successfully Send..")
+        setmessage("Email successfully sent.")
         setTimeout(() => {
           window.location.replace(`https://app.kleanify.co/sms-preview-link/`);
         }, 3000);
@@ -153,7 +153,7 @@ function PhotosVideosTab() {
                     type="submit"
                     size="large"
                   >
-                    Next
+                    Send Me The Link
                   </Button>
                   <Backdrop
                     sx={{
